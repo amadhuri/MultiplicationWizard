@@ -1,0 +1,20 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="new_user_card_view_height">250dp</dimen>
+    <dimen name="new_user_card_view_width">315dp</dimen>
+
+    <!-- Users screen -->
+    <dimen name="card_view_elevation">10dp</dimen>
+    <dimen name="card_view_cardCornerRadius">7dp</dimen>
+    <dimen name="new_user_tv_margin">25dp</dimen>
+    <dimen name="fab_elevation">6dp</dimen>
+    <dimen name="child_list_left_margin">54dp</dimen>
+    <dimen name="logo_height">194px</dimen>
+    <dimen name="welcome_tv_margin">32dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="child_name_bt_width">252dp</dimen>
+    <dimen name="child_name_bt_height">48dp</dimen>
+</resources>
