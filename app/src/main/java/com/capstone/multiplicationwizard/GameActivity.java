@@ -1,16 +1,14 @@
 package com.capstone.multiplicationwizard;
 
+import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Pair;
 import android.view.View;
 import android.widget.TextView;
-
 import com.capstone.multiplicationwizard.utils.AudioClip;
 import com.capstone.multiplicationwizard.utils.RandomNumberGenerator;
-
 import java.util.ArrayList;
-
 import static com.capstone.multiplicationwizard.utils.AudioClip.clapSoundID;
 
 public class GameActivity extends AppCompatActivity {
@@ -21,12 +19,14 @@ public class GameActivity extends AppCompatActivity {
     private Integer currentProblemAnswer = -1;
     private Integer currentAnswerSlot = 0;
     private AudioClip audioClip;
+    private Vibrator vib;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         audioClip = AudioClip.getInstance(getApplicationContext());
+        vib = (Vibrator)getSystemService(getApplicationContext().VIBRATOR_SERVICE);
         setContentView(R.layout.activity_game);
 
     }
@@ -100,16 +100,18 @@ public class GameActivity extends AppCompatActivity {
 
         TextView txtView = (TextView)view;
 
-       // if(txtView.getText().toString().equals(currentAnswerSlot.toString())) {
+        if(txtView.getText().toString().equals(currentProblemAnswer.toString())) {
 
             audioClip.playSound(audioClip.clapSoundID(),5,5);
-            incrementUserProblemNumber();
-            loadWidgets();
             audioClip.stopSound(audioClip.clapSoundID());
-        //}
-        //else {
+        }
+        else {
              //Vibrate
-        //}
+            vib.vibrate(100);
+        }
+        incrementUserProblemNumber();
+        loadWidgets();
+
 
     }
     private void incrementUserProblemNumber() {
