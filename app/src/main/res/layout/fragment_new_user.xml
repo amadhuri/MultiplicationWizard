@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     tools:context=".layout.NewUserFragment"
-    android:background="@color/colorPrimary">
+    android:background="@color/colorPrimaryBlue">
 
     <android.support.v7.widget.CardView
         android:layout_width="@dimen/new_user_card_view_width"
@@ -32,13 +32,13 @@
                     android:text="@string/welcome_wizard"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/colorPrimaryBlue"
                     android:textSize="24sp"/>
                 <TextView
                     android:text="@string/new_user_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/colorPrimaryBlue"
                     android:textSize="24sp"/>
             </LinearLayout>
             <EditText
@@ -58,7 +58,7 @@
                 android:padding="10dp"
                 android:textColor="@android:color/white"
                 android:textSize="18sp"
-                android:background="@color/colorPrimary"
+                android:background="@color/colorPrimaryBlue"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 />
