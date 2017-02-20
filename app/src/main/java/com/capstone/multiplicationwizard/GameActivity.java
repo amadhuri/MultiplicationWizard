@@ -6,6 +6,7 @@ import android.os.Vibrator;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.widget.TextView;
@@ -16,12 +17,14 @@ public class GameActivity extends AppCompatActivity {
 
     private ArrayList<Pair<Integer,Integer>> problemList;
     private Pair<Integer,Integer>userLevel;
+    private Integer userScoreLevel = 0;
     private Integer currentProblemNumber = 0;
     private Integer currentProblemAnswer = -1;
     private Integer currentAnswerSlot = 0;
     private Vibrator vib;
     private Context context;
     private MediaPlayer mediaPlayer;
+    private static final String TAG = GameActivity.class.getName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +33,11 @@ public class GameActivity extends AppCompatActivity {
         vib = (Vibrator)getSystemService(context.VIBRATOR_SERVICE);
         setContentView(R.layout.activity_game);
         mediaPlayer = MediaPlayer.create(context,R.raw.clap);
-        mediaPlayer.start();
+        try {
+            mediaPlayer.prepare();
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -43,6 +50,7 @@ public class GameActivity extends AppCompatActivity {
         TextView textViewP1 = (TextView)findViewById(R.id.tv_p1);
         TextView textViewP2 = (TextView)findViewById(R.id.tv_p2);
         userLevel = getUserGameLevel();
+        userScoreLevel = getUserScoreLevel();
         RandomNumberGenerator randomNumberGenerator = new RandomNumberGenerator(userLevel.first,userLevel.second);
         problemList = randomNumberGenerator.getMultiplicationPairs();
         currentProblemNumber = getUserProblemNumber();
@@ -104,6 +112,7 @@ public class GameActivity extends AppCompatActivity {
 
         if(txtView.getText().toString().equals(currentProblemAnswer.toString())) {
             mediaPlayer.start();
+            updateUserScoreLevel();
         }
         else {
              //Vibrate
@@ -126,5 +135,11 @@ public class GameActivity extends AppCompatActivity {
         Integer y =9;
         Pair<Integer,Integer> pair = new Pair<Integer,Integer>(x,y);
         return pair;
+    }
+    private Integer getUserScoreLevel() {
+        return 0;
+    }
+    private void updateUserScoreLevel() {
+        userScoreLevel++;
     }
 }
