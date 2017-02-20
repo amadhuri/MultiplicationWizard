@@ -1,5 +1,6 @@
 package com.capstone.multiplicationwizard.data;
 
+import android.annotation.TargetApi;
 import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;
@@ -7,7 +8,12 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
+import android.os.Build;
+
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by Madhuri on 2/17/2017.
@@ -64,9 +70,9 @@ public class MWContentProvider extends ContentProvider {
 
     @Override
     public Uri insert(Uri uri, ContentValues contentValues) {
-        if( (sURIMatcher.match(uri) != USERS) || (sURIMatcher.match(uri) != USER_LEVELS )) {
+       /* if( (sURIMatcher.match(uri) != USERS) || (sURIMatcher.match(uri) != USER_LEVELS )) {
             throw new IllegalArgumentException("Unsupported URI for insertion:" + uri);
-        }
+        }*/
 
         if (sURIMatcher.match(uri) == USERS) {
             long id = mHelper.createUser(contentValues);
@@ -92,5 +98,16 @@ public class MWContentProvider extends ContentProvider {
     @Override
     public int update(Uri uri, ContentValues contentValues, String s, String[] strings) {
         return 0;
+    }
+
+    /**
+     * get datetime
+     * */
+    @TargetApi(Build.VERSION_CODES.N)
+    private String getDateTime() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(
+                "yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        Date date = new Date();
+        return dateFormat.format(date);
     }
 }

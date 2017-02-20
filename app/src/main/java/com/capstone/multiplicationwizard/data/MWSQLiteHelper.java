@@ -34,13 +34,13 @@ public class MWSQLiteHelper extends SQLiteOpenHelper {
     private static final String TABLE_USER_LEVEL = "user_level";
     // Common column names
     private static final String KEY_ID = BaseColumns._ID;
-    private static final String KEY_CREATED_AT = "created_at";
+    public static final String KEY_CREATED_AT = "created_at";
     // User Table - column names
-    private static final String KEY_USERNAME = "username";
-    private static final String KEY_LEVEL = "level";
-    private static final String KEY_HIGHSCORE = "high_score";
+    public static final String KEY_USERNAME = "username";
+    public static final String KEY_LEVEL = "level";
+    public static final String KEY_HIGHSCORE = "high_score";
     //User level - column names
-    private static final String KEY_LEVEL_SCORE = "level_score";
+    public static final String KEY_LEVEL_SCORE = "level_score";
 
     // Table Create Statements
     // Users table create statement
@@ -171,15 +171,6 @@ public class MWSQLiteHelper extends SQLiteOpenHelper {
             db.close();
     }
 
-    /**
-     * get datetime
-     * */
-    @TargetApi(Build.VERSION_CODES.N)
-    private String getDateTime() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat(
-                "yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-        Date date = new Date();
-        return dateFormat.format(date);
-    }
+
 
 }

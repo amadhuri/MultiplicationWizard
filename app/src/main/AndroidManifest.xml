@@ -2,28 +2,29 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.capstone.multiplicationwizard">
 
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppThemeBlue">
-        <provider
-            android:name=".data.MWContentProvider"
-            android:authorities="com.capstone.multiplicationwizard.data" />
 
         <activity android:name=".GameActivity"
             android:theme="@style/AppThemeOrange">
+
+        </activity>
+        <activity android:name=".MainActivity"
+            android:theme="@style/AppThemeBlue">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-        <activity android:name=".MainActivity">
-
-        </activity>
+        <provider
+            android:name=".data.MWContentProvider"
+            android:authorities="com.capstone.multiplicationwizard.MWItems" />
     </application>
 
 </manifest>

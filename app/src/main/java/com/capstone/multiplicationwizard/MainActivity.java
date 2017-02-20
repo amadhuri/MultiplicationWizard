@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements UsersFragment.OnU
         mContentResolver = getContentResolver();
         mwDB = new MWSQLiteHelper(getApplicationContext());
         //final int userCount = mwDB.getUserCount();
+
         final int userCount = getUserCount();
         Log.e("MainActivity", "Usercount:"+userCount);
         Thread timer= new Thread()
@@ -61,10 +62,13 @@ public class MainActivity extends AppCompatActivity implements UsersFragment.OnU
     }
 
     private int getUserCount() {
+        int userCount = 0;
         Cursor cursor = mContentResolver.query(MWItemsContract.USERS_CONTENT_URI, null, null, null, null);
-        Log.e("Word Count", cursor.getCount() + "");
-        int userCount = cursor.getCount();
-        cursor.close();
+        if (cursor != null) {
+            Log.e("Word Count", cursor.getCount() + "");
+            userCount = cursor.getCount();
+            cursor.close();
+        }
         return userCount;
     }
 
