@@ -8,24 +8,19 @@ import java.util.Random;
 
 public class RandomNumberGenerator  {
 
-    private int leftMultiple;
-    private int rightMultiple;
-    private ArrayList<Pair<Integer,Integer>> multArrayProblemList;
     private static final int PAIRCOUNT = 20;
 
-
-
-    public RandomNumberGenerator(int leftMultiple , int rightMultiple) {
-        this.multArrayProblemList = new ArrayList<>(PAIRCOUNT);
-        this.leftMultiple = leftMultiple;
-        this.rightMultiple = rightMultiple;
-
-    }
     public int getRandomNumberTillValue(int value) {
+        int retRandom = 0;
         Random rand = new Random();
-        return rand.nextInt(value);
+        do {
+            retRandom = rand.nextInt(value);
+        }while(retRandom == 0);
+        return retRandom;
     }
-    public ArrayList<Pair<Integer,Integer>> getMultiplicationPairs() {
+    public ArrayList<Pair<Integer,Integer>> getMultiplicationPairs(int leftMultiple, int rightMultiple) {
+        ArrayList<Pair<Integer,Integer>> multArrayProblemList = new ArrayList<>(PAIRCOUNT);
+
         Random rand = new Random();
 
         for (int i = 0; i < PAIRCOUNT; i++) {

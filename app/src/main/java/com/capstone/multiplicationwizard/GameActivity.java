@@ -3,10 +3,8 @@ package com.capstone.multiplicationwizard;
 import android.content.Context;
 import android.media.MediaPlayer;
 import android.os.Vibrator;
-import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.widget.TextView;
@@ -25,6 +23,7 @@ public class GameActivity extends AppCompatActivity {
     private Context context;
     private MediaPlayer mediaPlayer;
     private static final String TAG = GameActivity.class.getName();
+    private RandomNumberGenerator randomNumberGenerator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +32,8 @@ public class GameActivity extends AppCompatActivity {
         vib = (Vibrator)getSystemService(context.VIBRATOR_SERVICE);
         setContentView(R.layout.activity_game);
         mediaPlayer = MediaPlayer.create(context,R.raw.clap);
+        randomNumberGenerator= new RandomNumberGenerator();
+
         try {
             mediaPlayer.prepare();
         }catch(Exception e) {
@@ -51,8 +52,7 @@ public class GameActivity extends AppCompatActivity {
         TextView textViewP2 = (TextView)findViewById(R.id.tv_p2);
         userLevel = getUserGameLevel();
         userScoreLevel = getUserScoreLevel();
-        RandomNumberGenerator randomNumberGenerator = new RandomNumberGenerator(userLevel.first,userLevel.second);
-        problemList = randomNumberGenerator.getMultiplicationPairs();
+        problemList = randomNumberGenerator.getMultiplicationPairs(userLevel.first,userLevel.second);
         currentProblemNumber = getUserProblemNumber();
         Integer p1 = problemList.get(currentProblemNumber).first;
         Integer p2 = problemList.get(currentProblemNumber).second;
@@ -70,38 +70,38 @@ public class GameActivity extends AppCompatActivity {
         TextView textViewS4 = (TextView)findViewById(R.id.tv_s4);
         if(currentAnswerSlot  == 0) {
             textViewS1.setText(currentProblemAnswer.toString());
-            tempValue = currentProblemAnswer + 2;
+            tempValue = currentProblemAnswer + randomNumberGenerator.getRandomNumberTillValue(5);
             textViewS2.setText(tempValue.toString());
-            tempValue = currentProblemAnswer + 4;
+            tempValue = currentProblemAnswer + randomNumberGenerator.getRandomNumberTillValue(5);
             textViewS3.setText(tempValue.toString());
-            tempValue = currentProblemAnswer + 6;
+            tempValue = currentProblemAnswer + randomNumberGenerator.getRandomNumberTillValue(5);
             textViewS4.setText(tempValue.toString());
         }
         else if(currentAnswerSlot  == 1) {
             textViewS2.setText(currentProblemAnswer.toString());
-            tempValue = currentProblemAnswer + 2;
+            tempValue = currentProblemAnswer + randomNumberGenerator.getRandomNumberTillValue(5);
             textViewS1.setText(tempValue.toString());
-            tempValue = currentProblemAnswer + 4;
+            tempValue = currentProblemAnswer + randomNumberGenerator.getRandomNumberTillValue(5);
             textViewS3.setText(tempValue.toString());
-            tempValue = currentProblemAnswer + 6;
+            tempValue = currentProblemAnswer + randomNumberGenerator.getRandomNumberTillValue(5);
             textViewS4.setText(tempValue.toString());
         }
         if(currentAnswerSlot  == 2) {
             textViewS3.setText(currentProblemAnswer.toString());
-            tempValue = currentProblemAnswer + 2;
+            tempValue = currentProblemAnswer + randomNumberGenerator.getRandomNumberTillValue(5);
             textViewS1.setText(tempValue.toString());
-            tempValue = currentProblemAnswer + 4;
+            tempValue = currentProblemAnswer + randomNumberGenerator.getRandomNumberTillValue(5);
             textViewS2.setText(tempValue.toString());
-            tempValue = currentProblemAnswer + 6;
+            tempValue = currentProblemAnswer + randomNumberGenerator.getRandomNumberTillValue(5);
             textViewS4.setText(tempValue.toString());
         }
         if(currentAnswerSlot  == 3) {
             textViewS4.setText(currentProblemAnswer.toString());
-            tempValue = currentProblemAnswer + 2;
+            tempValue = currentProblemAnswer + randomNumberGenerator.getRandomNumberTillValue(5);
             textViewS1.setText(tempValue.toString());
-            tempValue = currentProblemAnswer + 4;
+            tempValue = currentProblemAnswer + randomNumberGenerator.getRandomNumberTillValue(5);
             textViewS2.setText(tempValue.toString());
-            tempValue = currentProblemAnswer + 6;
+            tempValue = currentProblemAnswer + randomNumberGenerator.getRandomNumberTillValue(5);
             textViewS3.setText(tempValue.toString());
         }
 
