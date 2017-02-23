@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.TextView;
 
 import com.capstone.multiplicationwizard.R;
 import com.capstone.multiplicationwizard.model.User;
@@ -30,7 +30,8 @@ public class UsersAdapter extends ArrayAdapter<User> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.child_listitem, parent, false);
         }
         //Lookup view for data population
-        Button btName = (Button) convertView.findViewById(R.id.bt_child_name);
+        TextView btName = (TextView) convertView.findViewById(R.id.tv_child_name);
+        btName.setFocusable(false);
         btName.setText(user.name);
         return convertView;
     }

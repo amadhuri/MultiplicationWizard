@@ -2,6 +2,7 @@ package com.capstone.multiplicationwizard.layout;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.capstone.multiplicationwizard.GameActivity;
 import com.capstone.multiplicationwizard.MainActivity;
 import com.capstone.multiplicationwizard.R;
 import com.capstone.multiplicationwizard.data.MWItemsContract;
@@ -55,6 +57,9 @@ public class NewUserFragment extends Fragment {
                 contentValues.put(MWSQLiteHelper.KEY_USERNAME, tvNewUser.getText().toString());
                 Uri id = mainActivity.getContentResolver().insert(MWItemsContract.USERS_CONTENT_URI,contentValues);
                 Log.e("NewUserFragment","createUSer returned id:"+id);
+                //Launch GameActivity
+                Intent intent = new Intent(mainActivity.getApplicationContext(), GameActivity.class);
+                startActivity(intent);
                 return;
             }
         });

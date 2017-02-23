@@ -37,7 +37,8 @@
                 android:layout_width="@dimen/child_name_bt_width"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/child_list_left_margin"
-                android:id="@+id/childLV">
+                android:id="@+id/childLV"
+                >
             </ListView>
 
             <android.support.design.widget.FloatingActionButton

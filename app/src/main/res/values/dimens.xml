@@ -17,4 +17,24 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="child_name_bt_width">252dp</dimen>
     <dimen name="child_name_bt_height">48dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
+
+    <!-- Levels grid layout -->
+    <dimen name="levels_grid_list_height">364dp</dimen>
+    <dimen name="levels_grid_list_width">269dp</dimen>
+    <dimen name="levels_grid_list_left_margin">46dp</dimen>
+    <dimen name="levels_grid_list_top_margin">138dp</dimen>
+
+    <dimen name="levels_grid_list_item_height">75dp</dimen>
+    <dimen name="levels_grid_list_item_width">75dp</dimen>
+    <dimen name="levels_grid_list_spacing">20dp</dimen>
+
+    <!-- lock dimensions -->
+    <!--ldpi 89dp -> 66.75px
+    mdpi 89dp -> 89 px
+    hdpi 89dp -> 133.5px
+    xhdpi 89dp -> 178px
+    xxhdpi 89dp -> 267px
+    xxxhdpi 89dp ->356px-->
+
 </resources>
