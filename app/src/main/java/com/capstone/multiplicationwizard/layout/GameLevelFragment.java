@@ -12,7 +12,6 @@ import android.widget.GridView;
 
 import com.capstone.multiplicationwizard.R;
 import com.capstone.multiplicationwizard.adapter.GameLevelAdapter;
-import com.capstone.multiplicationwizard.dummy.DummyContent.DummyItem;
 
 import java.util.ArrayList;
 
@@ -110,7 +109,7 @@ public class GameLevelFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+
     }
 
     // Prepare some dummy data for gridview
