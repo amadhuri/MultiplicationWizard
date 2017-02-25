@@ -1,8 +1,8 @@
 package com.capstone.multiplicationwizard;
 
 import android.content.ContentResolver;
-import android.content.Intent;
 import android.database.Cursor;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -13,7 +13,6 @@ import android.util.Log;
 import com.capstone.multiplicationwizard.data.MWItemsContract;
 import com.capstone.multiplicationwizard.data.MWSQLiteHelper;
 import com.capstone.multiplicationwizard.layout.NewUserFragment;
-import com.capstone.multiplicationwizard.layout.SplashFragment;
 import com.capstone.multiplicationwizard.layout.UsersFragment;
 
 public class MainActivity extends AppCompatActivity implements UsersFragment.OnUsersFragmentAddNewUserListener {
@@ -21,44 +20,31 @@ public class MainActivity extends AppCompatActivity implements UsersFragment.OnU
     private Fragment mCurrentFragment = null;
     private ContentResolver mContentResolver = null;
     public MWSQLiteHelper mwDB = null;
+    private static final int SPLASH_SCREEN_DELAY = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        /*currentFragment = attachSplashFragment();*/
         mCurrentFragment = getCurrentFragment();
         mContentResolver = getContentResolver();
         mwDB = new MWSQLiteHelper(getApplicationContext());
-        //final int userCount = mwDB.getUserCount();
 
         final int userCount = getUserCount();
         Log.e("MainActivity", "Usercount:"+userCount);
-        Thread timer= new Thread()
-        {
-            public void run()
-            {
-                try
-                {
-                    //Display for 1 seconds
-                    sleep(1000);
-                }
-                catch (InterruptedException e)
-                {
-                    // TODO: handle exception
-                    e.printStackTrace();
-                }
-                finally
-                {
-                    detachCurrentFragment();
-                    if(userCount > 0)
-                        attachUsersFragment();
-                    else
-                        attachNewUserFragment();
-                }
+        Handler handler = new Handler(getMainLooper());
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                detachCurrentFragment();
+                if(userCount > 0)
+                    attachUsersFragment();
+                else
+                    attachNewUserFragment();
+
             }
-        };
-        timer.start();
+        },SPLASH_SCREEN_DELAY);
+
     }
 
     private int getUserCount() {
