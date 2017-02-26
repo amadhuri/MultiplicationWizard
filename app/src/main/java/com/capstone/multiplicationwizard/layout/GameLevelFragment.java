@@ -1,26 +1,36 @@
 package com.capstone.multiplicationwizard.layout;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
+import android.widget.TextView;
 
+import com.capstone.multiplicationwizard.GameActivity;
 import com.capstone.multiplicationwizard.R;
 import com.capstone.multiplicationwizard.adapter.GameLevelAdapter;
-import com.capstone.multiplicationwizard.dummy.DummyContent.DummyItem;
+import com.capstone.multiplicationwizard.fragment_interface.OnGameFragmentChangeListener;
+import com.capstone.multiplicationwizard.model.User;
+import com.marcoscg.headerdialog.HeaderDialog;
 
 import java.util.ArrayList;
 
 /**
  * A fragment representing a list of Items.
  * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
+ *
  */
 public class GameLevelFragment extends Fragment {
 
@@ -28,10 +38,13 @@ public class GameLevelFragment extends Fragment {
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
     private int mColumnCount = 1;
-    private OnListFragmentInteractionListener mListener;
     private GridView  mGridView = null;
 
     private GameLevelAdapter gameLevelAdapter = null;
+    private User mCurrentUser = null;
+    private OnGameFragmentChangeListener mListener;
+    TextView  tv_child_name = null;
+    TextView tv_child_point = null;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -64,38 +77,73 @@ public class GameLevelFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_game_level, container, false);
         mGridView = (GridView)view.findViewById(R.id.level_grid_list);
-        gameLevelAdapter = new GameLevelAdapter(this.getContext(), R.layout.fragment_game_level_item, getData());
-        mGridView.setAdapter(gameLevelAdapter);
-        // Set the adapter
-        /*if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-            recyclerView.setAdapter(new MyItemRecyclerViewAdapter(DummyContent.ITEMS, mListener));
-        }*/
+        tv_child_name = (TextView)view.findViewById(R.id.tv_levels_child_name);
+        tv_child_point = (TextView)view.findViewById(R.id.tv_levels_child_point);
+
         return view;
     }
-
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        /*if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
+
+
+        if (context instanceof OnGameFragmentChangeListener) {
+            mListener = (OnGameFragmentChangeListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnListFragmentInteractionListener");
-        }*/
+        }
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState){
+        super.onActivityCreated(savedInstanceState);
+        GameActivity activity = (GameActivity)getActivity();
+        mCurrentUser = activity.mCurrentUser;
+        if(mCurrentUser != null) {
+            tv_child_name.setText(mCurrentUser.getUsername());
+            tv_child_point.setText(mCurrentUser.getScore().toString());
+        }
+        gameLevelAdapter = new GameLevelAdapter(this.getContext(), R.layout.fragment_game_level_item, getData());
+        mGridView.setAdapter(gameLevelAdapter);
+        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                Integer selectedLevel = (Integer)adapterView.getAdapter().getItem(i);
+                int titleColor;
+                String titleText = "Level ".concat(selectedLevel.toString());
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    titleColor = getResources().getColor(R.color.colorAccentOrange, getActivity().getTheme());
+                }
+                else {
+                    titleColor = getResources().getColor(R.color.colorAccentOrange);
+                }
+                new HeaderDialog(getActivity())
+                            .setColor(titleColor) // Sets the header background color
+                            .setElevation(false) // Sets the header elevation, true by default
+                            .setTitle(titleText) // Sets the dialog title
+                            .setMessage("Lorem ipsum dolor sit amet...") // Sets the dialog message
+                            .justifyContent(true) // Justifies the message text, false by default
+                            .setTitleColor(Color.parseColor("#FFFFFF")) // Sets the title text color
+                            .setTitleGravity(Gravity.CENTER_HORIZONTAL) // Sets the title text gravity
+                            .setPositiveButton("START", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    mListener.OnGameFragmentChangeListener(R.id.game_level_fragment,mCurrentUser );
+                                }
+                            })
+                            .setNegativeButton("BACK", null)
+                            .show();
+                }
+            });
+
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
     }
 
     /**
@@ -108,17 +156,16 @@ public class GameLevelFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
-    }
+
 
     // Prepare some dummy data for gridview
     private ArrayList<Integer> getData() {
         final ArrayList<Integer> imageItems = new ArrayList<>(12);
-        imageItems.add(1);
-        for (int i = 1; i<12; i++)
-         imageItems.add(0);
+        int curLevel = mCurrentUser.getLevel();
+        for (int i=1; i<=curLevel;i++)
+            imageItems.add(i);
+        for (int i = curLevel+1; i<=12; i++)
+            imageItems.add(0);
 
         return imageItems;
     }

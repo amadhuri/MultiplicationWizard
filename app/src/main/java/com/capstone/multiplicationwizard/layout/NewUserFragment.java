@@ -54,11 +54,18 @@ public class NewUserFragment extends Fragment {
                 MainActivity mainActivity = (MainActivity)getActivity();
                 //long id = mainActivity.mwDB.createUser(newUser);
                 ContentValues contentValues = new ContentValues();
-                contentValues.put(MWSQLiteHelper.KEY_USERNAME, tvNewUser.getText().toString());
+                String newUserName = tvNewUser.getText().toString();
+                contentValues.put(MWSQLiteHelper.KEY_USERNAME, newUserName);
                 Uri id = mainActivity.getContentResolver().insert(MWItemsContract.USERS_CONTENT_URI,contentValues);
                 Log.e("NewUserFragment","createUSer returned id:"+id);
                 //Launch GameActivity
                 Intent intent = new Intent(mainActivity.getApplicationContext(), GameActivity.class);
+                User newUser = new User();
+                newUser.setUsername(newUserName);
+                newUser.setLevel(1);
+                newUser.setScore(0);
+                newUser.setId(id.toString());
+                intent.putExtra("com.capstone.multiplicationwizard.model.user",newUser);
                 startActivity(intent);
                 return;
             }

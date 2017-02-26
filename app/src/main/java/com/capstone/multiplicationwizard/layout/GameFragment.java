@@ -116,6 +116,32 @@ public class GameFragment extends Fragment {
         TextView textViewS2 = (TextView)mRootView.findViewById(R.id.tv_s2);
         TextView textViewS3 = (TextView)mRootView.findViewById(R.id.tv_s3);
         TextView textViewS4 = (TextView)mRootView.findViewById(R.id.tv_s4);
+
+        textViewS1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                answerSlotClickListener(view);
+            }
+        });
+        textViewS2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                answerSlotClickListener(view);
+            }
+        });
+        textViewS3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                answerSlotClickListener(view);
+            }
+        });
+        textViewS4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                answerSlotClickListener(view);
+            }
+        });
+
         if(currentAnswerSlot  == 0) {
             textViewS1.setText(currentProblemAnswer.toString());
             tempValue = currentProblemAnswer + randomNumberGenerator.getRandomNumberTillValue(5);
@@ -168,9 +194,8 @@ public class GameFragment extends Fragment {
         }
         incrementUserProblemNumber();
         loadWidgets();
-
-
     }
+
     private void incrementUserProblemNumber() {
         currentProblemNumber++;
     }

@@ -33,7 +33,7 @@ public class MWSQLiteHelper extends SQLiteOpenHelper {
     private static final String TABLE_USER = "users";
     private static final String TABLE_USER_LEVEL = "user_level";
     // Common column names
-    private static final String KEY_ID = BaseColumns._ID;
+    public static final String KEY_ID = BaseColumns._ID;
     public static final String KEY_CREATED_AT = "created_at";
     // User Table - column names
     public static final String KEY_USERNAME = "username";
@@ -110,8 +110,9 @@ public class MWSQLiteHelper extends SQLiteOpenHelper {
 
         User tu = new User();
 
-        tu.setUser_id(c.getInt(c.getColumnIndex(KEY_ID)));
-        tu.setName(c.getString(c.getColumnIndex(KEY_USERNAME)));
+
+        tu.setId(new Integer(c.getInt(c.getColumnIndex(KEY_ID))).toString());
+        tu.setUsername(c.getString(c.getColumnIndex(KEY_USERNAME)));
         tu.setLevel(c.getInt(c.getColumnIndex(KEY_LEVEL)));
         tu.setScore(c.getInt(c.getColumnIndex(KEY_HIGHSCORE)));
 

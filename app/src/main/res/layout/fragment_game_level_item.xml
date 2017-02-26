@@ -12,14 +12,15 @@
         android:layout_height="@dimen/levels_grid_list_item_width"
         android:src="@drawable/lock"
         />
-    <Button
-        android:id="@+id/btn_level"
+    <TextView
+        android:id="@+id/tv_level"
         android:layout_width="@dimen/levels_grid_list_item_width"
         android:layout_height="@dimen/levels_grid_list_item_width"
         android:background="@color/colorPrimaryDarkOrange"
         android:visibility="gone"
         android:textColor="@android:color/white"
         android:textSize="30sp"
+        android:gravity="center"
         />
 
     <!--<TextView

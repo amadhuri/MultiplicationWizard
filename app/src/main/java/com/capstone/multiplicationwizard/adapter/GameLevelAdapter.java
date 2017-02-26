@@ -8,8 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.capstone.multiplicationwizard.R;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -38,9 +41,9 @@ public class GameLevelAdapter extends ArrayAdapter {
             Integer level = (Integer)data.get(position);
             if(level > 0) {
                 row.findViewById(R.id.iv_lock).setVisibility(View.GONE);
-                Button btn_level = (Button)row.findViewById(R.id.btn_level);
-                btn_level.setVisibility(View.VISIBLE);
-                btn_level.setText(level.toString());
+                TextView tv_level = (TextView)row.findViewById(R.id.tv_level);
+                tv_level.setVisibility(View.VISIBLE);
+                tv_level.setText(level.toString());
             }
         }
         return row;

@@ -48,9 +48,12 @@ public class UsersFragment extends Fragment {
                 String userName = cursor.getString(cursor.getColumnIndex(MWSQLiteHelper.KEY_USERNAME));
                 int level = cursor.getInt(cursor.getColumnIndex(MWSQLiteHelper.KEY_LEVEL));
                 int score = cursor.getInt(cursor.getColumnIndex(MWSQLiteHelper.KEY_HIGHSCORE));
-                User newUser = new User(userName);
+                String user_id = cursor.getString(cursor.getColumnIndex(MWSQLiteHelper.KEY_ID));
+                User newUser = new User();
+                newUser.setUsername(userName);
                 newUser.setScore(score);
                 newUser.setLevel(level);
+                newUser.setId(user_id);
                 adapter.add(newUser);
                 cursor.moveToNext();
             }
@@ -61,7 +64,6 @@ public class UsersFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        String[] mobileArray = {"Pranav","Abhinav"};
         ArrayList<User> arrayOfUsers = new ArrayList<User>();
 
         UsersAdapter adapter = new UsersAdapter(this.getContext(), arrayOfUsers);
@@ -78,9 +80,13 @@ public class UsersFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 //Launch GameActivity
-                Log.e("UserFragment","onItemClick entered");
+
+                User currentUser = (User)adapterView.getAdapter().getItem(i);
                 Intent intent = new Intent(getActivity().getApplicationContext(), GameActivity.class);
+
+                intent.putExtra("com.capstone.multiplicationwizard.model.user",currentUser);
                 startActivity(intent);
+                return;
             }
         });
 
