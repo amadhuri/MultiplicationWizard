@@ -25,6 +25,7 @@ import com.capstone.multiplicationwizard.fragment_interface.OnGameFragmentChange
 import com.capstone.multiplicationwizard.model.User;
 import com.marcoscg.headerdialog.HeaderDialog;
 
+
 import java.util.ArrayList;
 
 /**
@@ -145,18 +146,6 @@ public class GameLevelFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
     }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-
 
     // Prepare some dummy data for gridview
     private ArrayList<Integer> getData() {
