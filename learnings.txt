@@ -1,0 +1,15 @@
+Handler
+-----------
+
+Every main thread or the UI thread  has a message queue. Message queue has all the events to this thread. It can have messages or runnables. We can post a runnable or messasge to this thread using a  Handler to the message queue.
+In the splash screen intially we used a thread and loaded the fragments from the thread context. We later changed that to Handler as we wanted to load the fragments from the UI thread context. 
+
+Handler = new Handler( new Runnable {
+		//Implement the Run method
+
+})
+
+we can also use the postDelayed method to process a message or runnable at a later point of time
+
+
+Runnable is a interface and the thread class implements that method.
