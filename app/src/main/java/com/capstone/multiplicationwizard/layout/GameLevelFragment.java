@@ -1,6 +1,7 @@
 package com.capstone.multiplicationwizard.layout;
 
 import android.annotation.TargetApi;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
 
@@ -122,7 +124,28 @@ public class GameLevelFragment extends Fragment {
                 else {
                     titleColor = getResources().getColor(R.color.colorAccentOrange);
                 }
-                new HeaderDialog(getActivity())
+                // custom dialog
+                final Dialog dialog = new Dialog(getActivity());
+                dialog.setContentView(R.layout.custom_dialog_1);
+                dialog.show();
+
+                Button positiveButton = (Button)dialog.findViewById(R.id.btn_positive_txt);
+                positiveButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                        mListener.OnGameFragmentChangeListener(R.id.game_level_fragment,mCurrentUser );
+                    }
+                });
+                Button negativeButton = (Button)dialog.findViewById(R.id.btn_negative_txt);
+                negativeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+
+                /*new HeaderDialog(getActivity())
                             .setColor(titleColor) // Sets the header background color
                             .setElevation(false) // Sets the header elevation, true by default
                             .setTitle(titleText) // Sets the dialog title
@@ -136,7 +159,7 @@ public class GameLevelFragment extends Fragment {
                                 }
                             })
                             .setNegativeButton("BACK", null)
-                            .show();
+                            .show();*/
                 }
             });
 

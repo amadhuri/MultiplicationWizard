@@ -11,4 +11,7 @@
     <string name="str_result">What is the multiplication result?</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
+
+    <string name="dialog_continue_str">Your score is </string>
+    <string name="dialog_play_again_str">Hey Wizard! Need to score 80pts to level up. Try again!"</string>
 </resources>

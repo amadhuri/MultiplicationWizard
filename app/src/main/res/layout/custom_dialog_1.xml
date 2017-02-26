@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="280dp"
+    android:layout_height="match_parent"
+   >
+
+    <TextView
+        android:layout_width="280dp"
+        android:layout_height="40dp"
+        android:background="@color/colorPrimaryDarkOrange"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/iv_level_circle"
+        android:textColor="@android:color/white"
+        android:text="Level 1"
+        android:textSize="25sp"
+        android:gravity="center"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/zero"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/iv_level_star_img"
+        android:layout_below="@id/iv_level_circle"/>
+    <TextView
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_cont_str"
+        android:text="@string/dialog_continue_str"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="18sp"
+        android:layout_margin="20dp"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_horizontal"
+        android:layout_below="@id/iv_level_star_img"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_positive_txt"
+        android:layout_below="@id/tv_cont_str"
+        android:textColor="@color/colorPrimaryDarkOrange"
+        android:background="@android:color/white"
+        android:text="Start"
+        android:layout_alignParentRight="true"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_negative_txt"
+        android:layout_below="@id/tv_cont_str"
+        android:textColor="@color/colorPrimaryDarkOrange"
+        android:background="@android:color/white"
+        android:text="Back"
+        android:layout_centerHorizontal="true"/>
+</RelativeLayout>
