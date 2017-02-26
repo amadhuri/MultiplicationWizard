@@ -29,6 +29,12 @@
     <dimen name="levels_grid_list_item_width">75dp</dimen>
     <dimen name="levels_grid_list_spacing">20dp</dimen>
 
+    <!--
+Refer to App Widget Documentation for margin information
+http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
+    -->
+    <dimen name="widget_margin">8dp</dimen>
+
     <!-- lock dimensions -->
     <!--ldpi 89dp -> 66.75px
     mdpi 89dp -> 89 px

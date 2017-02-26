@@ -10,23 +10,33 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppThemeBlue">
-
-        <activity android:name=".GameActivity"
-            android:theme="@style/AppThemeOrange">
-
-        </activity>
-        <activity android:name=".MainActivity"
-            android:windowSoftInputMode="adjustResize"
-            android:theme="@style/AppThemeBlue">
+        <activity
+            android:name=".GameActivity"
+            android:theme="@style/AppThemeOrange"></activity>
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/AppThemeBlue"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <provider
             android:name=".data.MWContentProvider"
             android:authorities="com.capstone.multiplicationwizard.MWItems" />
+
+        <receiver android:name=".MultiplicationWizardAppProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/multiplication_wizard_app_provider_info" />
+        </receiver>
     </application>
 
 </manifest>
