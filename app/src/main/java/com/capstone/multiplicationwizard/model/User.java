@@ -4,20 +4,23 @@ import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+
 /**
  * Created by Madhuri on 2/16/2017.
  */
 public class User implements Parcelable {
     public Uri user_id;
     public String name;
-    public Integer level;
-    public Integer score;
+    public Integer maxLevel;
+    public Integer highScore;
+    public ArrayList<LevelScores> levelScores;
 
     public User() {
         this.user_id = Uri.EMPTY;
         this.name = null;
-        this.level = 1;
-        this.score = 0;
+        this.maxLevel = 1;
+        this.highScore = 0;
     }
 
     /**
@@ -28,8 +31,8 @@ public class User implements Parcelable {
     public User(Parcel in) {
         this.user_id = Uri.parse(in.readString());
         this.name = in.readString();
-        this.level = in.readInt();
-        this.score = in.readInt();
+        this.maxLevel = in.readInt();
+        this.highScore = in.readInt();
     }
 
     @Override
@@ -41,8 +44,10 @@ public class User implements Parcelable {
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(user_id.toString());
         parcel.writeString(name);
-        parcel.writeInt(level);
-        parcel.writeInt(score);
+        parcel.writeInt(maxLevel);
+        parcel.writeInt(highScore);
+        //parcel.writeInt(curLevel);
+        //parcel.writeInt(curScore);
     }
 
     /**
@@ -79,20 +84,38 @@ public class User implements Parcelable {
         this.name = username;
     }
 
-    public Integer getLevel() {
-        return this.level;
+    public Integer getMaxLevel() {
+        return this.maxLevel;
     }
 
-    public Integer getScore() {
-        return this.score;
+    public Integer getHighScore() {
+        return this.highScore;
     }
 
-    public void setLevel(int level) {
-        level = new Integer(level);
+    public void setMaxLevel(int level) {
+        maxLevel = new Integer(level);
     }
 
-    public void setScore(int score) {
-        score = new Integer(score);
+    public void setHighScore(int score) {
+        highScore = new Integer(score);
     }
 
+
+    public class LevelScores {
+        public Integer curLevel;
+        public Integer curScore;
+
+        public LevelScores(int level, int score) {
+            this.curLevel = level;
+            this.curScore = score;
+        }
+
+        public Integer getCurLevel() { return curLevel;}
+
+        public void setCurLevel(int curLevel) {curLevel = new Integer(curLevel);}
+
+        public Integer getCurScore() { return curScore;}
+
+        public void setCurScore(int score) { curScore = new Integer(curScore);}
+    }
 }

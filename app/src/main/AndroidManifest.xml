@@ -12,11 +12,13 @@
         android:theme="@style/AppThemeBlue">
         <activity
             android:name=".GameActivity"
-            android:theme="@style/AppThemeOrange"></activity>
+            android:theme="@style/AppThemeOrange"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".MainActivity"
             android:theme="@style/AppThemeBlue"
-            android:windowSoftInputMode="adjustResize">
+            android:windowSoftInputMode="adjustResize"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

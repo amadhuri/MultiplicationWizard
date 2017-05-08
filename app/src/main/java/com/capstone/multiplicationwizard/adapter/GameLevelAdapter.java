@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -19,17 +20,33 @@ import java.util.ArrayList;
 /**
  * Created by Madhuri on 2/22/2017.
  */
-public class GameLevelAdapter extends ArrayAdapter {
+public class GameLevelAdapter extends BaseAdapter {
     private Context context;
     private int layoutResourceId;
     private ArrayList data;
 
     public GameLevelAdapter(Context context, int layoutResourceId, ArrayList data) {
-        super(context, layoutResourceId, data);
+        //super(context, layoutResourceId);
         this.layoutResourceId = layoutResourceId;
         this.context = context;
         this.data = data;
     }
+
+    @Override
+    public int getCount() {
+        return data.size();
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return data.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View row = convertView;
@@ -39,11 +56,12 @@ public class GameLevelAdapter extends ArrayAdapter {
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
             row = inflater.inflate(layoutResourceId, parent, false);
             Integer level = (Integer)data.get(position);
-            if(level > 0) {
+            if(level > 0)
+            {
                 row.findViewById(R.id.iv_lock).setVisibility(View.GONE);
                 TextView tv_level = (TextView)row.findViewById(R.id.tv_level);
                 tv_level.setVisibility(View.VISIBLE);
-                tv_level.setText(level.toString());
+                tv_level.setText(""+(position+1));
             }
         }
         return row;

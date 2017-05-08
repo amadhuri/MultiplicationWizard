@@ -1,22 +1,16 @@
 package com.capstone.multiplicationwizard.data;
 
-import android.annotation.TargetApi;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.icu.text.SimpleDateFormat;
-import android.os.Build;
 import android.provider.BaseColumns;
 import android.util.Log;
 
 import com.capstone.multiplicationwizard.model.User;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
 
 /**
  * Created by Madhuri on 2/16/2017.
@@ -95,28 +89,17 @@ public class MWSQLiteHelper extends SQLiteOpenHelper {
         return id;
     }
 
-    public User getUser(long user_id) {
+    public Cursor getUser(String user_id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String selectQuery = "SELECT  * FROM " + TABLE_USER + " WHERE "
+        String selectQuery = "SELECT  * FROM " + TABLE_USER_LEVEL + " WHERE "
                 + KEY_ID + " = " + user_id;
 
         Log.e(LOG_TAG, selectQuery);
 
         Cursor c = db.rawQuery(selectQuery, null);
 
-        if (c != null)
-            c.moveToFirst();
-
-        User tu = new User();
-
-
-        tu.setId(new Integer(c.getInt(c.getColumnIndex(KEY_ID))).toString());
-        tu.setUsername(c.getString(c.getColumnIndex(KEY_USERNAME)));
-        tu.setLevel(c.getInt(c.getColumnIndex(KEY_LEVEL)));
-        tu.setScore(c.getInt(c.getColumnIndex(KEY_HIGHSCORE)));
-
-        return tu;
+        return c;
     }
 
     //getting all users
@@ -133,8 +116,8 @@ public class MWSQLiteHelper extends SQLiteOpenHelper {
                 User tu = new User();
                 tu.setUser_id(c.getInt(c.getColumnIndex(KEY_ID)));
                 tu.setName(c.getString(c.getColumnIndex(KEY_USERNAME)));
-                tu.setLevel(c.getInt(c.getColumnIndex(KEY_LEVEL)));
-                tu.setScore(c.getInt(c.getColumnIndex(KEY_HIGHSCORE)));
+                tu.setMaxLevel(c.getInt(c.getColumnIndex(KEY_LEVEL)));
+                tu.setHighScore(c.getInt(c.getColumnIndex(KEY_HIGHSCORE)));
 
                 // adding to todo list
                 allUsers.add(tu);
@@ -163,6 +146,18 @@ public class MWSQLiteHelper extends SQLiteOpenHelper {
 
         // return count
         return count;
+    }
+
+    /**
+     * update user table
+     */
+    public int updateUser(String id, ContentValues values, String selection, String[] selectionArgs) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        int rowsUpdated = db.update(TABLE_USER,
+                            values,
+                            selection,
+                            selectionArgs);
+        return rowsUpdated;
     }
 
     // closing database

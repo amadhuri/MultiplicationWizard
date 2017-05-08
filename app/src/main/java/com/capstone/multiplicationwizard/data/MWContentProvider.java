@@ -47,6 +47,8 @@ public class MWContentProvider extends ContentProvider {
         switch(sURIMatcher.match(uri)) {
             case USERS:
                 return mHelper.getAllUsers();
+            case USER_LEVELS:
+                return mHelper.getUser(strings1[0]);
             default:
                 throw new IllegalArgumentException("Unsupported URI:"+uri);
         }
@@ -97,7 +99,13 @@ public class MWContentProvider extends ContentProvider {
 
     @Override
     public int update(Uri uri, ContentValues contentValues, String s, String[] strings) {
-        return 0;
+        if (sURIMatcher.match(uri) == USER_ID) {
+            String id = uri.getLastPathSegment();
+            int rowsUpdated = mHelper.updateUser(id, contentValues,s, strings);
+            return rowsUpdated;
+        } else { //TODO USERS_LEVELS
+            return 0;
+        }
     }
 
     /**

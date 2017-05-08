@@ -12,6 +12,7 @@ import android.util.Log;
 
 import com.capstone.multiplicationwizard.data.MWItemsContract;
 import com.capstone.multiplicationwizard.data.MWSQLiteHelper;
+import com.capstone.multiplicationwizard.data.MWSQLiteHelperNew;
 import com.capstone.multiplicationwizard.layout.NewUserFragment;
 import com.capstone.multiplicationwizard.layout.UsersFragment;
 
@@ -19,7 +20,7 @@ public class MainActivity extends AppCompatActivity implements UsersFragment.OnU
 
     private Fragment mCurrentFragment = null;
     private ContentResolver mContentResolver = null;
-    public MWSQLiteHelper mwDB = null;
+    public MWSQLiteHelperNew mwDB = null;
     private static final int SPLASH_SCREEN_DELAY = 100;
 
     @Override
@@ -28,9 +29,9 @@ public class MainActivity extends AppCompatActivity implements UsersFragment.OnU
         setContentView(R.layout.activity_main);
         mCurrentFragment = getCurrentFragment();
         mContentResolver = getContentResolver();
-        mwDB = new MWSQLiteHelper(getApplicationContext());
+        mwDB = new MWSQLiteHelperNew(getApplicationContext());
 
-        final int userCount = getUserCount();
+        final int userCount = mwDB.getUsers().size();
         Log.e("MainActivity", "Usercount:"+userCount);
         Handler handler = new Handler(getMainLooper());
         handler.postDelayed(new Runnable() {
@@ -76,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements UsersFragment.OnU
         //fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         NewUserFragment fragment = new NewUserFragment();
         fragmentTransaction.add(R.id.fragmentParentViewGroup, fragment);
-        fragmentTransaction.commit();
+        fragmentTransaction.commitAllowingStateLoss();;
         mCurrentFragment = (Fragment)fragment;
         return;
     }
@@ -88,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements UsersFragment.OnU
         //fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         UsersFragment fragment = new UsersFragment();
         fragmentTransaction.add(R.id.fragmentParentViewGroup, fragment);
-        fragmentTransaction.commit();
+        fragmentTransaction.commitAllowingStateLoss();
         mCurrentFragment = (Fragment)fragment;
         return;
     }

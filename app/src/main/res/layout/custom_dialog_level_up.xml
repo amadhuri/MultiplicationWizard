@@ -4,62 +4,46 @@
     android:orientation="vertical"
     android:layout_width="280dp"
     android:layout_height="match_parent"
-   >
+    >
 
-    <TextView
-        android:layout_width="280dp"
-        android:layout_height="40dp"
-        android:background="@color/colorPrimaryDarkOrange"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/iv_level_circle"
-        android:textColor="@android:color/white"
-        android:text="Level 1"
-        android:textSize="25sp"
-
-        android:gravity="center"/>
-
-
-    <!--
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/zero"
+        android:layout_width="@dimen/level_up_dialog_arrow_img_width"
+        android:layout_height="@dimen/level_up_dialog_arrow_img_height"
+        android:src="@drawable/level_up"
         android:layout_centerHorizontal="true"
-        android:id="@+id/iv_level_star_img"
-        android:visibility="gone"
-        android:layout_below="@id/iv_level_circle"/>
-        -->
-
-
-    <RatingBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/iv_level_circle"
-        android:isIndicator="true"
-        android:id="@+id/iv_level_star_img" />
-
+        android:id="@+id/iv_level_up_img"
+       />
     <TextView
         android:layout_width="280dp"
         android:layout_height="wrap_content"
-        android:id="@+id/tv_cont_str"
-        android:text="@string/dialog_continue_str"
-        android:textColor="@android:color/darker_gray"
-        android:textSize="18sp"
-        android:layout_margin="20dp"
+        android:id="@+id/tv_level_up_str"
+        android:text="@string/dialog_level_up_str"
+        android:textColor="@android:color/black"
+        android:textSize="24sp"
         android:layout_centerHorizontal="true"
         android:gravity="center_horizontal"
-        android:layout_below="@id/iv_level_star_img"/>
+        android:layout_below="@id/iv_level_up_img"/>
+    <TextView
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_level_score"
+        android:text="+80pt"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_horizontal"
+        android:layout_below="@id/tv_level_up_str"/>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/btn_positive_txt"
-        android:layout_below="@id/tv_cont_str"
+        android:layout_below="@id/tv_level_score"
         android:textColor="@color/colorPrimaryDarkOrange"
         android:background="@android:color/white"
-        android:text="Start"
+        android:text="Continue"
         android:layout_alignParentRight="true"/>
 
-    <Button
+    <!--<Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/btn_negative_txt"
@@ -67,5 +51,5 @@
         android:textColor="@color/colorPrimaryDarkOrange"
         android:background="@android:color/white"
         android:text="Back"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"/>-->
 </RelativeLayout>

@@ -43,4 +43,8 @@ http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
     xxhdpi 89dp -> 267px
     xxxhdpi 89dp ->356px-->
 
+    <!--level up custom dialog -->
+    <dimen name="level_up_dialog_arrow_img_width">150dp</dimen>
+    <dimen name="level_up_dialog_arrow_img_height">150dp</dimen>
+
 </resources>

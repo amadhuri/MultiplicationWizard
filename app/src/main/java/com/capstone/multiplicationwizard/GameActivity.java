@@ -21,7 +21,7 @@ import com.capstone.multiplicationwizard.utils.RandomNumberGenerator;
 import java.util.ArrayList;
 
 public class GameActivity extends AppCompatActivity implements OnGameFragmentChangeListener{
-    private Fragment mCurrentFragment = null;
+    public Fragment mCurrentFragment = null;
     public User mCurrentUser = null;
 
 
@@ -50,7 +50,8 @@ public class GameActivity extends AppCompatActivity implements OnGameFragmentCha
         fragmentTransaction.setCustomAnimations(R.anim.slide_up,0,0, 0);
         if (curFragment == R.id.game_level_fragment) {
             //Navigate from game level fragment to Game fragment
-            GameFragment newFragment = new GameFragment();;
+            GameFragment newFragment = new GameFragment();
+            newFragment.setCurrentUser(mCurrentUser);
             fragmentTransaction.add(R.id.fragmentParentViewGroup, newFragment);
             mCurrentFragment = (Fragment)newFragment;
         } else {
