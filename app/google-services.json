@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "428935510706",
+    "firebase_url": "https://my-projects-7d489.firebaseio.com",
+    "project_id": "my-projects-7d489",
+    "storage_bucket": "my-projects-7d489.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:428935510706:android:3427fe8cebdd0f01",
+        "android_client_info": {
+          "package_name": "com.capstone.multiplicationwizard"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "428935510706-7bagc9p4tvpbf27dhic1sn6ogkcem1q3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMNhiRLdACCPBHbzl7YIxfcdZrCBAfGK0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
