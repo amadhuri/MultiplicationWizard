@@ -15,6 +15,10 @@ import com.capstone.multiplicationwizard.data.MWSQLiteHelper;
 import com.capstone.multiplicationwizard.data.MWSQLiteHelperNew;
 import com.capstone.multiplicationwizard.layout.NewUserFragment;
 import com.capstone.multiplicationwizard.layout.UsersFragment;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+
 
 public class MainActivity extends AppCompatActivity implements UsersFragment.OnUsersFragmentAddNewUserListener {
 
@@ -22,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements UsersFragment.OnU
     private ContentResolver mContentResolver = null;
     public MWSQLiteHelperNew mwDB = null;
     private static final int SPLASH_SCREEN_DELAY = 100;
+    private InterstitialAd mInterstitialAd = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,19 +38,32 @@ public class MainActivity extends AppCompatActivity implements UsersFragment.OnU
 
         final int userCount = mwDB.getUsers().size();
         Log.e("MainActivity", "Usercount:"+userCount);
-        Handler handler = new Handler(getMainLooper());
-        handler.postDelayed(new Runnable() {
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId(getResources().getString(R.string.banner_ad_unit_id));
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .build();
+        mInterstitialAd.loadAd(adRequest);
+        mInterstitialAd.setAdListener(new AdListener() {
             @Override
-            public void run() {
+            public void onAdClosed() {
                 detachCurrentFragment();
                 if(userCount > 0)
                     attachUsersFragment();
                 else
                     attachNewUserFragment();
+            }
+        });
+        Handler handler = new Handler(getMainLooper());
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (mInterstitialAd.isLoaded()) {
+                    mInterstitialAd.show();
+                }
 
             }
         },SPLASH_SCREEN_DELAY);
-
     }
 
     private int getUserCount() {

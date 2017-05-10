@@ -15,4 +15,5 @@
     <string name="dialog_continue_str">Your score is </string>
     <string name="dialog_play_again_str">Hey Wizard! Need to score 80pts to level up. Try again!"</string>
     <string name="dialog_level_up_str">Level Up!</string>
+    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/1033173712</string>
 </resources>
