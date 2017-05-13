@@ -14,7 +14,7 @@ import com.capstone.multiplicationwizard.model.User;
 import java.util.ArrayList;
 
 /**
- * Created by dhirajninave on 05/04/17.
+ * Created by Madhuri on 05/04/17.
  */
 public class MWSQLiteHelperNew extends SQLiteOpenHelper
 {

@@ -31,6 +31,9 @@ import com.capstone.multiplicationwizard.model.Scores;
 import com.capstone.multiplicationwizard.model.User;
 import com.capstone.multiplicationwizard.fragment_interface.OnGameFragmentChangeListener;
 import com.capstone.multiplicationwizard.utils.RandomNumberGenerator;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 
 import java.util.ArrayList;
 
@@ -59,12 +62,15 @@ public class GameFragment extends Fragment {
     private User mCurrentUser = null;
     private final int levelUpScore = 20;
     private final int gameEndProblemNumber = 5;
+    private InterstitialAd mInterstitialAd = null;
 
     MWSQLiteHelperNew helperNew;
 
 
     public GameFragment() {
+
         // Required empty public constructor
+
     }
 
 
@@ -82,7 +88,12 @@ public class GameFragment extends Fragment {
 
         context = getActivity().getApplicationContext();
         vib = (Vibrator)context.getSystemService(context.VIBRATOR_SERVICE);
-
+        mInterstitialAd = new InterstitialAd(context);
+        mInterstitialAd.setAdUnitId(getResources().getString(R.string.banner_ad_unit_id));
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .build();
+        mInterstitialAd.loadAd(adRequest);
         mediaPlayer = MediaPlayer.create(context,R.raw.clap);
         randomNumberGenerator= new RandomNumberGenerator();
 
@@ -106,6 +117,7 @@ public class GameFragment extends Fragment {
 
         super.onAttach(context);
 
+
         /*if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
@@ -124,8 +136,11 @@ public class GameFragment extends Fragment {
     public void onResume() {
         super.onResume();
         loadWidgets();
+
+
     }
     private void loadWidgets() {
+
         currentProblemNumber = getUserProblemNumber();
         userLevel = getUserGameLevel();
         userCurrentLevelScore = getUserCurrentLevelScore();
@@ -313,16 +328,23 @@ public class GameFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 dialog.dismiss();
-
-                Intent intent = new Intent(getActivity().getApplicationContext(), GameActivity.class);
-                intent.putExtra("com.capstone.multiplicationwizard.model.user",mCurrentUser);
-                startActivity(intent);
-                getActivity().onBackPressed();
+                if(mInterstitialAd.isLoaded()) {
+                    mInterstitialAd.show();
+                }
+                mInterstitialAd.setAdListener(new AdListener() {
+                    @Override
+                    public void onAdClosed() {
+                        super.onAdClosed();
+                        Intent intent = new Intent(getActivity().getApplicationContext(), GameActivity.class);
+                        intent.putExtra("com.capstone.multiplicationwizard.model.user",mCurrentUser);
+                        startActivity(intent);
+                        //getActivity().onBackPressed();
+                    }
+                });
 
             }
         });
         dialog.show();
-
     }
 
     private void showContinueDialog(){

@@ -1,7 +1,7 @@
 package com.capstone.multiplicationwizard.model;
 
 /**
- * Created by dhirajninave on 05/04/17.
+ * Created by Madhuri on 05/04/17.
  */
 public class Scores {
 

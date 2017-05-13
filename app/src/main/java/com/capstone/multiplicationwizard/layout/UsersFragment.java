@@ -107,17 +107,15 @@ public class UsersFragment extends Fragment {
 
         final ListView childListView = (ListView) mRootView.findViewById(R.id.childLV);
 
-       childListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
+        childListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                //Launch GameActivity
-
                 User currentUser = (User)adapterView.getAdapter().getItem(i);
                 Intent intent = new Intent(getActivity().getApplicationContext(), GameActivity.class);
                 intent.putExtra("com.capstone.multiplicationwizard.model.user",currentUser);
                 startActivity(intent);
                 return;
+
             }
         });
 
