@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.capstone.multiplicationwizard.BuildConfig;
 import com.capstone.multiplicationwizard.GameActivity;
 import com.capstone.multiplicationwizard.R;
 import com.capstone.multiplicationwizard.data.MWItemsContract;
@@ -328,19 +329,27 @@ public class GameFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 dialog.dismiss();
-                if(mInterstitialAd.isLoaded()) {
-                    mInterstitialAd.show();
-                }
-                mInterstitialAd.setAdListener(new AdListener() {
-                    @Override
-                    public void onAdClosed() {
-                        super.onAdClosed();
-                        Intent intent = new Intent(getActivity().getApplicationContext(), GameActivity.class);
-                        intent.putExtra("com.capstone.multiplicationwizard.model.user",mCurrentUser);
-                        startActivity(intent);
-                        //getActivity().onBackPressed();
+                if(BuildConfig.FLAVOR.equals("demo")) {
+                    if (mInterstitialAd.isLoaded()) {
+                        mInterstitialAd.show();
                     }
-                });
+                    mInterstitialAd.setAdListener(new AdListener() {
+                        @Override
+                        public void onAdClosed() {
+                            super.onAdClosed();
+                            Intent intent = new Intent(getActivity().getApplicationContext(), GameActivity.class);
+                            intent.putExtra("com.capstone.multiplicationwizard.model.user", mCurrentUser);
+                            startActivity(intent);
+
+                        }
+                    });
+                }
+                else {
+                    Intent intent = new Intent(getActivity().getApplicationContext(), GameActivity.class);
+                    intent.putExtra("com.capstone.multiplicationwizard.model.user", mCurrentUser);
+                    startActivity(intent);
+                    getActivity().onBackPressed();
+                }
 
             }
         });
