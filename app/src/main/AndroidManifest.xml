@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.capstone.multiplicationwizard">
+    package="com.capstone.multiplicationwizard" >
 
     <!-- Include required permissions for Google Mobile Ads to run -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -12,7 +12,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppThemeBlue">
+        android:theme="@style/AppThemeBlue" >
         <activity
             android:name=".GameActivity"
             android:screenOrientation="portrait"
@@ -21,7 +21,7 @@
             android:name=".MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeBlue"
-            android:windowSoftInputMode="adjustResize">
+            android:windowSoftInputMode="adjustResize" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -33,7 +33,7 @@
             android:name=".data.MWContentProvider"
             android:authorities="com.capstone.multiplicationwizard.MWItems" />
 
-        <receiver android:name=".MultiplicationWizardAppProvider">
+        <receiver android:name=".MultiplicationWizardAppProvider" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -46,7 +46,9 @@
         <service
             android:name=".WidgetService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true"
+            android:permission="android.permission.BIND_REMOTEVIEWS">
+        </service>
     </application>
 
 </manifest>
