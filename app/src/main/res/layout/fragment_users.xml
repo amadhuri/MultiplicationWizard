@@ -36,7 +36,7 @@
             <ListView
                 android:layout_width="@dimen/child_name_bt_width"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/child_list_left_margin"
+                android:layout_marginStart="@dimen/child_list_left_margin"
                 android:id="@+id/childLV"
                 >
             </ListView>

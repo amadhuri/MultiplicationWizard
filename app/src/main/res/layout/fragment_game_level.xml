@@ -38,6 +38,7 @@
             android:layout_height="match_parent"
             android:background="?attr/colorPrimary"
             android:layout_below="@id/level_grid_list"
+            android:supportsRtl="true"
             android:layout_margin="@dimen/activity_horizontal_margin">
             <TextView
                 android:layout_width="match_parent"
@@ -46,6 +47,7 @@
                 android:id="@+id/tv_levels_child_name"
                 android:textColor="@color/colorPrimaryDarkOrange"
                 android:textSize="20sp"
+                android:layout_alignParentStart="true"
                 android:text="Child name"
                 android:background="@color/colorLightOrange"
                 />
@@ -55,6 +57,7 @@
                 android:id="@+id/tv_levels_child_point"
                 android:textColor="@color/colorPrimaryDarkOrange"
                 android:textSize="18sp"
+                android:layout_alignParentStart="true"
                 android:text="Child point"
                 android:layout_below="@id/tv_levels_child_name"
                 android:background="@color/colorLightOrange"/>
