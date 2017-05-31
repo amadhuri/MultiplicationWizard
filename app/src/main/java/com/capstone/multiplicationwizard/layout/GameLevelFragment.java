@@ -110,7 +110,8 @@ public class GameLevelFragment extends Fragment {
         mCurrentUser = activity.mCurrentUser;
         if(mCurrentUser != null) {
             tv_child_name.setText(mCurrentUser.getUsername());
-            tv_child_point.setText(""+helperNew.allScore(mCurrentUser.getUserId()));
+            Integer score = helperNew.allScore(mCurrentUser.getUserId());
+            tv_child_point.setText(score.toString());
         }
         gameLevelAdapter = new GameLevelAdapter(this.getContext(), R.layout.fragment_game_level_item, getData());
         mGridView.setAdapter(gameLevelAdapter);
