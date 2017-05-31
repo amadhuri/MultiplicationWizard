@@ -47,6 +47,7 @@
                 android:id="@+id/tv_levels_child_name"
                 android:textColor="@color/colorPrimaryDarkOrange"
                 android:textSize="20sp"
+                android:textAlignment="viewStart"
                 android:layout_alignParentStart="true"
                 android:text="Child name"
                 android:background="@color/colorLightOrange"
@@ -59,6 +60,7 @@
                 android:textSize="18sp"
                 android:layout_alignParentStart="true"
                 android:text="Child point"
+                android:textAlignment="viewStart"
                 android:layout_below="@id/tv_levels_child_name"
                 android:background="@color/colorLightOrange"/>
     </RelativeLayout>
