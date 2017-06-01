@@ -99,7 +99,7 @@ public class GameFragment extends Fragment {
         randomNumberGenerator= new RandomNumberGenerator();
 
         try {
-            mediaPlayer.prepare();
+            mediaPlayer.prepareAsync();
         }catch(Exception e) {
             e.printStackTrace();
         }

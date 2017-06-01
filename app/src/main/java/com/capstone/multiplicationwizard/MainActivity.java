@@ -18,6 +18,8 @@ import com.capstone.multiplicationwizard.layout.UsersFragment;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
+import com.morsebyte.shailesh.twostagerating.FeedbackReceivedListener;
+import com.morsebyte.shailesh.twostagerating.TwoStageRate;
 
 
 public class MainActivity extends AppCompatActivity implements UsersFragment.OnUsersFragmentAddNewUserListener {
@@ -26,6 +28,48 @@ public class MainActivity extends AppCompatActivity implements UsersFragment.OnU
     private ContentResolver mContentResolver = null;
     public MWSQLiteHelperNew mwDB = null;
     private static final int SPLASH_SCREEN_DELAY = 100;
+    private static final String TAG = MainActivity.class.getName();
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.e("MainActivity","onResume called");
+        TwoStageRate twoStageRate = TwoStageRate.with(this);
+        twoStageRate.settings.setLaunchTimes(100);
+        twoStageRate.resetOnDismiss(true).resetOnFeedBackDeclined(true).resetOnRatingDeclined(false);
+       // twoStageRate.showIfMeetsConditions();
+        twoStageRate.showRatePromptDialog();
+        twoStageRate.setFeedbackReceivedListener(new FeedbackReceivedListener() {
+            @Override
+            public void onFeedbackReceived(String feedback) {
+                Log.v(TAG,"onFeedback Received");
+            }
+        });
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        Log.e("MainActivity","OnPause called");
+    }
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        Log.e("MainActivity", "onDestroy called");
+    }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        Log.e("MainActivity","onStart called");
+    }
+
+    @Override
+    protected void onStop(){
+        super.onStop();
+        Log.e("MainActivity","onStop called");
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements UsersFragment.OnU
         mwDB = new MWSQLiteHelperNew(getApplicationContext());
 
         final int userCount = mwDB.getUsers().size();
-        Log.e("MainActivity", "Usercount:"+userCount);
+        Log.e("MainActivity", "onCreate Usercount:"+userCount);
         Handler handler = new Handler(getMainLooper());
         handler.postDelayed(new Runnable() {
             @Override
@@ -49,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements UsersFragment.OnU
 
             }
         },SPLASH_SCREEN_DELAY);
+
     }
 
     private int getUserCount() {
