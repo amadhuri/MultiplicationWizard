@@ -27,10 +27,11 @@ public class UsersFragment extends Fragment {
 
     View mRootView = null;
     Cursor mCursor = null;
+    UsersAdapter usersAdapter;
 
     private OnUsersFragmentAddNewUserListener mListener = null;
-    MWSQLiteHelperNew helperNew;
     public UsersFragment() {
+
     }
 
 
@@ -44,69 +45,37 @@ public class UsersFragment extends Fragment {
     {
 
         ArrayList<User> arr_users = new ArrayList<>();
-        arr_users = helperNew.getUsers();
+        Cursor cursor = getActivity().getContentResolver().query(MWItemsContract.USERS_CONTENT_URI,
+                            null,null,null,null,null);
+
+        if(cursor == null) {
+            return;
+        }
+        cursor.moveToFirst();
+        for(int i =0; i < cursor.getCount(); i++) {
+            User user = new User();
+            String username = cursor.getString(cursor.getColumnIndex("username"));
+            Integer id = cursor.getInt(cursor.getColumnIndex("ID"));
+            user.setUsername(username);
+            user.setId(id.toString());
+            cursor.moveToNext();
+        }
+        cursor.close();
 
         for (User u:arr_users)
         {
             adapter.add(u);
         }
-
-       /* Cursor cursor = getActivity().getContentResolver().query(MWItemsContract.USERS_CONTENT_URI, null, null, null, null);
-        if (cursor != null) {
-            cursor.moveToFirst();
-            while (!cursor.isAfterLast()) {
-                String userName = cursor.getString(cursor.getColumnIndex(MWSQLiteHelper.KEY_USERNAME));
-                int level = cursor.getInt(cursor.getColumnIndex(MWSQLiteHelper.KEY_LEVEL));
-                int score = cursor.getInt(cursor.getColumnIndex(MWSQLiteHelper.KEY_HIGHSCORE));
-                String user_id = cursor.getString(cursor.getColumnIndex(MWSQLiteHelper.KEY_ID));
-                User newUser = new User();
-                setUserLevelScores(user_id, newUser);
-                newUser.setUsername(userName);
-                newUser.setHighScore(score);
-                newUser.setMaxLevel(level);
-                newUser.setId(user_id);
-                adapter.add(newUser);
-                cursor.moveToNext();
-            }
-            cursor.close();
-        }
-        */
     }
 
-    private void setUserLevelScores(String userId, User newUser) {
-
-        String mSelectionClause = MWSQLiteHelper.KEY_ID + " = ?";
-        String[] mSelectionArgs = {""};
-        mSelectionArgs[0] = userId;
-        Cursor cursor = getActivity().getContentResolver().query(MWItemsContract.USER_LEVEL_CONTENT_URI,null,mSelectionClause,mSelectionArgs,null);
-        if (cursor != null) {
-            int count = cursor.getCount();
-            newUser.levelScores = new ArrayList<User.LevelScores>(count);
-            cursor.moveToFirst();
-            while (!cursor.isAfterLast()) {
-                int level = cursor.getInt(cursor.getColumnIndex(MWSQLiteHelper.KEY_LEVEL));
-                int score = cursor.getInt(cursor.getColumnIndex(MWSQLiteHelper.KEY_HIGHSCORE));
-            }
-
-        }
-    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        ArrayList<User> arrayOfUsers = new ArrayList<User>();
-
-        UsersAdapter adapter = new UsersAdapter(this.getContext(), arrayOfUsers);
-        /*for(String name:mobileArray) {
-            User newUser = new User(name);
-            adapter.add(newUser);
-        }*/
-        helperNew = new MWSQLiteHelperNew(getActivity());
-        setUserAdapterItems(adapter);
+        setUserAdapterItems(usersAdapter);
         mRootView = inflater.inflate(R.layout.fragment_users, container, false);
-
         final ListView childListView = (ListView) mRootView.findViewById(R.id.childLV);
-
+        childListView.setAdapter(usersAdapter);
         childListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -124,13 +93,10 @@ public class UsersFragment extends Fragment {
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
 
                 User currentUser = (User)adapterView.getAdapter().getItem(i);
-
+                getActivity().getContentResolver().delete(MWItemsContract.USERS_CONTENT_URI)
                 int del = helperNew.deleteUser(currentUser.getUserId());
                 if(del > 0) {
-                    ArrayList<User> arrayOfUsers = new ArrayList<User>();
-                    UsersAdapter adapter = new UsersAdapter(getActivity(), arrayOfUsers);
-                    setUserAdapterItems(adapter);
-                    childListView.setAdapter(adapter);
+                    usersAdapter.notifyDataSetChanged();
                 }
                 else
                 {
@@ -140,7 +106,6 @@ public class UsersFragment extends Fragment {
             }
         });
 
-        childListView.setAdapter(adapter);
 
         FloatingActionButton addFab = (FloatingActionButton) mRootView.findViewById(R.id.add_users_fab);
         addFab.setOnClickListener(new View.OnClickListener() {

@@ -84,31 +84,10 @@ public class MWSQLiteHelperNew extends SQLiteOpenHelper
         return id;
     }
 
-    public ArrayList<User> getUsers() {
-
-        ArrayList<User>  arr_users = new ArrayList<>();
-
+    public Cursor getUsers() {
         SQLiteDatabase db = getReadableDatabase();
-        Cursor c = db.query(TABLE_USER, null,null, null,null, null,null);
-
-        if(c != null)
-        {
-            c.moveToFirst();
-
-            for (int i = 0;i < c.getCount() ; i++)
-            {
-                int id = c.getInt(c.getColumnIndex(KEY_ID));
-                String name = c.getString(c.getColumnIndex(KEY_USERNAME));
-                User user = new User();
-                user.setId("" + id);
-                user.setUsername(name);
-                arr_users.add(user);
-                c.moveToNext();
-            }
-            c.close();
-        }
-
-        return arr_users;
+        Cursor cursor = db.query(TABLE_USER,null,null,null,null,null,null);
+        return cursor;
     }
 
     public int deleteUser(String id)
@@ -118,8 +97,6 @@ public class MWSQLiteHelperNew extends SQLiteOpenHelper
         return db.delete(TABLE_USER,KEY_ID+"=?",new String[]{id});
 
     }
-
-
 
     public long addScore(Scores score)
     {

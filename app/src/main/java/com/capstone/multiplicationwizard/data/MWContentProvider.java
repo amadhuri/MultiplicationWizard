@@ -20,7 +20,7 @@ import java.util.Locale;
  */
 public class MWContentProvider extends ContentProvider {
     static final String PROVIDER_NAME = "com.capstone.multiplicationwizard.MWContentProvider";
-    private MWSQLiteHelper mHelper = null;
+    private MWSQLiteHelperNew mHelper = null;
 
     // used for the UriMacher
     private static final int USERS = 10;
@@ -38,7 +38,7 @@ public class MWContentProvider extends ContentProvider {
     }
     @Override
     public boolean onCreate() {
-        mHelper = new MWSQLiteHelper(getContext());
+        mHelper = new MWSQLiteHelperNew(getContext());
         return true;
     }
 
@@ -46,9 +46,9 @@ public class MWContentProvider extends ContentProvider {
     public Cursor query(Uri uri, String[] strings, String s, String[] strings1, String s1) {
         switch(sURIMatcher.match(uri)) {
             case USERS:
-                return mHelper.getAllUsers();
+                return mHelper.getUsers();
             case USER_LEVELS:
-                return mHelper.getUser(strings1[0]);
+               // return mHelper.getUser(strings1[0]);
             default:
                 throw new IllegalArgumentException("Unsupported URI:"+uri);
         }
@@ -94,6 +94,11 @@ public class MWContentProvider extends ContentProvider {
 
     @Override
     public int delete(Uri uri, String s, String[] strings) {
+
+        if(sURIMatcher.match(uri) == -1) {
+            return -1;
+        }
+        uri.
         return 0;
     }
 
