@@ -77,9 +77,10 @@ public class MainActivity extends AppCompatActivity implements UsersFragment.OnU
         setContentView(R.layout.activity_main);
         mCurrentFragment = getCurrentFragment();
         mContentResolver = getContentResolver();
-        mwDB = new MWSQLiteHelperNew(getApplicationContext());
 
-        final int userCount = mwDB.getUsers().size();
+        Cursor cursor = mContentResolver.query(MWItemsContract.USERS_CONTENT_URI,
+                                null,null,null,null,null);
+        final int userCount = cursor.getCount();
         Log.e("MainActivity", "onCreate Usercount:"+userCount);
         Handler handler = new Handler(getMainLooper());
         handler.postDelayed(new Runnable() {

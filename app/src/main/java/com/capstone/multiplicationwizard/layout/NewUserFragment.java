@@ -1,7 +1,9 @@
 package com.capstone.multiplicationwizard.layout;
 
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -23,24 +25,16 @@ import com.capstone.multiplicationwizard.model.User;
 
 /**
  * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link NewUserFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link NewUserFragment#newInstance} factory method to
- * create an instance of this fragment.
  */
 public class NewUserFragment extends Fragment {
 
     View mView = null;
-    MWSQLiteHelperNew helperNew;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        helperNew = new MWSQLiteHelperNew(getActivity());
         mView =  inflater.inflate(R.layout.fragment_new_user, container, false);
         Button mContBtn = (Button)mView.findViewById(R.id.bt_new_user_cont);
         mContBtn.setOnClickListener(new View.OnClickListener(){
@@ -54,28 +48,15 @@ public class NewUserFragment extends Fragment {
                     Toast.makeText(getActivity().getApplicationContext(), "Enter user name", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    /*
-                    Log.e("NewUserFragment", "New USer name:" + tvNewUser.getText());
-                    MainActivity mainActivity = (MainActivity) getActivity();
-                    //long id = mainActivity.mwDB.createUser(newUser);
-                    ContentValues contentValues = new ContentValues();
-                    String newUserName = tvNewUser.getText().toString();
-                    contentValues.put(MWSQLiteHelper.KEY_USERNAME, newUserName);
-                    contentValues.put(MWSQLiteHelper.KEY_LEVEL,1);
-                    Uri id = mainActivity.getContentResolver().insert(MWItemsContract.USERS_CONTENT_URI, contentValues);
-                    Log.e("NewUserFragment", "createUSer returned id:" + id);
-                    //Launch GameActivity
-                    Intent intent = new Intent(mainActivity.getApplicationContext(), GameActivity.class);
-                    User newUser = new User();
-                    newUser.setUsername(newUserName);
-                    newUser.setMaxLevel(1);
-                    newUser.setHighScore(0);
-                    newUser.setId(id.toString());
-                    intent.putExtra("com.capstone.multiplicationwizard.model.user", newUser);
-                    startActivity(intent);
-                    */
-                    if(helperNew.getUsers().size() < 5) {
-                        long id = helperNew.createUser(name);
+                    Cursor cursor = getActivity().getContentResolver().query(MWItemsContract.USERS_CONTENT_URI,
+                                        null,null,null,null,null);
+                    if(cursor.getCount() < 5) {
+                        ContentValues contentValues = new ContentValues();
+                        contentValues.put(MWItemsContract.USER_NAME,name);
+                        Uri newUri;
+                        newUri = getActivity().getContentResolver().insert(MWItemsContract.USERS_CONTENT_URI,
+                                                     contentValues);
+                        long id = ContentUris.parseId(newUri);
                         if (id != -1) {
                             Intent intent = new Intent(getActivity(), GameActivity.class);
                             User newUser = new User();

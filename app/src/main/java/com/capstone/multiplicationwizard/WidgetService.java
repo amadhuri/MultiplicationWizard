@@ -2,11 +2,13 @@ package com.capstone.multiplicationwizard;
 
 import android.app.Service;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.IBinder;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 import android.widget.TextView;
 
+import com.capstone.multiplicationwizard.data.MWItemsContract;
 import com.capstone.multiplicationwizard.data.MWSQLiteHelperNew;
 import com.capstone.multiplicationwizard.model.User;
 
@@ -24,7 +26,6 @@ public class WidgetService extends RemoteViewsService {
     }
     class WidgetViewFactory implements RemoteViewsFactory {
 
-        MWSQLiteHelperNew mwDB;
         ArrayList<User> userArrayList;
         int numOfUsers;
 
@@ -53,9 +54,9 @@ public class WidgetService extends RemoteViewsService {
 
         @Override
         public void onCreate() {
-            mwDB = new MWSQLiteHelperNew(getApplicationContext());
-            userArrayList = mwDB.getUsers();
-            numOfUsers = userArrayList.size();
+            Cursor cursor =getContentResolver().query(MWItemsContract.USERS_CONTENT_URI,
+                                    null,null,null,null,null);
+            numOfUsers = cursor.getCount();
         }
 
         @Override

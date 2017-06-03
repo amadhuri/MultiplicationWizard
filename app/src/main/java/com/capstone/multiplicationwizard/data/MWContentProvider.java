@@ -47,8 +47,6 @@ public class MWContentProvider extends ContentProvider {
         switch(sURIMatcher.match(uri)) {
             case USERS:
                 return mHelper.getUsers();
-            case USER_LEVELS:
-               // return mHelper.getUser(strings1[0]);
             default:
                 throw new IllegalArgumentException("Unsupported URI:"+uri);
         }
@@ -72,12 +70,10 @@ public class MWContentProvider extends ContentProvider {
 
     @Override
     public Uri insert(Uri uri, ContentValues contentValues) {
-       /* if( (sURIMatcher.match(uri) != USERS) || (sURIMatcher.match(uri) != USER_LEVELS )) {
-            throw new IllegalArgumentException("Unsupported URI for insertion:" + uri);
-        }*/
 
         if (sURIMatcher.match(uri) == USERS) {
-            long id = mHelper.createUser(contentValues);
+            String name = contentValues.getAsString(MWItemsContract.USER_NAME);
+            long id = mHelper.createUser(name);
             return getUriForId(id,uri);
         } else { //TODO USERS_LEVELS
             return null;
@@ -98,19 +94,14 @@ public class MWContentProvider extends ContentProvider {
         if(sURIMatcher.match(uri) == -1) {
             return -1;
         }
-        uri.
+        mHelper.deleteUser(strings[0]);
         return 0;
     }
 
     @Override
     public int update(Uri uri, ContentValues contentValues, String s, String[] strings) {
-        if (sURIMatcher.match(uri) == USER_ID) {
-            String id = uri.getLastPathSegment();
-            int rowsUpdated = mHelper.updateUser(id, contentValues,s, strings);
-            return rowsUpdated;
-        } else { //TODO USERS_LEVELS
-            return 0;
-        }
+
+        return 0;
     }
 
     /**

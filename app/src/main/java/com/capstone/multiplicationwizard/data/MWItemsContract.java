@@ -17,6 +17,9 @@ public class MWItemsContract {
     public static final String USERS_BASE_PATH = "users";
     //The content URI for the top-level users authority
     public static final Uri USERS_CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + USERS_BASE_PATH);
+
+    public static final String USER_NAME = "username";
+
     public static final String USER_CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
             + "/users";
     public static final String USER_CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE

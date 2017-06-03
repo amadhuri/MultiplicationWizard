@@ -29,6 +29,7 @@ public class UsersFragment extends Fragment {
     Cursor mCursor = null;
     UsersAdapter usersAdapter;
 
+
     private OnUsersFragmentAddNewUserListener mListener = null;
     public UsersFragment() {
 
@@ -41,10 +42,10 @@ public class UsersFragment extends Fragment {
 
     }
 
-    private void setUserAdapterItems(UsersAdapter adapter)
+    private void setUserAdapterItems()
     {
-
         ArrayList<User> arr_users = new ArrayList<>();
+
         Cursor cursor = getActivity().getContentResolver().query(MWItemsContract.USERS_CONTENT_URI,
                             null,null,null,null,null);
 
@@ -58,21 +59,23 @@ public class UsersFragment extends Fragment {
             Integer id = cursor.getInt(cursor.getColumnIndex("ID"));
             user.setUsername(username);
             user.setId(id.toString());
+            arr_users.add(user);
             cursor.moveToNext();
         }
         cursor.close();
-
-        for (User u:arr_users)
-        {
-            adapter.add(u);
+        for(User user: arr_users) {
+            usersAdapter.add(user);
         }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        setUserAdapterItems(usersAdapter);
+        ArrayList<User> arr_users = new ArrayList<>();
+        usersAdapter = new UsersAdapter(this.getContext(),arr_users);
+        setUserAdapterItems();
         mRootView = inflater.inflate(R.layout.fragment_users, container, false);
         final ListView childListView = (ListView) mRootView.findViewById(R.id.childLV);
         childListView.setAdapter(usersAdapter);
@@ -93,9 +96,13 @@ public class UsersFragment extends Fragment {
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
 
                 User currentUser = (User)adapterView.getAdapter().getItem(i);
-                getActivity().getContentResolver().delete(MWItemsContract.USERS_CONTENT_URI)
-                int del = helperNew.deleteUser(currentUser.getUserId());
-                if(del > 0) {
+                String mSelectionCause = MWItemsContract.USERS_BASE_PATH+"=?";
+                String[] mSelectionArgs = new String[1];
+                mSelectionArgs[0]=currentUser.getUserId();
+                int ret = getActivity().getContentResolver().delete(MWItemsContract.USERS_CONTENT_URI,
+                                            mSelectionCause,mSelectionArgs);
+                if(ret == 0) {
+                    usersAdapter.remove(currentUser);
                     usersAdapter.notifyDataSetChanged();
                 }
                 else
@@ -112,7 +119,9 @@ public class UsersFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                if(helperNew.getUsers().size() < 5)
+                Cursor cursor = getActivity().getContentResolver().query(MWItemsContract.USERS_CONTENT_URI,
+                                    null,null,null,null,null);
+                if(cursor.getCount() < 5)
                 {
                     mListener.onFragmentAddNewUser();
                 }
