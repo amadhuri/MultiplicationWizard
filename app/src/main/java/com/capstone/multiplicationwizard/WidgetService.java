@@ -56,6 +56,17 @@ public class WidgetService extends RemoteViewsService {
         public void onCreate() {
             Cursor cursor =getContentResolver().query(MWItemsContract.USERS_CONTENT_URI,
                                     null,null,null,null,null);
+            if(cursor == null)
+                return;
+            cursor.moveToFirst();
+            for(int i =0; i < cursor.getCount(); i++) {
+                User user = new User();
+                String username = cursor.getString(cursor.getColumnIndex(MWItemsContract.USER_NAME));
+                user.setUsername(username);
+                userArrayList.add(user);
+                cursor.moveToNext();
+            }
+            cursor.close();
             numOfUsers = cursor.getCount();
         }
 

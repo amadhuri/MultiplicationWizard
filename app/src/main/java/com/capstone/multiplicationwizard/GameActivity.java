@@ -31,8 +31,6 @@ public class GameActivity extends AppCompatActivity implements OnGameFragmentCha
         setContentView(R.layout.activity_game);
         Bundle userBundle = getIntent().getExtras();
         mCurrentUser = userBundle.getParcelable("com.capstone.multiplicationwizard.model.user");
-        //mCurrentFragment = getCurrentFragment();
-
     }
 
     @Override
