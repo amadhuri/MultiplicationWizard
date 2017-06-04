@@ -17,29 +17,22 @@ import com.capstone.multiplicationwizard.GameActivity;
 import com.capstone.multiplicationwizard.R;
 import com.capstone.multiplicationwizard.adapter.UsersAdapter;
 import com.capstone.multiplicationwizard.data.MWItemsContract;
-import com.capstone.multiplicationwizard.data.MWSQLiteHelper;
-import com.capstone.multiplicationwizard.data.MWSQLiteHelperNew;
 import com.capstone.multiplicationwizard.model.User;
 
 import java.util.ArrayList;
 
 public class UsersFragment extends Fragment {
 
-    View mRootView = null;
-    Cursor mCursor = null;
-    UsersAdapter usersAdapter;
+    private View mRootView = null;
+    private Cursor mCursor = null;
+    private UsersAdapter usersAdapter;
 
 
     private OnUsersFragmentAddNewUserListener mListener = null;
-    public UsersFragment() {
-
-    }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     private void setUserAdapterItems()
@@ -48,7 +41,6 @@ public class UsersFragment extends Fragment {
 
         Cursor cursor = getActivity().getContentResolver().query(MWItemsContract.USERS_CONTENT_URI,
                             null,null,null,null,null);
-
         if(cursor == null) {
             return;
         }
@@ -66,7 +58,6 @@ public class UsersFragment extends Fragment {
         for(User user: arr_users) {
             usersAdapter.add(user);
         }
-
     }
 
     @Override
@@ -121,12 +112,18 @@ public class UsersFragment extends Fragment {
 
                 Cursor cursor = getActivity().getContentResolver().query(MWItemsContract.USERS_CONTENT_URI,
                                     null,null,null,null,null);
-                if(cursor.getCount() < 5)
+                if(cursor == null) {
+                    return;
+                }
+                else if(cursor.getCount() < MWItemsContract.MAX_USERS)
                 {
                     mListener.onFragmentAddNewUser();
                 }
                 else {
-                    Toast.makeText(getActivity(), "Maximum 5 Users can be added\nLong Press on user to delete", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(),
+                                 "Maximum"+MWItemsContract.MAX_USERS+
+                                 " Users can be added\nLong Press on user to delete"
+                                 , Toast.LENGTH_SHORT).show();
                 }
 
             }

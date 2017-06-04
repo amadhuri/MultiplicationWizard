@@ -11,14 +11,9 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.capstone.multiplicationwizard.data.MWItemsContract;
-import com.capstone.multiplicationwizard.data.MWSQLiteHelper;
 import com.capstone.multiplicationwizard.data.MWSQLiteHelperNew;
 import com.capstone.multiplicationwizard.layout.NewUserFragment;
 import com.capstone.multiplicationwizard.layout.UsersFragment;
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.InterstitialAd;
-import com.morsebyte.shailesh.twostagerating.FeedbackReceivedListener;
 import com.morsebyte.shailesh.twostagerating.TwoStageRate;
 
 
@@ -29,27 +24,19 @@ public class MainActivity extends AppCompatActivity implements UsersFragment.OnU
     public MWSQLiteHelperNew mwDB = null;
     private static final int SPLASH_SCREEN_DELAY = 100;
     private static final String TAG = MainActivity.class.getName();
+    TwoStageRate twoStageRate;
+
 
     @Override
     protected void onResume() {
         super.onResume();
         Log.e("MainActivity","onResume called");
-        TwoStageRate twoStageRate = TwoStageRate.with(this);
-        twoStageRate.settings.setLaunchTimes(100);
-        twoStageRate.resetOnDismiss(true).resetOnFeedBackDeclined(true).resetOnRatingDeclined(false);
-       // twoStageRate.showIfMeetsConditions();
-        twoStageRate.showRatePromptDialog();
-        twoStageRate.setFeedbackReceivedListener(new FeedbackReceivedListener() {
-            @Override
-            public void onFeedbackReceived(String feedback) {
-                Log.v(TAG,"onFeedback Received");
-            }
-        });
     }
 
     @Override
     protected void onPause(){
         super.onPause();
+
         Log.e("MainActivity","OnPause called");
     }
 
@@ -77,6 +64,11 @@ public class MainActivity extends AppCompatActivity implements UsersFragment.OnU
         setContentView(R.layout.activity_main);
         mCurrentFragment = getCurrentFragment();
         mContentResolver = getContentResolver();
+
+        twoStageRate= TwoStageRate.with(this);
+        twoStageRate.settings.setLaunchTimes(100);
+        twoStageRate.resetOnDismiss(true).resetOnFeedBackDeclined(true).resetOnRatingDeclined(false);
+        twoStageRate.showIfMeetsConditions();
 
         Cursor cursor = mContentResolver.query(MWItemsContract.USERS_CONTENT_URI,
                                 null,null,null,null,null);
@@ -123,7 +115,6 @@ public class MainActivity extends AppCompatActivity implements UsersFragment.OnU
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.setCustomAnimations(R.anim.slide_up,0,0, 0);
-        //fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         NewUserFragment fragment = new NewUserFragment();
         fragmentTransaction.add(R.id.fragmentParentViewGroup, fragment);
         fragmentTransaction.commitAllowingStateLoss();;
@@ -135,7 +126,6 @@ public class MainActivity extends AppCompatActivity implements UsersFragment.OnU
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.setCustomAnimations(R.anim.slide_up,0,0, 0);
-        //fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         UsersFragment fragment = new UsersFragment();
         fragmentTransaction.add(R.id.fragmentParentViewGroup, fragment);
         fragmentTransaction.commitAllowingStateLoss();

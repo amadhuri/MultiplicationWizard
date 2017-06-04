@@ -7,7 +7,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +15,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.capstone.multiplicationwizard.GameActivity;
-import com.capstone.multiplicationwizard.MainActivity;
 import com.capstone.multiplicationwizard.R;
 import com.capstone.multiplicationwizard.data.MWItemsContract;
-import com.capstone.multiplicationwizard.data.MWSQLiteHelper;
-import com.capstone.multiplicationwizard.data.MWSQLiteHelperNew;
 import com.capstone.multiplicationwizard.model.User;
 
 /**
@@ -42,20 +38,30 @@ public class NewUserFragment extends Fragment {
             public void onClick(View view) {
                 EditText tvNewUser = (EditText)mView.findViewById(R.id.new_user_et);
 
-                String name = tvNewUser.getText().toString().trim();
+                String name = tvNewUser.getText().toString().toLowerCase().trim();
                 if(name.equals(""))
                 {
-                    Toast.makeText(getActivity().getApplicationContext(), "Enter user name", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity().getApplicationContext(),
+                                     "Enter user name", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    Cursor cursor = getActivity().getContentResolver().query(MWItemsContract.USERS_CONTENT_URI,
+                    Cursor cursor = getActivity().getContentResolver().query
+                                        (MWItemsContract.USERS_CONTENT_URI,
                                         null,null,null,null,null);
-                    if(cursor.getCount() < 5) {
+                    if(cursor.getCount() < MWItemsContract.MAX_USERS) {
                         ContentValues contentValues = new ContentValues();
                         contentValues.put(MWItemsContract.USER_NAME,name);
                         Uri newUri;
-                        newUri = getActivity().getContentResolver().insert(MWItemsContract.USERS_CONTENT_URI,
+                        newUri = getActivity().getContentResolver().insert
+                                                    (MWItemsContract.USERS_CONTENT_URI,
                                                      contentValues);
+                        if(newUri == null) {
+                            Toast.makeText(getContext(),
+                                    "Failed to insert"+name,
+                                    Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
                         long id = ContentUris.parseId(newUri);
                         if (id != -1) {
                             Intent intent = new Intent(getActivity(), GameActivity.class);
@@ -67,12 +73,15 @@ public class NewUserFragment extends Fragment {
                             intent.putExtra("com.capstone.multiplicationwizard.model.user", newUser);
                             startActivity(intent);
                         } else {
-                            Toast.makeText(getActivity(), "Duplicate User Name", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Duplicate User Name",
+                                    Toast.LENGTH_SHORT).show();
                         }
                     }
                     else
                     {
-                        Toast.makeText(getActivity(), "Maximum 5 Users can be added", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(),
+                                      "Maximum"+MWItemsContract.MAX_USERS+
+                                      "Users can be added", Toast.LENGTH_SHORT).show();
                     }
 
                 }

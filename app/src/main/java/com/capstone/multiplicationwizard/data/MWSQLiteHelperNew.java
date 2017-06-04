@@ -84,6 +84,7 @@ public class MWSQLiteHelperNew extends SQLiteOpenHelper
         return id;
     }
 
+
     public Cursor getUsers() {
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.query(TABLE_USER,null,null,null,null,null,null);

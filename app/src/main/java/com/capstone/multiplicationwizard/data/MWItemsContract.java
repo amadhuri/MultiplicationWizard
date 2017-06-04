@@ -11,6 +11,7 @@ import android.provider.ContactsContract;
  */
 public class MWItemsContract {
 
+    public static final int MAX_USERS = 5;
     //The authority of the MWContentProvider
     public static final String AUTHORITY = "com.capstone.multiplicationwizard.MWItems";
     //Constant string for Users table

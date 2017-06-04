@@ -1,20 +1,15 @@
 package com.capstone.multiplicationwizard.layout;
 
 import android.app.Dialog;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,12 +20,9 @@ import android.widget.TextView;
 import com.capstone.multiplicationwizard.BuildConfig;
 import com.capstone.multiplicationwizard.GameActivity;
 import com.capstone.multiplicationwizard.R;
-import com.capstone.multiplicationwizard.data.MWItemsContract;
-import com.capstone.multiplicationwizard.data.MWSQLiteHelper;
 import com.capstone.multiplicationwizard.data.MWSQLiteHelperNew;
 import com.capstone.multiplicationwizard.model.Scores;
 import com.capstone.multiplicationwizard.model.User;
-import com.capstone.multiplicationwizard.fragment_interface.OnGameFragmentChangeListener;
 import com.capstone.multiplicationwizard.utils.RandomNumberGenerator;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
@@ -292,31 +284,6 @@ public class GameFragment extends Fragment {
         {
             helperNew.addScore(new Scores(mCurrentUser.getUserId(), "" + mCurrentUser.getMaxLevel(), "" + getUserCurrentLevelScore()));
         }
-        /*
-        // Update maxScore and maxLevel
-        ContentValues contentValues = new ContentValues();
-        Uri uri = Uri.parse(MWItemsContract.USERS_CONTENT_URI + "/" + mCurrentUser.user_id);
-        contentValues.put(MWSQLiteHelper.KEY_LEVEL, mCurrentUser.getMaxLevel()+1);
-        contentValues.put(MWSQLiteHelper.KEY_HIGHSCORE, mCurrentUser.highScore+getUserCurrentLevelScore());
-        int count = getActivity().getContentResolver().update(uri,contentValues,null,null );
-
-       //  Update level score
-        String[] projection = {MWSQLiteHelper.KEY_ID,MWSQLiteHelper.KEY_LEVEL, MWSQLiteHelper.KEY_LEVEL_SCORE};
-        String selection = MWSQLiteHelper.KEY_ID + "= ?";
-        String[] selectionArgs = new String[]{String.valueOf(mCurrentUser.user_id)};
-        Log.e("GameFragment","selectionArgs:"+selectionArgs);
-        Cursor cursor = getActivity().getContentResolver().query(MWItemsContract.USER_LEVEL_CONTENT_URI,projection,selection,selectionArgs, null);
-        if (cursor.getCount() == 0)
-        {
-            ContentValues levelContentValues = new ContentValues();
-            levelContentValues.put(MWSQLiteHelper.KEY_ID, mCurrentUser.user_id.toString());
-            levelContentValues.put(MWSQLiteHelper.KEY_LEVEL, mCurrentUser.getMaxLevel()+1);
-            levelContentValues.put(MWSQLiteHelper.KEY_LEVEL_SCORE, getUserCurrentLevelScore());
-            getActivity().getContentResolver().insert(MWItemsContract.USER_LEVEL_CONTENT_URI,levelContentValues );
-        } else {
-            //TODO
-        }
-        */
     }
     private void showLevelUpDialog(){
 

@@ -7,5 +7,5 @@
         android:toXDelta="0%p"
         android:fromYDelta="5000%p"
         android:toYDelta="0%p"
-        android:duration="3000"/>
+        android:duration="1500"/>
 </set>

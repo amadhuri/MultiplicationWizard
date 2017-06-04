@@ -81,11 +81,8 @@ public class MWContentProvider extends ContentProvider {
     }
 
     private Uri getUriForId(long id, Uri uri) {
-        if (id > 0) {
-            Uri itemUri = ContentUris.withAppendedId(uri, id);
-            return itemUri;
-        }
-        throw new SQLException("Problem while inserting into uri:"+uri);
+        Uri itemUri = ContentUris.withAppendedId(uri, id);
+        return itemUri;
     }
 
     @Override
@@ -104,14 +101,5 @@ public class MWContentProvider extends ContentProvider {
         return 0;
     }
 
-    /**
-     * get datetime
-     * */
-    @TargetApi(Build.VERSION_CODES.N)
-    private String getDateTime() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat(
-                "yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-        Date date = new Date();
-        return dateFormat.format(date);
-    }
+
 }
