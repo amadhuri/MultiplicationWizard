@@ -26,7 +26,7 @@ public class WidgetService extends RemoteViewsService {
     }
     class WidgetViewFactory implements RemoteViewsFactory {
 
-        ArrayList<User> userArrayList;
+        ArrayList<User> userArrayList = new ArrayList<User>();
         int numOfUsers;
 
         public WidgetViewFactory() {
