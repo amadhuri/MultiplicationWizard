@@ -24,17 +24,12 @@ public class MWContentProvider extends ContentProvider {
 
     // used for the UriMacher
     private static final int USERS = 10;
-    private static final int USER_ID = 20;
-    private static final int USER_LEVELS = 30;
-    private static final int USER_LEVEL_ID = 40;
-
+    private static final int SCORES = 20;
     private static final UriMatcher sURIMatcher = new UriMatcher(
             UriMatcher.NO_MATCH);
     static {
         sURIMatcher.addURI(MWItemsContract.AUTHORITY, MWItemsContract.USERS_BASE_PATH, USERS);
-        sURIMatcher.addURI(MWItemsContract.AUTHORITY, MWItemsContract.USERS_BASE_PATH + "/#", USER_ID);
-        sURIMatcher.addURI(MWItemsContract.AUTHORITY, MWItemsContract.USER_LEVEL_BASE_PATH, USER_LEVELS);
-        sURIMatcher.addURI(MWItemsContract.AUTHORITY, MWItemsContract.USER_LEVEL_BASE_PATH + "/#", USER_LEVEL_ID);
+        sURIMatcher.addURI(MWItemsContract.AUTHORITY, MWItemsContract.SCORES_BASE_PATH,SCORES);
     }
     @Override
     public boolean onCreate() {
@@ -47,6 +42,8 @@ public class MWContentProvider extends ContentProvider {
         switch(sURIMatcher.match(uri)) {
             case USERS:
                 return mHelper.getUsers();
+            case SCORES:
+                return mHelper.
             default:
                 throw new IllegalArgumentException("Unsupported URI:"+uri);
         }
@@ -57,12 +54,6 @@ public class MWContentProvider extends ContentProvider {
         switch(sURIMatcher.match(uri)) {
             case USERS:
                 return MWItemsContract.USER_CONTENT_TYPE;
-            case USER_ID:
-                return MWItemsContract.USER_CONTENT_ITEM_TYPE;
-            case USER_LEVELS:
-                return MWItemsContract.USER_LEVEL_CONTENT_TYPE;
-            case USER_LEVEL_ID:
-                return MWItemsContract.USER_LEVEL_CONTENT_ITEM_TYPE;
             default:
                 throw new IllegalArgumentException("Unsupport URI:"+uri);
         }

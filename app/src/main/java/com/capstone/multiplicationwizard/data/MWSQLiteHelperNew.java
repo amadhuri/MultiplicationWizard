@@ -191,27 +191,6 @@ public class MWSQLiteHelperNew extends SQLiteOpenHelper
         return result;
     }
 
-    public int allScore(String user_id)
-    {
-        int result = 0;
-        SQLiteDatabase db = getReadableDatabase();
-        Cursor c = db.query(TABLE_SCORE, null,KEY_USER+"= ?", new String[]{user_id},null, null,null);
-
-        if(c != null)
-        {
-            c.moveToFirst();
-
-            for (int i = 0;i < c.getCount() ; i++)
-            {
-                result += c.getInt(c.getColumnIndex(KEY_SCORE));
-                c.moveToNext();
-            }
-            c.close();
-        }
-
-        return result;
-    }
-
 
     public ArrayList<Scores> getLevelScores(String user_id) {
 

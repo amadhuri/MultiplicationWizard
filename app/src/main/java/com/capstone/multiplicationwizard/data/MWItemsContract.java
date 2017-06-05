@@ -16,24 +16,19 @@ public class MWItemsContract {
     public static final String AUTHORITY = "com.capstone.multiplicationwizard.MWItems";
     //Constant string for Users table
     public static final String USERS_BASE_PATH = "users";
+    public static final String USER_NAME = "username";
+
+
+    //Constant string for Scores table
+
+    public static final String SCORES_BASE_PATH = "scores";
     //The content URI for the top-level users authority
     public static final Uri USERS_CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + USERS_BASE_PATH);
 
-    public static final String USER_NAME = "username";
-
-    public static final String USER_CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
-            + "/users";
-    public static final String USER_CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
-            + "/user";
-
-    //Constant string for User_level table
-    public static final String USER_LEVEL_BASE_PATH = "user_level";
-    //The content URI for the top-level user_level authority
-    public static final Uri USER_LEVEL_CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + USER_LEVEL_BASE_PATH);
-    public static final String USER_LEVEL_CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
-            + "/user_levels";
-    public static final String USER_LEVEL_CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
-            + "/user_level";
+    public static final Uri SCORES_CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + SCORES_BASE_PATH);
+    public static final String USER_ID = "user_id";
+    private static final String SCORE = "score";
+    private static final String LEVEL = "level";
 
 }
 

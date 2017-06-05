@@ -4,6 +4,7 @@ package com.capstone.multiplicationwizard.layout;
 import android.app.Dialog;
 import android.content.Context;
 
+import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -22,6 +23,7 @@ import android.widget.Toast;
 import com.capstone.multiplicationwizard.GameActivity;
 import com.capstone.multiplicationwizard.R;
 import com.capstone.multiplicationwizard.adapter.GameLevelAdapter;
+import com.capstone.multiplicationwizard.data.MWItemsContract;
 import com.capstone.multiplicationwizard.data.MWSQLiteHelperNew;
 import com.capstone.multiplicationwizard.fragment_interface.OnGameFragmentChangeListener;
 import com.capstone.multiplicationwizard.model.Scores;
@@ -48,7 +50,6 @@ public class GameLevelFragment extends Fragment {
     private OnGameFragmentChangeListener mListener;
     TextView  tv_child_name = null;
     TextView tv_child_point = null;
-    MWSQLiteHelperNew helperNew;
     final ArrayList<Integer> imageItems = new ArrayList<>(12);
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -104,15 +105,34 @@ public class GameLevelFragment extends Fragment {
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
+
         super.onActivityCreated(savedInstanceState);
         final GameActivity activity = (GameActivity)getActivity();
-        helperNew = new MWSQLiteHelperNew(getActivity());
         mCurrentUser = activity.mCurrentUser;
-        if(mCurrentUser != null) {
-            tv_child_name.setText(mCurrentUser.getUsername());
-            Integer score = helperNew.allScore(mCurrentUser.getUserId());
-            tv_child_point.setText(score.toString());
+        if(mCurrentUser == null) {
+            return;
         }
+        Integer score = 0;
+        tv_child_name.setText(mCurrentUser.getUsername());
+        String[] mProjection = new String[1];
+        mProjection[0] = MWItemsContract.SCORE;
+        String mSelectionCause = MWItemsContract.USER_ID+"=?";
+        String[] mSelectionArgs = new String[1];
+        mSelectionArgs[0]=mCurrentUser.getUserId();
+        Cursor cursor = activity.getContentResolver()
+                .query(MWItemsContract.SCORES_CONTENT_URI,mProjection,
+                        mSelectionCause,mSelectionArgs,null);
+        if(cursor == null) {
+            return;
+        }
+        cursor.moveToFirst();
+        for (int i = 0;i < cursor.getCount() ; i++)
+        {
+            score += cursor.getInt(cursor.getColumnIndex(MWItemsContract.SCORE));
+            cursor.moveToNext();
+        }
+        cursor.close();
+        tv_child_point.setText(score.toString());
         gameLevelAdapter = new GameLevelAdapter(this.getContext(), R.layout.fragment_game_level_item, getData());
         mGridView.setAdapter(gameLevelAdapter);
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -123,10 +143,8 @@ public class GameLevelFragment extends Fragment {
 
                 if(imageItems.get(i) > 0)
                 {
-                mCurrentUser.setMaxLevel(i);
-                Integer selectedLevel = (Integer) adapterView.getAdapter().getItem(i);
-
-
+                    mCurrentUser.setMaxLevel(i);
+                    Integer selectedLevel = (Integer) adapterView.getAdapter().getItem(i);
                     int titleColor;
                     String titleText = "Level ".concat(selectedLevel.toString());
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -145,16 +163,10 @@ public class GameLevelFragment extends Fragment {
 
 
                     RatingBar iv_level_star_img = (RatingBar) dialog.findViewById(R.id.iv_level_star_img);
-
                     double levelscore = helperNew.getScore(mCurrentUser.getUserId(),""+i);
-
                     double score = ((levelscore /  MWSQLiteHelperNew.out_off) ) * 100;
-
                     double stars = score/20;
-
                     iv_level_star_img.setRating(Float.parseFloat(String.valueOf(stars)));
-
-
                     Button positiveButton = (Button) dialog.findViewById(R.id.btn_positive_txt);
                     positiveButton.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -192,8 +204,6 @@ public class GameLevelFragment extends Fragment {
     // Prepare some dummy data for gridview
     private ArrayList<Integer> getData()
     {
-
-
         int maxl = helperNew.getMaxLevel(mCurrentUser.getUserId())+1;
         ArrayList<Scores>  arr_scores = new ArrayList<>();
         arr_scores = helperNew.getLevelScores(mCurrentUser.getUserId());
