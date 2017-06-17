@@ -27,8 +27,10 @@ public class MWItemsContract {
 
     public static final Uri SCORES_CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + SCORES_BASE_PATH);
     public static final String USER_ID = "user_id";
-    private static final String SCORE = "score";
-    private static final String LEVEL = "level";
-
+    public static final String SCORE = "score";
+    public static final String LEVEL = "level";
+    public static final String LEVEL_UP_SCORE = "20";
+    public static int out_off = 5 * 5;  //que * marks
+    public static int GAMELEVEL = 12;
 }
 

@@ -11,6 +11,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
 import android.os.Build;
+import android.support.annotation.Nullable;
 
 import java.util.Date;
 import java.util.Locale;
@@ -43,19 +44,9 @@ public class MWContentProvider extends ContentProvider {
             case USERS:
                 return mHelper.getUsers();
             case SCORES:
-                return mHelper.
+                return mHelper.getScores();
             default:
                 throw new IllegalArgumentException("Unsupported URI:"+uri);
-        }
-    }
-
-    @Override
-    public String getType(Uri uri) {
-        switch(sURIMatcher.match(uri)) {
-            case USERS:
-                return MWItemsContract.USER_CONTENT_TYPE;
-            default:
-                throw new IllegalArgumentException("Unsupport URI:"+uri);
         }
     }
 
@@ -92,5 +83,9 @@ public class MWContentProvider extends ContentProvider {
         return 0;
     }
 
-
+    @Nullable
+    @Override
+    public String getType(Uri uri) {
+        return null;
+    }
 }

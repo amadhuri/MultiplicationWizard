@@ -19,7 +19,6 @@ import java.util.ArrayList;
 public class MWSQLiteHelperNew extends SQLiteOpenHelper
 {
 
-    public static int out_off = 5 * 5;  //que * marks
     public static  String name = "wizardNew.db";
     public static  int version = 2;
 
@@ -90,7 +89,11 @@ public class MWSQLiteHelperNew extends SQLiteOpenHelper
         Cursor cursor = db.query(TABLE_USER,null,null,null,null,null,null);
         return cursor;
     }
-
+    public Cursor getScores() {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query(TABLE_SCORE,null,null,null,null,null,null);
+        return cursor;
+    }
     public int deleteUser(String id)
     {
         SQLiteDatabase db = getWritableDatabase();
@@ -149,26 +152,7 @@ public class MWSQLiteHelperNew extends SQLiteOpenHelper
     }
 
 
-    public int getMaxLevel(String user_id)
-    {
-        int level = -1;
-        SQLiteDatabase db = getReadableDatabase();
-        Cursor c = db.rawQuery("SELECT MAX("+KEY_LEVEL+") as mLevel from "+TABLE_SCORE+" WHERE "+KEY_USER+" = '"+user_id+"'",null);
 
-        if(c != null)
-        {
-            c.moveToFirst();
-
-            for (int i = 0;i < c.getCount() ; i++)
-            {
-                level = c.getInt(c.getColumnIndex("mLevel"));
-                c.moveToNext();
-            }
-            c.close();
-        }
-
-        return level;
-    }
 
     public int getScore(String user_id,String level)
     {
@@ -191,30 +175,4 @@ public class MWSQLiteHelperNew extends SQLiteOpenHelper
         return result;
     }
 
-
-    public ArrayList<Scores> getLevelScores(String user_id) {
-
-        ArrayList<Scores>  arr_scores = new ArrayList<>();
-
-        SQLiteDatabase db = getReadableDatabase();
-        Cursor c = db.query(TABLE_SCORE, null,KEY_USER+"=? and "+KEY_SCORE+" > 20", new String[]{user_id},null, null,null);
-
-        if(c != null)
-        {
-            c.moveToFirst();
-
-            for (int i = 0;i < c.getCount() ; i++)
-            {
-                int userid = c.getInt(c.getColumnIndex(KEY_USER));
-                int level = c.getInt(c.getColumnIndex(KEY_LEVEL));
-                int score = c.getInt(c.getColumnIndex(KEY_SCORE));
-
-                arr_scores.add(new Scores(""+userid,""+level,""+score));
-                c.moveToNext();
-            }
-            c.close();
-        }
-
-        return arr_scores;
-    }
 }

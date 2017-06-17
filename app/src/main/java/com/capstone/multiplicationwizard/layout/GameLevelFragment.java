@@ -51,6 +51,8 @@ public class GameLevelFragment extends Fragment {
     TextView  tv_child_name = null;
     TextView tv_child_point = null;
     final ArrayList<Integer> imageItems = new ArrayList<>(12);
+    ArrayList<Scores>  arr_scores = new ArrayList<>();
+
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -116,7 +118,7 @@ public class GameLevelFragment extends Fragment {
         tv_child_name.setText(mCurrentUser.getUsername());
         String[] mProjection = new String[1];
         mProjection[0] = MWItemsContract.SCORE;
-        String mSelectionCause = MWItemsContract.USER_ID+"=?";
+        String mSelectionCause = MWItemsContract.USER_ID+" = ?";
         String[] mSelectionArgs = new String[1];
         mSelectionArgs[0]=mCurrentUser.getUserId();
         Cursor cursor = activity.getContentResolver()
@@ -140,7 +142,7 @@ public class GameLevelFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-
+                double levelscore = 0;
                 if(imageItems.get(i) > 0)
                 {
                     mCurrentUser.setMaxLevel(i);
@@ -158,13 +160,17 @@ public class GameLevelFragment extends Fragment {
                     dialog.setContentView(R.layout.custom_dialog_1);
                     dialog.show();
 
+                    if (arr_scores.size()<=i) {
+                        levelscore = 0;
+                    }else {
+                        levelscore = Double.parseDouble(arr_scores.get(i).getScore());
+                    }
                     ((TextView) dialog.findViewById(R.id.iv_level_circle)).setText("Level " + (i + 1));
-                    ((TextView) dialog.findViewById(R.id.tv_cont_str)).setText("Your Score is " + helperNew.getScore(mCurrentUser.getUserId(),""+i));
-
+                    ((TextView) dialog.findViewById(R.id.tv_cont_str)).setText("Your Score is " + levelscore);
 
                     RatingBar iv_level_star_img = (RatingBar) dialog.findViewById(R.id.iv_level_star_img);
-                    double levelscore = helperNew.getScore(mCurrentUser.getUserId(),""+i);
-                    double score = ((levelscore /  MWSQLiteHelperNew.out_off) ) * 100;
+
+                    double score = ((levelscore /  MWItemsContract.out_off) ) * 100;
                     double stars = score/20;
                     iv_level_star_img.setRating(Float.parseFloat(String.valueOf(stars)));
                     Button positiveButton = (Button) dialog.findViewById(R.id.btn_positive_txt);
@@ -204,52 +210,55 @@ public class GameLevelFragment extends Fragment {
     // Prepare some dummy data for gridview
     private ArrayList<Integer> getData()
     {
-        int maxl = helperNew.getMaxLevel(mCurrentUser.getUserId())+1;
-        ArrayList<Scores>  arr_scores = new ArrayList<>();
-        arr_scores = helperNew.getLevelScores(mCurrentUser.getUserId());
-
+        int maxLevel =0;
+        String[] mProjection = new String[3];
+        mProjection[0] = MWItemsContract.SCORE;
+        mProjection[1] = MWItemsContract.LEVEL;
+        String mSelectionCause = MWItemsContract.USER_ID+" = ?";
+        String[] mSelectionArgs = new String[1];
+        mSelectionArgs[0]=mCurrentUser.getUserId();
+        //mSelectionArgs[1]= MWItemsContract.LEVEL_UP_SCORE;
+        Cursor cursor = getContext().getContentResolver()
+                .query(MWItemsContract.SCORES_CONTENT_URI,mProjection,
+                        mSelectionCause,mSelectionArgs,null);
+        if(cursor == null) {
+            return null;
+        }
+        Integer val = 0;
+        Integer level = 0;
+        cursor.moveToFirst();
+        for (int i = 0;i < cursor.getCount() ; i++)
+        {
+            val = cursor.getInt(cursor.getColumnIndex(MWItemsContract.SCORE));
+            level = cursor.getInt(cursor.getColumnIndex(MWItemsContract.LEVEL));
+            Scores scores = new Scores(mCurrentUser.getUserId(),level.toString(),val.toString());
+            arr_scores.add(scores);
+            cursor.moveToNext();
+        }
+        cursor.close();
         if(arr_scores.size() == 0)
         {
-            maxl = 0;
+            maxLevel = 0;
         }
         else
         {
-            String val = arr_scores.get(arr_scores.size()-1).getLevel();
-            maxl = Integer.valueOf(val)+1;
+            maxLevel = Integer.valueOf(level);
+            if (Double.parseDouble(arr_scores.get(maxLevel).getScore())>= 25)
+                maxLevel++;
         }
-
-
-
-        for (int i=0; i<12;i++)
+        for (int i=0; i<MWItemsContract.GAMELEVEL;i++)
         {
-          //  int lscore = helperNew.getScore(mCurrentUser.getUserId(),""+(i));
-            if(i <= maxl )
+            if(i <=maxLevel )
             {
                 imageItems.add(1);
             }
+
             else
             {
                 imageItems.add(0);
             }
 
-
-               /* if(helperNew.getScore(mCurrentUser.getUserId(),""+i) > 0)
-                {
-                    imageItems.add(1);
-                }
-                else
-                {
-                    if(i==1)
-                    {
-
-                    }
-                    else {
-                        imageItems.add(0);
-                    }
-                }*/
-
         }
-
         return imageItems;
     }
 }
