@@ -90,9 +90,12 @@ public class UsersFragment extends Fragment {
                 String mSelectionCause = MWItemsContract.USERS_BASE_PATH+"=?";
                 String[] mSelectionArgs = new String[1];
                 mSelectionArgs[0]=currentUser.getUserId();
-                int ret = getActivity().getContentResolver().delete(MWItemsContract.USERS_CONTENT_URI,
+                int retUser = getActivity().getContentResolver().delete(MWItemsContract.USERS_CONTENT_URI,
                                             mSelectionCause,mSelectionArgs);
-                if(ret == 0) {
+
+                int retScores = getActivity().getContentResolver().delete(MWItemsContract.SCORES_CONTENT_URI,
+                        mSelectionCause,mSelectionArgs);
+                if(retUser == 0 && retScores == 0) {
                     usersAdapter.remove(currentUser);
                     usersAdapter.notifyDataSetChanged();
                 }

@@ -101,7 +101,12 @@ public class MWSQLiteHelperNew extends SQLiteOpenHelper
         return db.delete(TABLE_USER,KEY_ID+"=?",new String[]{id});
 
     }
+    public int deleteUserFromScores(String id) {
+        SQLiteDatabase db = getWritableDatabase();
 
+        return db.delete(TABLE_SCORE,KEY_ID+"=?",new String[]{id});
+
+    }
     public long addScore(Scores score)
     {
         SQLiteDatabase db = getWritableDatabase();
@@ -150,8 +155,6 @@ public class MWSQLiteHelperNew extends SQLiteOpenHelper
 
         return result;
     }
-
-
 
 
     public int getScore(String user_id,String level)

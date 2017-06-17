@@ -73,7 +73,12 @@ public class MWContentProvider extends ContentProvider {
         if(sURIMatcher.match(uri) == -1) {
             return -1;
         }
-        mHelper.deleteUser(strings[0]);
+        if(sURIMatcher.match(uri) == USERS) {
+            mHelper.deleteUser(strings[0]);
+        }
+        else if(sURIMatcher.match(uri) == SCORES) {
+            mHelper.deleteUserFromScores(strings[0]);
+        }
         return 0;
     }
 
