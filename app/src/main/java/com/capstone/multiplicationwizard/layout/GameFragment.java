@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v4.app.Fragment;
@@ -271,19 +272,7 @@ public class GameFragment extends Fragment {
     private void saveScores() {
 
         helperNew = new MWSQLiteHelperNew(getActivity());
-
-
-        if(helperNew.isPlayedLevel(mCurrentUser.getUserId(),""+mCurrentUser.getMaxLevel()))
-        {
-            if(helperNew.getScore(mCurrentUser.getUserId(),""+mCurrentUser.getMaxLevel()) < getUserCurrentLevelScore())
-            {
-                helperNew.updateScore(new Scores(mCurrentUser.getUserId(), "" + mCurrentUser.getMaxLevel(), "" + getUserCurrentLevelScore()));
-            }
-        }
-        else
-        {
-            helperNew.addScore(new Scores(mCurrentUser.getUserId(), "" + mCurrentUser.getMaxLevel(), "" + getUserCurrentLevelScore()));
-        }
+        new SaveScoreAsyncTask(helperNew,mCurrentUser,getUserCurrentLevelScore()).execute(null,null,null);
     }
     private void showLevelUpDialog(){
 
@@ -359,5 +348,59 @@ public class GameFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
 
 
+    }
+    class SaveScoreAsyncTask extends AsyncTask<Void,Void,Void> {
+
+        private MWSQLiteHelperNew helperNew;
+        private User userInfo;
+        private Integer currLevScore;
+
+        public SaveScoreAsyncTask(MWSQLiteHelperNew db, User user,Integer userCurrentLevelScore) {
+            helperNew = db;
+            userInfo = user;
+            currLevScore = userCurrentLevelScore;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected void onCancelled(Void aVoid) {
+            super.onCancelled(aVoid);
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+
+            if(helperNew.isPlayedLevel(userInfo.getUserId(),""+userInfo.getMaxLevel()))
+            {
+                if(helperNew.getScore(userInfo.getUserId(),""+userInfo.getMaxLevel()) < currLevScore)
+                {
+                    helperNew.updateScore(new Scores(userInfo.getUserId(), "" + userInfo.getMaxLevel(), "" + currLevScore));
+                }
+            }
+            else
+            {
+                helperNew.addScore(new Scores(userInfo.getUserId(), "" + userInfo.getMaxLevel(), "" + currLevScore));
+            }
+            return null;
+        }
     }
 }
