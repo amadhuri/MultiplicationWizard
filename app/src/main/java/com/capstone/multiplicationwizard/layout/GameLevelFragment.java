@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -217,6 +218,7 @@ public class GameLevelFragment extends Fragment {
         String mSelectionCause = MWItemsContract.USER_ID+" = ?";
         String[] mSelectionArgs = new String[1];
         mSelectionArgs[0]=mCurrentUser.getUserId();
+        Log.e("GameLevelFragment","mCurrentUser userId:"+mSelectionArgs[0]);
         //mSelectionArgs[1]= MWItemsContract.LEVEL_UP_SCORE;
         Cursor cursor = getContext().getContentResolver()
                 .query(MWItemsContract.SCORES_CONTENT_URI,mProjection,
@@ -224,6 +226,7 @@ public class GameLevelFragment extends Fragment {
         if(cursor == null) {
             return null;
         }
+        arr_scores.clear();
         Integer val = 0;
         Integer level = 0;
         cursor.moveToFirst();
@@ -231,6 +234,7 @@ public class GameLevelFragment extends Fragment {
         {
             val = cursor.getInt(cursor.getColumnIndex(MWItemsContract.SCORE));
             level = cursor.getInt(cursor.getColumnIndex(MWItemsContract.LEVEL));
+            Log.e("GameLevelFragment","mCurrentUser userId:"+mSelectionArgs[0]+" scores:"+val+" level:"+level);
             Scores scores = new Scores(mCurrentUser.getUserId(),level.toString(),val.toString());
             arr_scores.add(scores);
             cursor.moveToNext();

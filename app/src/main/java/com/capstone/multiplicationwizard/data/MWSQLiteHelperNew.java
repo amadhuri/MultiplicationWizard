@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.provider.BaseColumns;
 import android.util.Log;
 
@@ -92,6 +93,19 @@ public class MWSQLiteHelperNew extends SQLiteOpenHelper
     public Cursor getScores() {
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.query(TABLE_SCORE,null,null,null,null,null,null);
+        return cursor;
+    }
+    public Cursor getUserScores() {
+        SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
+        SQLiteDatabase db = getReadableDatabase();
+        queryBuilder.setTables(TABLE_SCORE);
+        Cursor cursor = db.rawQuery("select users.username, scores.score from users INNER JOIN scores on users.ID = scores.user_id", null);
+        if (cursor == null)
+            Log.e("MSSQLiteHelperNew","cursor is null");
+        else if(cursor.getCount() == 0)
+            Log.e("MSSQLiteHelperNew", "cursor is null");
+        else
+            Log.e("MSSQLiteHelperNew","cursor count:"+cursor.getCount());
         return cursor;
     }
     public int deleteUser(String id)

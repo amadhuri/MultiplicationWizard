@@ -26,11 +26,13 @@ public class MWContentProvider extends ContentProvider {
     // used for the UriMacher
     private static final int USERS = 10;
     private static final int SCORES = 20;
+    private static final int USERS_SCORES = 30;
     private static final UriMatcher sURIMatcher = new UriMatcher(
             UriMatcher.NO_MATCH);
     static {
         sURIMatcher.addURI(MWItemsContract.AUTHORITY, MWItemsContract.USERS_BASE_PATH, USERS);
         sURIMatcher.addURI(MWItemsContract.AUTHORITY, MWItemsContract.SCORES_BASE_PATH,SCORES);
+        sURIMatcher.addURI(MWItemsContract.AUTHORITY, MWItemsContract.USERS_SCORES_BASE_PATH, USERS_SCORES);
     }
     @Override
     public boolean onCreate() {
@@ -45,6 +47,8 @@ public class MWContentProvider extends ContentProvider {
                 return mHelper.getUsers();
             case SCORES:
                 return mHelper.getScores();
+            case USERS_SCORES:
+                 return mHelper.getUserScores();
             default:
                 throw new IllegalArgumentException("Unsupported URI:"+uri);
         }

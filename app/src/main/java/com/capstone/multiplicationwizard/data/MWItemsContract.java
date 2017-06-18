@@ -25,10 +25,13 @@ public class MWItemsContract {
     //The content URI for the top-level users authority
     public static final Uri USERS_CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + USERS_BASE_PATH);
 
+    public static final String USERS_SCORES_BASE_PATH = "users_scores";
     public static final Uri SCORES_CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + SCORES_BASE_PATH);
+    public static final Uri USERS_SCORES_CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + USERS_SCORES_BASE_PATH);
     public static final String USER_ID = "user_id";
     public static final String SCORE = "score";
     public static final String LEVEL = "level";
+
     public static final String LEVEL_UP_SCORE = "20";
     public static int out_off = 5 * 5;  //que * marks
     public static int GAMELEVEL = 12;

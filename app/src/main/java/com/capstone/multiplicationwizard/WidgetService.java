@@ -60,15 +60,28 @@ public class WidgetService extends RemoteViewsService {
 
         @Override
         public void onCreate() {
-            Cursor cursor =getContentResolver().query(MWItemsContract.USERS_CONTENT_URI,
-                                    null,null,null,null,null);
-            if(cursor == null)
+            String[] mProjection = new String[2];
+            mProjection[0] = MWItemsContract.USER_NAME;
+            mProjection[1] = MWItemsContract.SCORE;
+            String mSelectionCause = MWItemsContract.USER_ID+" = ?";
+            String[] mSelectionArgs = new String[1];
+
+          /*  Cursor cursor =getContentResolver().query(MWItemsContract.USERS_CONTENT_URI,
+                                    null,null,null,null,null);*/
+            Cursor cursor = getContentResolver()
+                    .query(MWItemsContract.USERS_SCORES_CONTENT_URI,mProjection,
+                            null,null,null);
+            if(cursor == null) {
+             Log.e("WidgetService", "cursor is null");
                 return;
+            }
+            Log.e("WidgetService","cursor getCount:"+cursor.getCount());
             cursor.moveToFirst();
             for(int i =0; i < cursor.getCount(); i++) {
                 User user = new User();
                 String username = cursor.getString(cursor.getColumnIndex(MWItemsContract.USER_NAME));
                 user.setUsername(username);
+                user.setHighScore(cursor.getInt(cursor.getColumnIndex(MWItemsContract.SCORE)));
                 userArrayList.add(user);
                 cursor.moveToNext();
             }
@@ -94,13 +107,13 @@ public class WidgetService extends RemoteViewsService {
           RemoteViews remoteViews = new RemoteViews(getPackageName(),R.layout.appwidget_layout);
           remoteViews.removeAllViews(R.id.ll_child_views);
            if(j < numOfUsers) {
-               Log.e("WidgetService","adding view:j"+j);
+               Log.e("WidgetService","adding view:j:"+j);
                 User user = userArrayList.get(j);
                 Log.e("WidgetService","username:"+ user.getUsername());
                 RemoteViews childView = new RemoteViews(getPackageName(), R.layout.appwidget_listview_title);
                 childView.setTextViewText(R.id.tv_appwidget_1,user.getUsername());
-                childView.setTextViewText(R.id.tv_appwidget_2,"10");
-                remoteViews.addView(R.id.ll_widget_layout, childView);
+                childView.setTextViewText(R.id.tv_appwidget_2,user.getHighScore().toString());
+                remoteViews.addView(R.id.ll_child_views, childView);
                j++;
             }
             else {

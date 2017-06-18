@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.widget.TextView;
@@ -31,6 +32,7 @@ public class GameActivity extends AppCompatActivity implements OnGameFragmentCha
         setContentView(R.layout.activity_game);
         Bundle userBundle = getIntent().getExtras();
         mCurrentUser = userBundle.getParcelable("com.capstone.multiplicationwizard.model.user");
+        Log.e("GameActivity","onCreate username:"+mCurrentUser.getUsername());
     }
 
     @Override
