@@ -4,6 +4,11 @@ import android.app.Service;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.IBinder;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 import android.widget.TextView;
@@ -26,8 +31,9 @@ public class WidgetService extends RemoteViewsService {
     }
     class WidgetViewFactory implements RemoteViewsFactory {
 
+
         ArrayList<User> userArrayList = new ArrayList<User>();
-        int numOfUsers;
+        int numOfUsers = 1;
 
         public WidgetViewFactory() {
         }
@@ -39,7 +45,7 @@ public class WidgetService extends RemoteViewsService {
 
         @Override
         public RemoteViews getLoadingView() {
-            return null;
+           return null;
         }
 
         @Override
@@ -77,20 +83,31 @@ public class WidgetService extends RemoteViewsService {
 
         @Override
         public int getCount() {
-            return numOfUsers;
+            Log.e("WidgetService","getCount numOfUSers:"+numOfUsers);
+            return 1;
         }
 
         @Override
         public RemoteViews getViewAt(int i) {
-            if(i < numOfUsers) {
-                User user = userArrayList.get(i);
-                RemoteViews remoteViews = new RemoteViews(getPackageName(),R.layout.appwidget_layout);
-                remoteViews.setTextViewText(R.id.tv_appwidget_1,user.getUsername());
-                remoteViews.setTextViewText(R.id.tv_appwidget_2,user.getHighScore().toString());
-
-                return remoteViews;
+            Log.e("WidgetService","i:"+i);
+            int j = 0;
+          RemoteViews remoteViews = new RemoteViews(getPackageName(),R.layout.appwidget_layout);
+          remoteViews.removeAllViews(R.id.ll_child_views);
+           if(j < numOfUsers) {
+               Log.e("WidgetService","adding view:j"+j);
+                User user = userArrayList.get(j);
+                Log.e("WidgetService","username:"+ user.getUsername());
+                RemoteViews childView = new RemoteViews(getPackageName(), R.layout.appwidget_listview_title);
+                childView.setTextViewText(R.id.tv_appwidget_1,user.getUsername());
+                childView.setTextViewText(R.id.tv_appwidget_2,"10");
+                remoteViews.addView(R.id.ll_widget_layout, childView);
+               j++;
             }
-            return null;
+            else {
+               RemoteViews childView = new RemoteViews(getPackageName(),R.layout.appwidget_nousers);
+               remoteViews.addView(R.id.ll_child_views, childView);
+           }
+            return remoteViews;
         }
 
         @Override

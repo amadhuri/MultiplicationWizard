@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/ll_wl_userlist"
+    android:orientation="horizontal"
+    android:padding="20dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_appwidget_1"
+        android:textSize="@dimen/text_size_large"
+        android:textColor="@android:color/white" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="right"
+        android:id="@+id/tv_appwidget_2"
+        android:textSize="@dimen/text_size_large"
+        android:textColor="@android:color/white"/>
+</LinearLayout>
