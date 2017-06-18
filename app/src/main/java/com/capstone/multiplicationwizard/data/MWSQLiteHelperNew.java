@@ -90,9 +90,9 @@ public class MWSQLiteHelperNew extends SQLiteOpenHelper
         Cursor cursor = db.query(TABLE_USER,null,null,null,null,null,null);
         return cursor;
     }
-    public Cursor getScores() {
+    public Cursor getScores(String[] mProjection, String mSelClause, String[] mSelArgs) {
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.query(TABLE_SCORE,null,null,null,null,null,null);
+        Cursor cursor = db.query(TABLE_SCORE,mProjection,mSelClause,mSelArgs,null,null,null);
         return cursor;
     }
     public Cursor getUserScores() {

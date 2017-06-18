@@ -41,12 +41,12 @@ public class MWContentProvider extends ContentProvider {
     }
 
     @Override
-    public Cursor query(Uri uri, String[] strings, String s, String[] strings1, String s1) {
+    public Cursor query(Uri uri, String[] projection, String selectionClause, String[] mSelArgs, String s1) {
         switch(sURIMatcher.match(uri)) {
             case USERS:
                 return mHelper.getUsers();
             case SCORES:
-                return mHelper.getScores();
+                return mHelper.getScores(projection, selectionClause, mSelArgs);
             case USERS_SCORES:
                  return mHelper.getUserScores();
             default:
