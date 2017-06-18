@@ -17,10 +17,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.capstone.multiplicationwizard.BuildConfig;
 import com.capstone.multiplicationwizard.GameActivity;
 import com.capstone.multiplicationwizard.R;
+import com.capstone.multiplicationwizard.data.MWItemsContract;
 import com.capstone.multiplicationwizard.data.MWSQLiteHelperNew;
 import com.capstone.multiplicationwizard.model.Scores;
 import com.capstone.multiplicationwizard.model.User;
@@ -138,6 +140,11 @@ public class GameFragment extends Fragment {
         currentProblemNumber = getUserProblemNumber();
         userLevel = getUserGameLevel();
         userCurrentLevelScore = getUserCurrentLevelScore();
+        Toast.makeText(getContext(),mCurrentUser.getMaxLevel().toString(),Toast.LENGTH_LONG);
+        if(mCurrentUser.getMaxLevel() >= MWItemsContract.GAMELEVEL) {
+            Toast.makeText(getContext(),"Game Over. Good Job !",Toast.LENGTH_SHORT);
+            return;
+        }
         if (currentProblemNumber >= gameEndProblemNumber)
         {
             saveScores();

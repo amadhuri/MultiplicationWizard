@@ -51,7 +51,7 @@ public class GameActivity extends AppCompatActivity implements OnGameFragmentCha
         if (curFragment == R.id.game_level_fragment) {
             //Navigate from game level fragment to Game fragment
             GameFragment newFragment = new GameFragment();
-            newFragment.setCurrentUser(mCurrentUser);
+            newFragment.setCurrentUser(curUser);
             fragmentTransaction.add(R.id.fragmentParentViewGroup, newFragment);
             mCurrentFragment = (Fragment)newFragment;
         } else {
