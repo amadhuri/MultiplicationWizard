@@ -112,14 +112,6 @@ public class GameFragment extends Fragment {
     public void onAttach(Context context) {
 
         super.onAttach(context);
-
-
-        /*if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }*/
     }
 
     @Override
@@ -344,7 +336,7 @@ public class GameFragment extends Fragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        builder.setTitle("You are a MultiplicationWizard now.Keep working hard !");
+        builder.setTitle("Congratulataions.Keep working hard !");
         builder.setCancelable(false);
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
