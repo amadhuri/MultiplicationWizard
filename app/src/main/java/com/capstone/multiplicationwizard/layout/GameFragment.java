@@ -140,17 +140,17 @@ public class GameFragment extends Fragment {
         currentProblemNumber = getUserProblemNumber();
         userLevel = getUserGameLevel();
         userCurrentLevelScore = getUserCurrentLevelScore();
-        Toast.makeText(getContext(),mCurrentUser.getMaxLevel().toString(),Toast.LENGTH_LONG);
-        if(mCurrentUser.getMaxLevel() >= MWItemsContract.GAMELEVEL) {
-            Toast.makeText(getContext(),"Game Over. Good Job !",Toast.LENGTH_SHORT);
-            return;
-        }
         if (currentProblemNumber >= gameEndProblemNumber)
         {
             saveScores();
             if (userCurrentLevelScore > levelUpScore)
             {
-                showLevelUpDialog();
+                if(mCurrentUser.getMaxLevel() >= (MWItemsContract.GAMELEVEL - 1)) {
+                    showGameCompleteDialog();
+                }
+                else {
+                    showLevelUpDialog();
+                }
             }
             else {
                 showContinueDialog();
@@ -328,6 +328,25 @@ public class GameFragment extends Fragment {
         builder.setCancelable(false);
         builder.setTitle("Sorry you failed the level.  Try Again");
         builder.setPositiveButton("Try Again", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(getActivity().getApplicationContext(), GameActivity.class);
+                intent.putExtra("com.capstone.multiplicationwizard.model.user",mCurrentUser);
+                startActivity(intent);
+                getActivity().onBackPressed();
+            }
+        });
+        builder.create().show();
+
+    }
+    private void showGameCompleteDialog(){
+
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+        builder.setTitle("You are a MultiplicationWizard now.Keep working hard !");
+        builder.setCancelable(false);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(getActivity().getApplicationContext(), GameActivity.class);
