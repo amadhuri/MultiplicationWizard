@@ -256,8 +256,72 @@ public class GameFragment extends Fragment {
     }
     // Based on the user level we want to get the left multiple and right multiple
     private Pair<Integer,Integer> getUserGameLevel() {
-        Integer x =3;
-        Integer y =9;
+        Integer x,y;
+        switch(mCurrentUser.getMaxLevel()) {
+
+            case 0:
+                x = 3;
+                y = 9;
+                break;
+
+            case 1:
+                x = 4;
+                y = 9;
+                break;
+            case 2:
+                x = 5;
+                y = 9;
+                break;
+
+            case 3:
+                x = 6;
+                y = 9;
+                break;
+            case 4:
+                x = 7;
+                y = 9;
+                break;
+
+            case 5:
+                x = 8;
+                y = 9;
+                break;
+
+            case 6:
+                x = 9;
+                y = 9;
+                break;
+
+            case 7:
+                x = 10;
+                y = 9;
+                break;
+
+            case 8:
+                x = 11;
+                y = 12;
+                break;
+
+            case 9:
+                x = 12;
+                y = 13;
+                break;
+
+            case 10:
+                x = 13;
+                y = 14;
+                break;
+
+            case 11:
+                x = 14;
+                y = 16;
+                break;
+            default:
+                x = 14;
+                y = 17;
+
+
+        }
         Pair<Integer,Integer> pair = new Pair<Integer,Integer>(x,y);
         return pair;
     }
