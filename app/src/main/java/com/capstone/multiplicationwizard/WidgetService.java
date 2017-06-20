@@ -104,6 +104,7 @@ public class WidgetService extends RemoteViewsService {
         public RemoteViews getViewAt(int i) {
             Log.e("WidgetService","i:"+i);
             int j = 0;
+
             RemoteViews remoteViews = new RemoteViews(getPackageName(),R.layout.appwidget_layout);
             remoteViews.removeAllViews(R.id.ll_child_views);
             if(j < numOfUsers) {
@@ -115,6 +116,7 @@ public class WidgetService extends RemoteViewsService {
                 childView.setTextViewText(R.id.tv_appwidget_2,user.getHighScore().toString());
                 remoteViews.addView(R.id.ll_child_views, childView);
                 j++;
+
             }
             else {
                 RemoteViews childView = new RemoteViews(getPackageName(),R.layout.appwidget_nousers);
