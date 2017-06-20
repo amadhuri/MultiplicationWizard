@@ -99,7 +99,7 @@ public class MWSQLiteHelperNew extends SQLiteOpenHelper
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
         SQLiteDatabase db = getReadableDatabase();
         queryBuilder.setTables(TABLE_SCORE);
-        Cursor cursor = db.rawQuery("select users.username, scores.score from users INNER JOIN scores on users.ID = scores.user_id", null);
+        Cursor cursor = db.rawQuery("select ut.username, sum(st.score) from users ut left outer JOIN scores st on ut.ID = st.user_id group by ut.ID,ut.username", null);
         if (cursor == null)
             Log.e("MSSQLiteHelperNew","cursor is null");
         else if(cursor.getCount() == 0)
