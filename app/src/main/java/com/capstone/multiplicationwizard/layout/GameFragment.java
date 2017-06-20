@@ -1,6 +1,8 @@
 package com.capstone.multiplicationwizard.layout;
 
 import android.app.Dialog;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -21,6 +23,7 @@ import android.widget.Toast;
 
 import com.capstone.multiplicationwizard.BuildConfig;
 import com.capstone.multiplicationwizard.GameActivity;
+import com.capstone.multiplicationwizard.MultiplicationWizardAppProvider;
 import com.capstone.multiplicationwizard.R;
 import com.capstone.multiplicationwizard.data.MWItemsContract;
 import com.capstone.multiplicationwizard.data.MWSQLiteHelperNew;
@@ -336,6 +339,7 @@ public class GameFragment extends Fragment {
 
         helperNew = new MWSQLiteHelperNew(getActivity());
         new SaveScoreAsyncTask(helperNew,mCurrentUser,getUserCurrentLevelScore()).execute(null,null,null);
+
     }
     private void showLevelUpDialog(){
 
@@ -450,7 +454,16 @@ public class GameFragment extends Fragment {
 
         @Override
         protected void onPostExecute(Void aVoid) {
+
             super.onPostExecute(aVoid);
+
+            AppWidgetManager widgetManager = AppWidgetManager.getInstance(context);
+            ComponentName widgetComponent = new ComponentName(context,MultiplicationWizardAppProvider.class);
+            int[] widgetIds = widgetManager.getAppWidgetIds(widgetComponent);
+            Intent update = new Intent();
+            update.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, widgetIds);
+            update.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+            context.sendBroadcast(update);
         }
 
         @Override
