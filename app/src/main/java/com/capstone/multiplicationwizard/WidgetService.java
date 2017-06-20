@@ -104,23 +104,23 @@ public class WidgetService extends RemoteViewsService {
         public RemoteViews getViewAt(int i) {
             Log.e("WidgetService","i:"+i);
             int j = 0;
-          RemoteViews remoteViews = new RemoteViews(getPackageName(),R.layout.appwidget_layout);
-          remoteViews.removeAllViews(R.id.ll_child_views);
-           if(j < numOfUsers) {
-               Log.e("WidgetService","adding view:j:"+j);
+            RemoteViews remoteViews = new RemoteViews(getPackageName(),R.layout.appwidget_layout);
+            remoteViews.removeAllViews(R.id.ll_child_views);
+            if(j < numOfUsers) {
+                Log.e("WidgetService","adding view:j:"+j);
                 User user = userArrayList.get(j);
                 Log.e("WidgetService","username:"+ user.getUsername());
                 RemoteViews childView = new RemoteViews(getPackageName(), R.layout.appwidget_listview_title);
                 childView.setTextViewText(R.id.tv_appwidget_1,user.getUsername());
                 childView.setTextViewText(R.id.tv_appwidget_2,user.getHighScore().toString());
                 remoteViews.addView(R.id.ll_child_views, childView);
-               j++;
+                j++;
             }
             else {
-               RemoteViews childView = new RemoteViews(getPackageName(),R.layout.appwidget_nousers);
-               remoteViews.addView(R.id.ll_child_views, childView);
+                RemoteViews childView = new RemoteViews(getPackageName(),R.layout.appwidget_nousers);
+                remoteViews.addView(R.id.ll_child_views, childView);
            }
-            return remoteViews;
+           return remoteViews;
         }
 
         @Override

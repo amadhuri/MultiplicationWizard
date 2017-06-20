@@ -33,6 +33,7 @@ import com.capstone.multiplicationwizard.utils.RandomNumberGenerator;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
 
@@ -464,6 +465,12 @@ public class GameFragment extends Fragment {
             update.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, widgetIds);
             update.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
             context.sendBroadcast(update);
+            FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(context);
+
+            Bundle params = new Bundle();
+            params.putString("user name", userInfo.getUsername());
+            params.putString("user level", userInfo.getMaxLevel().toString());
+            firebaseAnalytics.logEvent("share_image", params);
         }
 
         @Override
