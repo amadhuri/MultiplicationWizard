@@ -162,7 +162,7 @@ public class GameFragment extends Fragment {
             textViewP1.setText(p1.toString());
             textViewP2.setText(p2.toString());
             currentProblemAnswer = p1 * p2;
-            currentAnswerSlot = randomNumberGenerator.getRandomNumberTillValue(3);
+            currentAnswerSlot = randomNumberGenerator.getRandomNumberTillValue(5)-1;
             loadAnswerWidgets();
         }
     }
@@ -265,25 +265,25 @@ public class GameFragment extends Fragment {
 
             case 0:
                 x = 3;
-                y = 9;
+                y = 4;
                 break;
 
             case 1:
                 x = 4;
-                y = 9;
+                y = 5;
                 break;
             case 2:
                 x = 5;
-                y = 9;
+                y = 6;
                 break;
 
             case 3:
                 x = 6;
-                y = 9;
+                y = 7;
                 break;
             case 4:
                 x = 7;
-                y = 9;
+                y = 8;
                 break;
 
             case 5:
@@ -293,12 +293,12 @@ public class GameFragment extends Fragment {
 
             case 6:
                 x = 9;
-                y = 9;
+                y = 10;
                 break;
 
             case 7:
                 x = 10;
-                y = 9;
+                y = 11;
                 break;
 
             case 8:
@@ -318,7 +318,7 @@ public class GameFragment extends Fragment {
 
             case 11:
                 x = 14;
-                y = 16;
+                y = 15;
                 break;
             default:
                 x = 14;

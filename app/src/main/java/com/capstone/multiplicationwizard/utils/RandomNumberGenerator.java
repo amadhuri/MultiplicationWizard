@@ -26,8 +26,8 @@ public class RandomNumberGenerator  {
         for (int i = 0; i < PAIRCOUNT; i++) {
             Integer x;
             Integer y;
-            x = rand.nextInt(leftMultiple)+2;
-            y = rand.nextInt(rightMultiple)+2;
+            x = rand.nextInt(leftMultiple)+leftMultiple;
+            y = rand.nextInt(rightMultiple)+rightMultiple;
             Pair<Integer,Integer> pair = new Pair<Integer,Integer>(x,y);
             multArrayProblemList.add(pair);
         }
