@@ -23,7 +23,7 @@
         android:layout_centerHorizontal="true"
         android:gravity="center_horizontal"
         android:layout_below="@id/iv_level_up_img"/>
-    <TextView
+    <!--<TextView
         android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:id="@+id/tv_level_score"
@@ -32,12 +32,12 @@
         android:textSize="18sp"
         android:layout_centerHorizontal="true"
         android:gravity="center_horizontal"
-        android:layout_below="@id/tv_level_up_str"/>
+        android:layout_below="@id/tv_level_up_str"/>-->
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/btn_positive_txt"
-        android:layout_below="@id/tv_level_score"
+        android:layout_below="@id/tv_level_up_str"
         android:textColor="@color/colorPrimaryDarkOrange"
         android:background="@android:color/white"
         android:text="Continue"

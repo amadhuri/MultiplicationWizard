@@ -60,8 +60,8 @@ public class GameFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private View mRootView = null;
     private User mCurrentUser = null;
-    private final int levelUpScore = 20;
-    private final int gameEndProblemNumber = 5;
+    private final int levelUpScore = 80;
+    private final int gameEndProblemNumber = 20;
     private InterstitialAd mInterstitialAd = null;
 
     MWSQLiteHelperNew helperNew;
