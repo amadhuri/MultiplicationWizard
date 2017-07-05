@@ -6,13 +6,13 @@
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
     </style>
+
     <style name="AppThemeBlue" parent="AppTheme.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimaryBlue</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkBlue</item>
         <item name="colorAccent">@color/colorAccentBlue</item>
     </style>
-
 
 
     <style name="AppThemeOrange" parent="AppTheme.NoActionBar">

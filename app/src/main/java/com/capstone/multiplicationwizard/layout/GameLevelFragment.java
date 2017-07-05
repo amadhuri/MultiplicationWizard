@@ -34,10 +34,11 @@ import com.marcoscg.headerdialog.HeaderDialog;
 
 import java.util.ArrayList;
 
+import static android.text.TextUtils.concat;
+
 /**
  * A fragment representing a list of Items.
  * <p/>
- *
  */
 public class GameLevelFragment extends Fragment {
 
@@ -45,14 +46,14 @@ public class GameLevelFragment extends Fragment {
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
     private int mColumnCount = 1;
-    private GridView  mGridView = null;
+    private GridView mGridView = null;
     private User mCurrentUser = null;
     private GameLevelAdapter gameLevelAdapter = null;
     private OnGameFragmentChangeListener mListener;
-    TextView  tv_child_name = null;
+    TextView tv_child_name = null;
     TextView tv_child_point = null;
     final ArrayList<Integer> imageItems = new ArrayList<>(12);
-    ArrayList<Scores>  arr_scores = new ArrayList<>();
+    ArrayList<Scores> arr_scores = new ArrayList<>();
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -86,9 +87,9 @@ public class GameLevelFragment extends Fragment {
 
 
         View view = inflater.inflate(R.layout.fragment_game_level, container, false);
-        mGridView = (GridView)view.findViewById(R.id.level_grid_list);
-        tv_child_name = (TextView)view.findViewById(R.id.tv_levels_child_name);
-        tv_child_point = (TextView)view.findViewById(R.id.tv_levels_child_point);
+        mGridView = (GridView) view.findViewById(R.id.level_grid_list);
+        tv_child_name = (TextView) view.findViewById(R.id.tv_levels_child_name);
+        tv_child_point = (TextView) view.findViewById(R.id.tv_levels_child_point);
 
         return view;
     }
@@ -107,30 +108,29 @@ public class GameLevelFragment extends Fragment {
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState){
+    public void onActivityCreated(Bundle savedInstanceState) {
 
         super.onActivityCreated(savedInstanceState);
-        final GameActivity activity = (GameActivity)getActivity();
+        final GameActivity activity = (GameActivity) getActivity();
         mCurrentUser = activity.mCurrentUser;
-        if(mCurrentUser == null) {
+        if (mCurrentUser == null) {
             return;
         }
         Integer score = 0;
         tv_child_name.setText(mCurrentUser.getUsername());
         String[] mProjection = new String[1];
         mProjection[0] = MWItemsContract.SCORE;
-        String mSelectionCause = MWItemsContract.USER_ID+" = ?";
+        String mSelectionCause = MWItemsContract.USER_ID + " = ?";
         String[] mSelectionArgs = new String[1];
-        mSelectionArgs[0]=mCurrentUser.getUserId();
+        mSelectionArgs[0] = mCurrentUser.getUserId();
         Cursor cursor = activity.getContentResolver()
-                .query(MWItemsContract.SCORES_CONTENT_URI,mProjection,
-                        mSelectionCause,mSelectionArgs,null);
-        if(cursor == null) {
+                .query(MWItemsContract.SCORES_CONTENT_URI, mProjection,
+                        mSelectionCause, mSelectionArgs, null);
+        if (cursor == null) {
             return;
         }
         cursor.moveToFirst();
-        for (int i = 0;i < cursor.getCount() ; i++)
-        {
+        for (int i = 0; i < cursor.getCount(); i++) {
             score += cursor.getInt(cursor.getColumnIndex(MWItemsContract.SCORE));
             cursor.moveToNext();
         }
@@ -144,12 +144,12 @@ public class GameLevelFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
                 double levelscore = 0;
-                if(imageItems.get(i) > 0)
-                {
+                if (imageItems.get(i) > 0) {
                     mCurrentUser.setMaxLevel(i);
                     Integer selectedLevel = (Integer) adapterView.getAdapter().getItem(i);
                     int titleColor;
-                    String titleText = "Level ".concat(selectedLevel.toString());
+                    String level = getString(R.string.level);
+                    String titleText = level.concat(selectedLevel.toString());
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         titleColor = getResources().getColor(R.color.colorAccentOrange, getActivity().getTheme());
                     } else {
@@ -161,18 +161,18 @@ public class GameLevelFragment extends Fragment {
                     dialog.setContentView(R.layout.custom_dialog_1);
                     dialog.show();
 
-                    if (arr_scores.size()<=i) {
+                    if (arr_scores.size() <= i) {
                         levelscore = 0;
-                    }else {
+                    } else {
                         levelscore = Double.parseDouble(arr_scores.get(i).getScore());
                     }
-                    ((TextView) dialog.findViewById(R.id.iv_level_circle)).setText("Level " + (i + 1));
-                    ((TextView) dialog.findViewById(R.id.tv_cont_str)).setText("Your Score is " + levelscore);
+                    ((TextView) dialog.findViewById(R.id.iv_level_circle)).setText(level + (i + 1));
+                    ((TextView) dialog.findViewById(R.id.tv_cont_str)).setText(getString(R.string.your_score) + levelscore);
 
                     RatingBar iv_level_star_img = (RatingBar) dialog.findViewById(R.id.iv_level_star_img);
 
-                    double score = ((levelscore /  MWItemsContract.out_off) ) * 100;
-                    double stars = score/20;
+                    double score = ((levelscore / MWItemsContract.out_off)) * 100;
+                    double stars = score / 20;
                     iv_level_star_img.setRating(Float.parseFloat(String.valueOf(stars)));
                     Button positiveButton = (Button) dialog.findViewById(R.id.btn_positive_txt);
                     positiveButton.setOnClickListener(new View.OnClickListener() {
@@ -191,14 +191,12 @@ public class GameLevelFragment extends Fragment {
                         }
                     });
 
+                } else {
+                    Toast.makeText(activity, getString(R.string.level_locked), Toast.LENGTH_SHORT).show();
                 }
-                else
-                {
-                    Toast.makeText(activity, "Level Is Locked", Toast.LENGTH_SHORT).show();
-                }
-                }
+            }
 
-            });
+        });
 
 
     }
@@ -209,55 +207,45 @@ public class GameLevelFragment extends Fragment {
     }
 
     // Prepare some dummy data for gridview
-    private ArrayList<Integer> getData()
-    {
-        int maxLevel =0;
+    private ArrayList<Integer> getData() {
+        int maxLevel = 0;
         String[] mProjection = new String[3];
         mProjection[0] = MWItemsContract.SCORE;
         mProjection[1] = MWItemsContract.LEVEL;
-        String mSelectionCause = MWItemsContract.USER_ID+" = ?";
+        String mSelectionCause = MWItemsContract.USER_ID + " = ?";
         String[] mSelectionArgs = new String[1];
-        mSelectionArgs[0]=mCurrentUser.getUserId();
+        mSelectionArgs[0] = mCurrentUser.getUserId();
 
         //mSelectionArgs[1]= MWItemsContract.LEVEL_UP_SCORE;
         Cursor cursor = getContext().getContentResolver()
-                .query(MWItemsContract.SCORES_CONTENT_URI,mProjection,
-                        mSelectionCause,mSelectionArgs,null);
-        if(cursor == null) {
+                .query(MWItemsContract.SCORES_CONTENT_URI, mProjection,
+                        mSelectionCause, mSelectionArgs, null);
+        if (cursor == null) {
             return null;
         }
         arr_scores.clear();
         Integer val = 0;
         Integer level = 0;
         cursor.moveToFirst();
-        for (int i = 0;i < cursor.getCount() ; i++)
-        {
+        for (int i = 0; i < cursor.getCount(); i++) {
             val = cursor.getInt(cursor.getColumnIndex(MWItemsContract.SCORE));
             level = cursor.getInt(cursor.getColumnIndex(MWItemsContract.LEVEL));
-            Scores scores = new Scores(mCurrentUser.getUserId(),level.toString(),val.toString());
+            Scores scores = new Scores(mCurrentUser.getUserId(), level.toString(), val.toString());
             arr_scores.add(scores);
             cursor.moveToNext();
         }
         cursor.close();
-        if(arr_scores.size() == 0)
-        {
+        if (arr_scores.size() == 0) {
             maxLevel = 0;
-        }
-        else
-        {
+        } else {
             maxLevel = Integer.valueOf(level);
-            if (Double.parseDouble(arr_scores.get(maxLevel).getScore())>= 25)
+            if (Double.parseDouble(arr_scores.get(maxLevel).getScore()) >= 25)
                 maxLevel++;
         }
-        for (int i=0; i<MWItemsContract.GAMELEVEL;i++)
-        {
-            if(i <=maxLevel )
-            {
+        for (int i = 0; i < MWItemsContract.GAMELEVEL; i++) {
+            if (i <= maxLevel) {
                 imageItems.add(1);
-            }
-
-            else
-            {
+            } else {
                 imageItems.add(0);
             }
 

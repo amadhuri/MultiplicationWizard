@@ -26,6 +26,7 @@ public class User implements Parcelable {
     /**
      * Use when reconstructing User object from parcel
      * This will be used only by the 'CREATOR'
+     *
      * @param in a parcel to read this object
      */
     public User(Parcel in) {
@@ -53,7 +54,7 @@ public class User implements Parcelable {
     /**
      * This field is needed for Android to be able to
      * create new objects, individually or as arrays
-     *
+     * <p>
      * If you don’t do that, Android framework will through exception
      * Parcelable protocol requires a Parcelable.Creator object called CREATOR
      */
@@ -110,12 +111,20 @@ public class User implements Parcelable {
             this.curScore = score;
         }
 
-        public Integer getCurLevel() { return curLevel;}
+        public Integer getCurLevel() {
+            return curLevel;
+        }
 
-        public void setCurLevel(int curLevel) {curLevel = new Integer(curLevel);}
+        public void setCurLevel(int curLevel) {
+            curLevel = new Integer(curLevel);
+        }
 
-        public Integer getCurScore() { return curScore;}
+        public Integer getCurScore() {
+            return curScore;
+        }
 
-        public void setCurScore(int score) { curScore = new Integer(curScore);}
+        public void setCurScore(int score) {
+            curScore = new Integer(curScore);
+        }
     }
 }

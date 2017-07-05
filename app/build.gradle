@@ -4,7 +4,7 @@ android {
 
     // Create a variable called keystorePropertiesFile, and initialize it to your
     // keystore.properties file, in the rootProject folder.
-    if(rootProject.file("keystore.properties").exists()) {
+    if (rootProject.file("keystore.properties").exists()) {
 
         def keystorePropertiesFile = rootProject.file("keystore.properties")
 
@@ -40,8 +40,7 @@ android {
             }
         }
 
-    }
-    else {
+    } else {
         buildTypes {
             release {
                 minifyEnabled false

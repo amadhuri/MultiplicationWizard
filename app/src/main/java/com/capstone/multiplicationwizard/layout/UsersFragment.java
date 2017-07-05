@@ -35,17 +35,16 @@ public class UsersFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
-    private void setUserAdapterItems()
-    {
+    private void setUserAdapterItems() {
         ArrayList<User> arr_users = new ArrayList<>();
 
         Cursor cursor = getActivity().getContentResolver().query(MWItemsContract.USERS_CONTENT_URI,
-                            null,null,null,null,null);
-        if(cursor == null) {
+                null, null, null, null, null);
+        if (cursor == null) {
             return;
         }
         cursor.moveToFirst();
-        for(int i =0; i < cursor.getCount(); i++) {
+        for (int i = 0; i < cursor.getCount(); i++) {
             User user = new User();
             String username = cursor.getString(cursor.getColumnIndex("username"));
             Integer id = cursor.getInt(cursor.getColumnIndex("ID"));
@@ -55,7 +54,7 @@ public class UsersFragment extends Fragment {
             cursor.moveToNext();
         }
         cursor.close();
-        for(User user: arr_users) {
+        for (User user : arr_users) {
             usersAdapter.add(user);
         }
     }
@@ -65,7 +64,7 @@ public class UsersFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         ArrayList<User> arr_users = new ArrayList<>();
-        usersAdapter = new UsersAdapter(this.getContext(),arr_users);
+        usersAdapter = new UsersAdapter(this.getContext(), arr_users);
         setUserAdapterItems();
         mRootView = inflater.inflate(R.layout.fragment_users, container, false);
         final ListView childListView = (ListView) mRootView.findViewById(R.id.childLV);
@@ -73,9 +72,9 @@ public class UsersFragment extends Fragment {
         childListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                User currentUser = (User)adapterView.getAdapter().getItem(i);
+                User currentUser = (User) adapterView.getAdapter().getItem(i);
                 Intent intent = new Intent(getActivity().getApplicationContext(), GameActivity.class);
-                intent.putExtra("com.capstone.multiplicationwizard.model.user",currentUser);
+                intent.putExtra("com.capstone.multiplicationwizard.model.user", currentUser);
                 startActivity(intent);
                 return;
 
@@ -86,21 +85,19 @@ public class UsersFragment extends Fragment {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                User currentUser = (User)adapterView.getAdapter().getItem(i);
-                String mSelectionCause = MWItemsContract.USERS_BASE_PATH+"=?";
+                User currentUser = (User) adapterView.getAdapter().getItem(i);
+                String mSelectionCause = MWItemsContract.USERS_BASE_PATH + "=?";
                 String[] mSelectionArgs = new String[1];
-                mSelectionArgs[0]=currentUser.getUserId();
+                mSelectionArgs[0] = currentUser.getUserId();
                 int retUser = getActivity().getContentResolver().delete(MWItemsContract.USERS_CONTENT_URI,
-                                            mSelectionCause,mSelectionArgs);
+                        mSelectionCause, mSelectionArgs);
 
                 int retScores = getActivity().getContentResolver().delete(MWItemsContract.SCORES_CONTENT_URI,
-                        mSelectionCause,mSelectionArgs);
-                if(retUser == 0 && retScores == 0) {
+                        mSelectionCause, mSelectionArgs);
+                if (retUser == 0 && retScores == 0) {
                     usersAdapter.remove(currentUser);
                     usersAdapter.notifyDataSetChanged();
-                }
-                else
-                {
+                } else {
                     Toast.makeText(getActivity(), "User not Deleted", Toast.LENGTH_SHORT).show();
                 }
                 return false;
@@ -114,19 +111,16 @@ public class UsersFragment extends Fragment {
             public void onClick(View view) {
 
                 Cursor cursor = getActivity().getContentResolver().query(MWItemsContract.USERS_CONTENT_URI,
-                                    null,null,null,null,null);
-                if(cursor == null) {
+                        null, null, null, null, null);
+                if (cursor == null) {
                     return;
-                }
-                else if(cursor.getCount() < MWItemsContract.MAX_USERS)
-                {
+                } else if (cursor.getCount() < MWItemsContract.MAX_USERS) {
                     mListener.onFragmentAddNewUser();
-                }
-                else {
+                } else {
                     Toast.makeText(getActivity(),
-                                 "Maximum"+MWItemsContract.MAX_USERS+
-                                 " Users can be added\nLong Press on user to delete"
-                                 , Toast.LENGTH_SHORT).show();
+                            "Maximum" + MWItemsContract.MAX_USERS +
+                                    " Users can be added\nLong Press on user to delete"
+                            , Toast.LENGTH_SHORT).show();
                 }
 
             }

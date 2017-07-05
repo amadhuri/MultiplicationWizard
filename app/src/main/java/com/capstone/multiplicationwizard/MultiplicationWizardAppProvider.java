@@ -12,13 +12,13 @@ import android.widget.RemoteViews;
 public class MultiplicationWizardAppProvider extends AppWidgetProvider {
 
     static void updateAppWidgetListView(Context context, AppWidgetManager appWidgetManager,
-                                int appWidgetId) {
+                                        int appWidgetId) {
 
         RemoteViews views = new RemoteViews(context.getPackageName(),
                 R.layout.multiplication_wizard_app_provider);
-        Intent svcIntent = new Intent(context,WidgetService.class);
-        svcIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,appWidgetId);
-        views.setRemoteAdapter(R.id.appwidget_list_view,svcIntent);
+        Intent svcIntent = new Intent(context, WidgetService.class);
+        svcIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+        views.setRemoteAdapter(R.id.appwidget_list_view, svcIntent);
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }

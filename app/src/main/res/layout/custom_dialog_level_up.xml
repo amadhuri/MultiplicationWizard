@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="280dp"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
 
     <ImageView
         android:layout_width="@dimen/level_up_dialog_arrow_img_width"
         android:layout_height="@dimen/level_up_dialog_arrow_img_height"
         android:src="@drawable/level_up"
         android:layout_centerHorizontal="true"
-        android:id="@+id/iv_level_up_img"
-       />
+        android:id="@+id/iv_level_up_img" />
+
     <TextView
         android:layout_width="280dp"
         android:layout_height="wrap_content"
@@ -22,7 +20,7 @@
         android:textSize="24sp"
         android:layout_centerHorizontal="true"
         android:gravity="center_horizontal"
-        android:layout_below="@id/iv_level_up_img"/>
+        android:layout_below="@id/iv_level_up_img" />
     <!--<TextView
         android:layout_width="280dp"
         android:layout_height="wrap_content"
@@ -41,7 +39,7 @@
         android:textColor="@color/colorPrimaryDarkOrange"
         android:background="@android:color/white"
         android:text="Continue"
-        android:layout_alignParentRight="true"/>
+        android:layout_alignParentRight="true" />
 
     <!--<Button
         android:layout_width="wrap_content"

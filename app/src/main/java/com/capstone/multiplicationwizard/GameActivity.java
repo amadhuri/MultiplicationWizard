@@ -19,9 +19,10 @@ import com.capstone.multiplicationwizard.layout.GameLevelFragment;
 import com.capstone.multiplicationwizard.layout.NewUserFragment;
 import com.capstone.multiplicationwizard.model.User;
 import com.capstone.multiplicationwizard.utils.RandomNumberGenerator;
+
 import java.util.ArrayList;
 
-public class GameActivity extends AppCompatActivity implements OnGameFragmentChangeListener{
+public class GameActivity extends AppCompatActivity implements OnGameFragmentChangeListener {
     public Fragment mCurrentFragment = null;
     public User mCurrentUser = null;
 
@@ -32,7 +33,7 @@ public class GameActivity extends AppCompatActivity implements OnGameFragmentCha
         setContentView(R.layout.activity_game);
         Bundle userBundle = getIntent().getExtras();
         mCurrentUser = userBundle.getParcelable("com.capstone.multiplicationwizard.model.user");
-        Log.e("GameActivity","onCreate username:"+mCurrentUser.getUsername());
+        Log.e("GameActivity", "onCreate username:" + mCurrentUser.getUsername());
     }
 
     @Override
@@ -47,21 +48,21 @@ public class GameActivity extends AppCompatActivity implements OnGameFragmentCha
         mCurrentFragment = fragmentManager.findFragmentById(curFragment);
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.detach(mCurrentFragment);
-        fragmentTransaction.setCustomAnimations(R.anim.slide_up,0,0, 0);
+        fragmentTransaction.setCustomAnimations(R.anim.slide_up, 0, 0, 0);
         if (curFragment == R.id.game_level_fragment) {
             //Navigate from game level fragment to Game fragment
             GameFragment newFragment = new GameFragment();
             newFragment.setCurrentUser(curUser);
             fragmentTransaction.add(R.id.fragmentParentViewGroup, newFragment);
-            mCurrentFragment = (Fragment)newFragment;
+            mCurrentFragment = (Fragment) newFragment;
         } else {
             //Navigate from Game fragment to game level fragment
             GameLevelFragment newFragment = new GameLevelFragment();
             fragmentTransaction.add(R.id.fragmentParentViewGroup, newFragment);
-            mCurrentFragment = (Fragment)newFragment;
+            mCurrentFragment = (Fragment) newFragment;
         }
         fragmentTransaction.commit();
         return;
     }
- }
+}
 

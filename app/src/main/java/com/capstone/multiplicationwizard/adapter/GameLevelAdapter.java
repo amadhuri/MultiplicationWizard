@@ -55,13 +55,12 @@ public class GameLevelAdapter extends BaseAdapter {
         if (row == null) {
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
             row = inflater.inflate(layoutResourceId, parent, false);
-            Integer level = (Integer)data.get(position);
-            if(level > 0)
-            {
+            Integer level = (Integer) data.get(position);
+            if (level > 0) {
                 row.findViewById(R.id.iv_lock).setVisibility(View.GONE);
-                TextView tv_level = (TextView)row.findViewById(R.id.tv_level);
+                TextView tv_level = (TextView) row.findViewById(R.id.tv_level);
                 tv_level.setVisibility(View.VISIBLE);
-                tv_level.setText(""+(position+1));
+                tv_level.setText("" + (position + 1));
             }
         }
         return row;

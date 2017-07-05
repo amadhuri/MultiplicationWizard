@@ -46,8 +46,8 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 public class GameFragment extends Fragment {
-    private ArrayList<Pair<Integer,Integer>> problemList;
-    private Pair<Integer,Integer>userLevel;
+    private ArrayList<Pair<Integer, Integer>> problemList;
+    private Pair<Integer, Integer> userLevel;
     private Integer userCurrentLevelScore = 0;
     private Integer currentProblemNumber = 0;
     private Integer currentProblemAnswer = -1;
@@ -74,7 +74,7 @@ public class GameFragment extends Fragment {
     }
 
 
-    public void setCurrentUser(User currentUser){
+    public void setCurrentUser(User currentUser) {
         mCurrentUser = currentUser;
     }
 
@@ -87,19 +87,19 @@ public class GameFragment extends Fragment {
         mRootView = inflater.inflate(R.layout.fragment_game, container, false);
 
         context = getActivity().getApplicationContext();
-        vib = (Vibrator)context.getSystemService(context.VIBRATOR_SERVICE);
+        vib = (Vibrator) context.getSystemService(context.VIBRATOR_SERVICE);
         mInterstitialAd = new InterstitialAd(context);
         mInterstitialAd.setAdUnitId(getResources().getString(R.string.banner_ad_unit_id));
         AdRequest adRequest = new AdRequest.Builder()
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                 .build();
         mInterstitialAd.loadAd(adRequest);
-        mediaPlayer = MediaPlayer.create(context,R.raw.clap);
-        randomNumberGenerator= new RandomNumberGenerator();
+        mediaPlayer = MediaPlayer.create(context, R.raw.clap);
+        randomNumberGenerator = new RandomNumberGenerator();
 
         try {
             mediaPlayer.prepareAsync();
-        }catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return mRootView;
@@ -131,24 +131,21 @@ public class GameFragment extends Fragment {
 
 
     }
+
     private void loadWidgets() {
 
         currentProblemNumber = getUserProblemNumber();
         userLevel = getUserGameLevel();
         userCurrentLevelScore = getUserCurrentLevelScore();
-        if (currentProblemNumber >= gameEndProblemNumber)
-        {
+        if (currentProblemNumber >= gameEndProblemNumber) {
             saveScores();
-            if (userCurrentLevelScore > levelUpScore)
-            {
-                if(mCurrentUser.getMaxLevel() >= (MWItemsContract.GAMELEVEL - 1)) {
+            if (userCurrentLevelScore > levelUpScore) {
+                if (mCurrentUser.getMaxLevel() >= (MWItemsContract.GAMELEVEL - 1)) {
                     showGameCompleteDialog();
-                }
-                else {
+                } else {
                     showLevelUpDialog();
                 }
-            }
-            else {
+            } else {
                 showContinueDialog();
             }
         } else {
@@ -162,16 +159,17 @@ public class GameFragment extends Fragment {
             textViewP1.setText(p1.toString());
             textViewP2.setText(p2.toString());
             currentProblemAnswer = p1 * p2;
-            currentAnswerSlot = randomNumberGenerator.getRandomNumberTillValue(5)-1;
+            currentAnswerSlot = randomNumberGenerator.getRandomNumberTillValue(5) - 1;
             loadAnswerWidgets();
         }
     }
+
     private void loadAnswerWidgets() {
         Integer tempValue;
-        TextView textViewS1 = (TextView)mRootView.findViewById(R.id.tv_s1);
-        TextView textViewS2 = (TextView)mRootView.findViewById(R.id.tv_s2);
-        TextView textViewS3 = (TextView)mRootView.findViewById(R.id.tv_s3);
-        TextView textViewS4 = (TextView)mRootView.findViewById(R.id.tv_s4);
+        TextView textViewS1 = (TextView) mRootView.findViewById(R.id.tv_s1);
+        TextView textViewS2 = (TextView) mRootView.findViewById(R.id.tv_s2);
+        TextView textViewS3 = (TextView) mRootView.findViewById(R.id.tv_s3);
+        TextView textViewS4 = (TextView) mRootView.findViewById(R.id.tv_s4);
 
         textViewS1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -198,7 +196,7 @@ public class GameFragment extends Fragment {
             }
         });
 
-        if(currentAnswerSlot  == 0) {
+        if (currentAnswerSlot == 0) {
             textViewS1.setText(currentProblemAnswer.toString());
             tempValue = currentProblemAnswer + randomNumberGenerator.getRandomNumberTillValue(5);
             textViewS2.setText(tempValue.toString());
@@ -206,8 +204,7 @@ public class GameFragment extends Fragment {
             textViewS3.setText(tempValue.toString());
             tempValue = currentProblemAnswer + randomNumberGenerator.getRandomNumberTillValue(5);
             textViewS4.setText(tempValue.toString());
-        }
-        else if(currentAnswerSlot  == 1) {
+        } else if (currentAnswerSlot == 1) {
             textViewS2.setText(currentProblemAnswer.toString());
             tempValue = currentProblemAnswer + randomNumberGenerator.getRandomNumberTillValue(5);
             textViewS1.setText(tempValue.toString());
@@ -216,7 +213,7 @@ public class GameFragment extends Fragment {
             tempValue = currentProblemAnswer + randomNumberGenerator.getRandomNumberTillValue(5);
             textViewS4.setText(tempValue.toString());
         }
-        if(currentAnswerSlot  == 2) {
+        if (currentAnswerSlot == 2) {
             textViewS3.setText(currentProblemAnswer.toString());
             tempValue = currentProblemAnswer + randomNumberGenerator.getRandomNumberTillValue(5);
             textViewS1.setText(tempValue.toString());
@@ -225,7 +222,7 @@ public class GameFragment extends Fragment {
             tempValue = currentProblemAnswer + randomNumberGenerator.getRandomNumberTillValue(5);
             textViewS4.setText(tempValue.toString());
         }
-        if(currentAnswerSlot  == 3) {
+        if (currentAnswerSlot == 3) {
             textViewS4.setText(currentProblemAnswer.toString());
             tempValue = currentProblemAnswer + randomNumberGenerator.getRandomNumberTillValue(5);
             textViewS1.setText(tempValue.toString());
@@ -236,15 +233,15 @@ public class GameFragment extends Fragment {
         }
 
     }
-    public void  answerSlotClickListener(View view) {
 
-        TextView txtView = (TextView)view;
+    public void answerSlotClickListener(View view) {
 
-        if(txtView.getText().toString().equals(currentProblemAnswer.toString())) {
+        TextView txtView = (TextView) view;
+
+        if (txtView.getText().toString().equals(currentProblemAnswer.toString())) {
             mediaPlayer.start();
             updateUserCurrentLevelScore();
-        }
-        else {
+        } else {
             //Vibrate
             vib.vibrate(100);
         }
@@ -255,13 +252,15 @@ public class GameFragment extends Fragment {
     private void incrementUserProblemNumber() {
         currentProblemNumber++;
     }
+
     private int getUserProblemNumber() {
         return currentProblemNumber;
     }
+
     // Based on the user level we want to get the left multiple and right multiple
-    private Pair<Integer,Integer> getUserGameLevel() {
-        Integer x,y;
-        switch(mCurrentUser.getMaxLevel()) {
+    private Pair<Integer, Integer> getUserGameLevel() {
+        Integer x, y;
+        switch (mCurrentUser.getMaxLevel()) {
 
             case 0:
                 x = 3;
@@ -326,34 +325,37 @@ public class GameFragment extends Fragment {
 
 
         }
-        Pair<Integer,Integer> pair = new Pair<Integer,Integer>(x,y);
+        Pair<Integer, Integer> pair = new Pair<Integer, Integer>(x, y);
         return pair;
     }
+
     private Integer getUserCurrentLevelScore() {
         return userCurrentLevelScore;
     }
+
     private void updateUserCurrentLevelScore() {
-        userCurrentLevelScore = userCurrentLevelScore +5;
+        userCurrentLevelScore = userCurrentLevelScore + 5;
     }
 
     private void saveScores() {
 
         helperNew = new MWSQLiteHelperNew(getActivity());
-        new SaveScoreAsyncTask(helperNew,mCurrentUser,getUserCurrentLevelScore()).execute(null,null,null);
+        new SaveScoreAsyncTask(helperNew, mCurrentUser, getUserCurrentLevelScore()).execute(null, null, null);
 
     }
-    private void showLevelUpDialog(){
+
+    private void showLevelUpDialog() {
 
         // custom dialog
         final Dialog dialog = new Dialog(getActivity());
         dialog.setContentView(R.layout.custom_dialog_level_up);
         dialog.setCancelable(false);
-        Button positiveButton = (Button)dialog.findViewById(R.id.btn_positive_txt);
+        Button positiveButton = (Button) dialog.findViewById(R.id.btn_positive_txt);
         positiveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dialog.dismiss();
-                if(BuildConfig.FLAVOR.equals("demo")) {
+                if (BuildConfig.FLAVOR.equals("demo")) {
                     if (mInterstitialAd.isLoaded()) {
                         mInterstitialAd.show();
                     }
@@ -367,8 +369,7 @@ public class GameFragment extends Fragment {
 
                         }
                     });
-                }
-                else {
+                } else {
                     Intent intent = new Intent(getActivity().getApplicationContext(), GameActivity.class);
                     intent.putExtra("com.capstone.multiplicationwizard.model.user", mCurrentUser);
                     startActivity(intent);
@@ -380,7 +381,7 @@ public class GameFragment extends Fragment {
         dialog.show();
     }
 
-    private void showContinueDialog(){
+    private void showContinueDialog() {
 
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -392,7 +393,7 @@ public class GameFragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(getActivity().getApplicationContext(), GameActivity.class);
-                intent.putExtra("com.capstone.multiplicationwizard.model.user",mCurrentUser);
+                intent.putExtra("com.capstone.multiplicationwizard.model.user", mCurrentUser);
                 startActivity(intent);
                 getActivity().onBackPressed();
             }
@@ -400,7 +401,8 @@ public class GameFragment extends Fragment {
         builder.create().show();
 
     }
-    private void showGameCompleteDialog(){
+
+    private void showGameCompleteDialog() {
 
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -411,7 +413,7 @@ public class GameFragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(getActivity().getApplicationContext(), GameActivity.class);
-                intent.putExtra("com.capstone.multiplicationwizard.model.user",mCurrentUser);
+                intent.putExtra("com.capstone.multiplicationwizard.model.user", mCurrentUser);
                 startActivity(intent);
                 getActivity().onBackPressed();
             }
@@ -436,13 +438,14 @@ public class GameFragment extends Fragment {
 
 
     }
-    class SaveScoreAsyncTask extends AsyncTask<Void,Void,Void> {
+
+    class SaveScoreAsyncTask extends AsyncTask<Void, Void, Void> {
 
         private MWSQLiteHelperNew helperNew;
         private User userInfo;
         private Integer currLevScore;
 
-        public SaveScoreAsyncTask(MWSQLiteHelperNew db, User user,Integer userCurrentLevelScore) {
+        public SaveScoreAsyncTask(MWSQLiteHelperNew db, User user, Integer userCurrentLevelScore) {
             helperNew = db;
             userInfo = user;
             currLevScore = userCurrentLevelScore;
@@ -459,7 +462,7 @@ public class GameFragment extends Fragment {
             super.onPostExecute(aVoid);
 
             AppWidgetManager widgetManager = AppWidgetManager.getInstance(context);
-            ComponentName widgetComponent = new ComponentName(context,MultiplicationWizardAppProvider.class);
+            ComponentName widgetComponent = new ComponentName(context, MultiplicationWizardAppProvider.class);
             int[] widgetIds = widgetManager.getAppWidgetIds(widgetComponent);
             Intent update = new Intent();
             update.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, widgetIds);
@@ -491,15 +494,11 @@ public class GameFragment extends Fragment {
         @Override
         protected Void doInBackground(Void... voids) {
 
-            if(helperNew.isPlayedLevel(userInfo.getUserId(),""+userInfo.getMaxLevel()))
-            {
-                if(helperNew.getScore(userInfo.getUserId(),""+userInfo.getMaxLevel()) < currLevScore)
-                {
+            if (helperNew.isPlayedLevel(userInfo.getUserId(), "" + userInfo.getMaxLevel())) {
+                if (helperNew.getScore(userInfo.getUserId(), "" + userInfo.getMaxLevel()) < currLevScore) {
                     helperNew.updateScore(new Scores(userInfo.getUserId(), "" + userInfo.getMaxLevel(), "" + currLevScore));
                 }
-            }
-            else
-            {
+            } else {
                 helperNew.addScore(new Scores(userInfo.getUserId(), "" + userInfo.getMaxLevel(), "" + currLevScore));
             }
             return null;

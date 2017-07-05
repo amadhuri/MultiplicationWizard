@@ -17,11 +17,10 @@ import java.util.ArrayList;
 /**
  * Created by Madhuri on 05/04/17.
  */
-public class MWSQLiteHelperNew extends SQLiteOpenHelper
-{
+public class MWSQLiteHelperNew extends SQLiteOpenHelper {
 
-    public static  String name = "wizardNew.db";
-    public static  int version = 2;
+    public static String name = "wizardNew.db";
+    public static int version = 2;
 
 
     private static final String TABLE_USER = "users";
@@ -30,12 +29,10 @@ public class MWSQLiteHelperNew extends SQLiteOpenHelper
     public static final String KEY_CREATED_AT = "created_at";
 
 
-
     private static final String TABLE_SCORE = "scores";
     private static final String KEY_SCORE = "score";
     private static final String KEY_LEVEL = "level";
     private static final String KEY_USER = "user_id";
-
 
 
     public MWSQLiteHelperNew(Context context) {
@@ -54,9 +51,9 @@ public class MWSQLiteHelperNew extends SQLiteOpenHelper
 
         String CREATE_TABLE_SCORE = "CREATE TABLE "
                 + TABLE_SCORE + "(" + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + KEY_USER +" INTEGER ,"
-                + KEY_LEVEL +" INTEGER ,"
-                + KEY_SCORE +" INTEGER ,"
+                + KEY_USER + " INTEGER ,"
+                + KEY_LEVEL + " INTEGER ,"
+                + KEY_SCORE + " INTEGER ,"
                 + KEY_CREATED_AT + " DATETIME" + ")";
 
         db.execSQL(CREATE_TABLE_SCORE);
@@ -74,11 +71,10 @@ public class MWSQLiteHelperNew extends SQLiteOpenHelper
     }
 
 
-    public long createUser(String name)
-    {
+    public long createUser(String name) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(KEY_USERNAME,name);
+        values.put(KEY_USERNAME, name);
         long id = db.insert(TABLE_USER, null, values);
 
         return id;
@@ -87,83 +83,80 @@ public class MWSQLiteHelperNew extends SQLiteOpenHelper
 
     public Cursor getUsers() {
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.query(TABLE_USER,null,null,null,null,null,null);
+        Cursor cursor = db.query(TABLE_USER, null, null, null, null, null, null);
         return cursor;
     }
+
     public Cursor getScores(String[] mProjection, String mSelClause, String[] mSelArgs) {
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.query(TABLE_SCORE,mProjection,mSelClause,mSelArgs,null,null,null);
+        Cursor cursor = db.query(TABLE_SCORE, mProjection, mSelClause, mSelArgs, null, null, null);
         return cursor;
     }
+
     public Cursor getUserScores() {
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
         SQLiteDatabase db = getReadableDatabase();
         queryBuilder.setTables(TABLE_SCORE);
         Cursor cursor = db.rawQuery("select ut.username, sum(st.score) from users ut left outer JOIN scores st on ut.ID = st.user_id group by ut.ID,ut.username", null);
         if (cursor == null)
-            Log.e("MSSQLiteHelperNew","cursor is null");
-        else if(cursor.getCount() == 0)
+            Log.e("MSSQLiteHelperNew", "cursor is null");
+        else if (cursor.getCount() == 0)
             Log.e("MSSQLiteHelperNew", "cursor is null");
         else
-            Log.e("MSSQLiteHelperNew","cursor count:"+cursor.getCount());
+            Log.e("MSSQLiteHelperNew", "cursor count:" + cursor.getCount());
         return cursor;
     }
-    public int deleteUser(String id)
-    {
+
+    public int deleteUser(String id) {
         SQLiteDatabase db = getWritableDatabase();
 
-        return db.delete(TABLE_USER,KEY_ID+"=?",new String[]{id});
+        return db.delete(TABLE_USER, KEY_ID + "=?", new String[]{id});
 
     }
+
     public int deleteUserFromScores(String id) {
         SQLiteDatabase db = getWritableDatabase();
 
-        return db.delete(TABLE_SCORE,KEY_ID+"=?",new String[]{id});
+        return db.delete(TABLE_SCORE, KEY_ID + "=?", new String[]{id});
 
     }
-    public long addScore(Scores score)
-    {
+
+    public long addScore(Scores score) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(KEY_USER,score.getUser_id());
-        values.put(KEY_LEVEL,score.getLevel());
-        values.put(KEY_SCORE,score.getScore());
+        values.put(KEY_USER, score.getUser_id());
+        values.put(KEY_LEVEL, score.getLevel());
+        values.put(KEY_SCORE, score.getScore());
         long id = db.insert(TABLE_SCORE, null, values);
 
         return id;
     }
 
 
-    public int updateScore(Scores score)
-    {
+    public int updateScore(Scores score) {
         SQLiteDatabase db = getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_LEVEL,score.getLevel());
-        values.put(KEY_SCORE,score.getScore());
+        values.put(KEY_LEVEL, score.getLevel());
+        values.put(KEY_SCORE, score.getScore());
 
-        int id = db.update(TABLE_SCORE, values,KEY_USER+"=? AND "+KEY_LEVEL+"=?",new String[]{score.getUser_id(),score.getLevel()});
+        int id = db.update(TABLE_SCORE, values, KEY_USER + "=? AND " + KEY_LEVEL + "=?", new String[]{score.getUser_id(), score.getLevel()});
 
         return id;
     }
 
-    public boolean isPlayedLevel(String user_id,String level)
-    {
+    public boolean isPlayedLevel(String user_id, String level) {
         boolean result = false;
         SQLiteDatabase db = getReadableDatabase();
-        Cursor c = db.query(TABLE_SCORE, null,KEY_USER+"= ? AND "+KEY_LEVEL+"=?", new String[]{user_id,level},null, null,null);
+        Cursor c = db.query(TABLE_SCORE, null, KEY_USER + "= ? AND " + KEY_LEVEL + "=?", new String[]{user_id, level}, null, null, null);
 
-        if(c != null)
-        {
-            if(c.getCount() > 0)
-            {
+        if (c != null) {
+            if (c.getCount() > 0) {
                 result = true;
-            }
-            else{
+            } else {
                 result = false;
             }
-        }
-        else {
+        } else {
             result = false;
         }
 
@@ -171,18 +164,15 @@ public class MWSQLiteHelperNew extends SQLiteOpenHelper
     }
 
 
-    public int getScore(String user_id,String level)
-    {
+    public int getScore(String user_id, String level) {
         int result = 0;
         SQLiteDatabase db = getReadableDatabase();
-        Cursor c = db.query(TABLE_SCORE, null,KEY_USER+"= ? AND "+KEY_LEVEL+"=?", new String[]{user_id,level},null, null,null);
+        Cursor c = db.query(TABLE_SCORE, null, KEY_USER + "= ? AND " + KEY_LEVEL + "=?", new String[]{user_id, level}, null, null, null);
 
-        if(c != null)
-        {
+        if (c != null) {
             c.moveToFirst();
 
-            for (int i = 0;i < c.getCount() ; i++)
-            {
+            for (int i = 0; i < c.getCount(); i++) {
                 result = c.getInt(c.getColumnIndex(KEY_SCORE));
                 c.moveToNext();
             }

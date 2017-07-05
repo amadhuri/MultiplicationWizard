@@ -10,8 +10,8 @@
         android:id="@+id/iv_lock"
         android:layout_width="@dimen/levels_grid_list_item_width"
         android:layout_height="@dimen/levels_grid_list_item_width"
-        android:src="@drawable/lock"
-        />
+        android:src="@drawable/lock" />
+
     <TextView
         android:id="@+id/tv_level"
         android:layout_width="@dimen/levels_grid_list_item_width"
@@ -20,8 +20,7 @@
         android:visibility="gone"
         android:textColor="@android:color/white"
         android:textSize="30sp"
-        android:gravity="center"
-        />
+        android:gravity="center" />
 
     <!--<TextView
         android:id="@+id/content"

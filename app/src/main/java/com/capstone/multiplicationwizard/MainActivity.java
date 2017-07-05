@@ -30,32 +30,32 @@ public class MainActivity extends AppCompatActivity implements UsersFragment.OnU
     @Override
     protected void onResume() {
         super.onResume();
-        Log.e("MainActivity","onResume called");
+        Log.e("MainActivity", "onResume called");
     }
 
     @Override
-    protected void onPause(){
+    protected void onPause() {
         super.onPause();
 
-        Log.e("MainActivity","OnPause called");
+        Log.e("MainActivity", "OnPause called");
     }
 
     @Override
-    protected void onDestroy(){
+    protected void onDestroy() {
         super.onDestroy();
         Log.e("MainActivity", "onDestroy called");
     }
 
     @Override
-    protected void onStart(){
+    protected void onStart() {
         super.onStart();
-        Log.e("MainActivity","onStart called");
+        Log.e("MainActivity", "onStart called");
     }
 
     @Override
-    protected void onStop(){
+    protected void onStop() {
         super.onStop();
-        Log.e("MainActivity","onStop called");
+        Log.e("MainActivity", "onStop called");
     }
 
     @Override
@@ -65,27 +65,27 @@ public class MainActivity extends AppCompatActivity implements UsersFragment.OnU
         mCurrentFragment = getCurrentFragment();
         mContentResolver = getContentResolver();
 
-        twoStageRate= TwoStageRate.with(this);
+        twoStageRate = TwoStageRate.with(this);
         twoStageRate.settings.setLaunchTimes(100);
         twoStageRate.resetOnDismiss(true).resetOnFeedBackDeclined(true).resetOnRatingDeclined(false);
         twoStageRate.showIfMeetsConditions();
 
         Cursor cursor = mContentResolver.query(MWItemsContract.USERS_CONTENT_URI,
-                                null,null,null,null,null);
+                null, null, null, null, null);
         final int userCount = cursor.getCount();
-        Log.e("MainActivity", "onCreate Usercount:"+userCount);
+        Log.e("MainActivity", "onCreate Usercount:" + userCount);
         Handler handler = new Handler(getMainLooper());
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 detachCurrentFragment();
-                if(userCount > 0)
+                if (userCount > 0)
                     attachUsersFragment();
                 else
                     attachNewUserFragment();
 
             }
-        },SPLASH_SCREEN_DELAY);
+        }, SPLASH_SCREEN_DELAY);
 
     }
 
@@ -114,22 +114,23 @@ public class MainActivity extends AppCompatActivity implements UsersFragment.OnU
     private void attachNewUserFragment() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.setCustomAnimations(R.anim.slide_up,0,0, 0);
+        fragmentTransaction.setCustomAnimations(R.anim.slide_up, 0, 0, 0);
         NewUserFragment fragment = new NewUserFragment();
         fragmentTransaction.add(R.id.fragmentParentViewGroup, fragment);
-        fragmentTransaction.commitAllowingStateLoss();;
-        mCurrentFragment = (Fragment)fragment;
+        fragmentTransaction.commitAllowingStateLoss();
+        ;
+        mCurrentFragment = (Fragment) fragment;
         return;
     }
 
     private void attachUsersFragment() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.setCustomAnimations(R.anim.slide_up,0,0, 0);
+        fragmentTransaction.setCustomAnimations(R.anim.slide_up, 0, 0, 0);
         UsersFragment fragment = new UsersFragment();
         fragmentTransaction.add(R.id.fragmentParentViewGroup, fragment);
         fragmentTransaction.commitAllowingStateLoss();
-        mCurrentFragment = (Fragment)fragment;
+        mCurrentFragment = (Fragment) fragment;
         return;
     }
 

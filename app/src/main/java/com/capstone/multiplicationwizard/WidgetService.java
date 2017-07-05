@@ -29,6 +29,7 @@ public class WidgetService extends RemoteViewsService {
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
         return new WidgetViewFactory();
     }
+
     class WidgetViewFactory implements RemoteViewsFactory {
 
 
@@ -45,7 +46,7 @@ public class WidgetService extends RemoteViewsService {
 
         @Override
         public RemoteViews getLoadingView() {
-           return null;
+            return null;
         }
 
         @Override
@@ -63,26 +64,26 @@ public class WidgetService extends RemoteViewsService {
             String[] mProjection = new String[2];
             mProjection[0] = MWItemsContract.USER_NAME;
             mProjection[1] = MWItemsContract.SCORE;
-            String mSelectionCause = MWItemsContract.USER_ID+" = ?";
+            String mSelectionCause = MWItemsContract.USER_ID + " = ?";
             String[] mSelectionArgs = new String[1];
 
           /*  Cursor cursor =getContentResolver().query(MWItemsContract.USERS_CONTENT_URI,
                                     null,null,null,null,null);*/
             Cursor cursor = getContentResolver()
-                    .query(MWItemsContract.USERS_SCORES_CONTENT_URI,mProjection,
-                            null,null,null);
-            if(cursor == null) {
-             Log.e("WidgetService", "cursor is null");
+                    .query(MWItemsContract.USERS_SCORES_CONTENT_URI, mProjection,
+                            null, null, null);
+            if (cursor == null) {
+                Log.e("WidgetService", "cursor is null");
                 return;
             }
-            Log.e("WidgetService","cursor getCount:"+cursor.getCount());
+            Log.e("WidgetService", "cursor getCount:" + cursor.getCount());
             cursor.moveToFirst();
-            for(int i =0; i < cursor.getCount(); i++) {
+            for (int i = 0; i < cursor.getCount(); i++) {
                 User user = new User();
                 String username = cursor.getString(cursor.getColumnIndex(MWItemsContract.USER_NAME));
                 user.setUsername(username);
                 int colCount = cursor.getColumnCount();
-                user.setHighScore(cursor.getInt(colCount-1));
+                user.setHighScore(cursor.getInt(colCount - 1));
                 userArrayList.add(user);
                 cursor.moveToNext();
             }
@@ -97,18 +98,18 @@ public class WidgetService extends RemoteViewsService {
 
         @Override
         public int getCount() {
-            Log.e("WidgetService","getCount numOfUSers:"+numOfUsers);
+            Log.e("WidgetService", "getCount numOfUSers:" + numOfUsers);
             return 1;
         }
 
         @Override
         public RemoteViews getViewAt(int i) {
-            Log.e("WidgetService","i:"+i);
+            Log.e("WidgetService", "i:" + i);
             int j = 0;
 
-            RemoteViews remoteViews = new RemoteViews(getPackageName(),R.layout.appwidget_layout);
+            RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.appwidget_layout);
             remoteViews.removeAllViews(R.id.ll_child_views);
-            if(j < numOfUsers) {
+            if (j < numOfUsers) {
                 while (j < numOfUsers) {
                     Log.e("WidgetService", "adding view:j:" + j);
                     User user = userArrayList.get(j);
@@ -119,12 +120,11 @@ public class WidgetService extends RemoteViewsService {
                     remoteViews.addView(R.id.ll_child_views, childView);
                     j++;
                 }
-            }
-            else {
-                RemoteViews childView = new RemoteViews(getPackageName(),R.layout.appwidget_nousers);
+            } else {
+                RemoteViews childView = new RemoteViews(getPackageName(), R.layout.appwidget_nousers);
                 remoteViews.addView(R.id.ll_child_views, childView);
-           }
-           return remoteViews;
+            }
+            return remoteViews;
         }
 
         @Override

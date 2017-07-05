@@ -3,6 +3,7 @@
     android:layout_height="match_parent"
     android:id="@+id/ll_wl_userlist"
     xmlns:android="http://schemas.android.com/apk/res/android">
+
     <TextView
         android:layout_width="@dimen/widget_userscores_width"
         android:layout_height="wrap_content"
@@ -10,6 +11,7 @@
         android:layout_marginLeft="30dp"
         android:textSize="@dimen/text_size_large"
         android:textColor="@android:color/white" />
+
     <TextView
         android:layout_width="@dimen/widget_userscores_width"
         android:layout_height="wrap_content"
@@ -18,5 +20,5 @@
         android:layout_marginRight="30dp"
         android:gravity="right"
         android:layout_toRightOf="@id/tv_appwidget_1"
-        android:textColor="@android:color/white"/>
+        android:textColor="@android:color/white" />
 </RelativeLayout>

@@ -35,7 +35,7 @@ http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
     -->
     <dimen name="widget_margin">8dp</dimen>
     <dimen name="child_view_height">50dp</dimen>
-    <dimen  name="widget_userscores_width">125dp</dimen>
+    <dimen name="widget_userscores_width">125dp</dimen>
 
     <!-- lock dimensions -->
     <!--ldpi 89dp -> 66.75px
@@ -48,7 +48,6 @@ http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
     <!--level up custom dialog -->
     <dimen name="level_up_dialog_arrow_img_width">150dp</dimen>
     <dimen name="level_up_dialog_arrow_img_height">150dp</dimen>
-
 
 
 </resources>

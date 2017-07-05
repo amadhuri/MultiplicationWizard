@@ -29,11 +29,13 @@ public class MWContentProvider extends ContentProvider {
     private static final int USERS_SCORES = 30;
     private static final UriMatcher sURIMatcher = new UriMatcher(
             UriMatcher.NO_MATCH);
+
     static {
         sURIMatcher.addURI(MWItemsContract.AUTHORITY, MWItemsContract.USERS_BASE_PATH, USERS);
-        sURIMatcher.addURI(MWItemsContract.AUTHORITY, MWItemsContract.SCORES_BASE_PATH,SCORES);
+        sURIMatcher.addURI(MWItemsContract.AUTHORITY, MWItemsContract.SCORES_BASE_PATH, SCORES);
         sURIMatcher.addURI(MWItemsContract.AUTHORITY, MWItemsContract.USERS_SCORES_BASE_PATH, USERS_SCORES);
     }
+
     @Override
     public boolean onCreate() {
         mHelper = new MWSQLiteHelperNew(getContext());
@@ -42,15 +44,15 @@ public class MWContentProvider extends ContentProvider {
 
     @Override
     public Cursor query(Uri uri, String[] projection, String selectionClause, String[] mSelArgs, String s1) {
-        switch(sURIMatcher.match(uri)) {
+        switch (sURIMatcher.match(uri)) {
             case USERS:
                 return mHelper.getUsers();
             case SCORES:
                 return mHelper.getScores(projection, selectionClause, mSelArgs);
             case USERS_SCORES:
-                 return mHelper.getUserScores();
+                return mHelper.getUserScores();
             default:
-                throw new IllegalArgumentException("Unsupported URI:"+uri);
+                throw new IllegalArgumentException("Unsupported URI:" + uri);
         }
     }
 
@@ -60,7 +62,7 @@ public class MWContentProvider extends ContentProvider {
         if (sURIMatcher.match(uri) == USERS) {
             String name = contentValues.getAsString(MWItemsContract.USER_NAME);
             long id = mHelper.createUser(name);
-            return getUriForId(id,uri);
+            return getUriForId(id, uri);
         } else { //TODO USERS_LEVELS
             return null;
         }
@@ -74,13 +76,12 @@ public class MWContentProvider extends ContentProvider {
     @Override
     public int delete(Uri uri, String s, String[] strings) {
 
-        if(sURIMatcher.match(uri) == -1) {
+        if (sURIMatcher.match(uri) == -1) {
             return -1;
         }
-        if(sURIMatcher.match(uri) == USERS) {
+        if (sURIMatcher.match(uri) == USERS) {
             mHelper.deleteUser(strings[0]);
-        }
-        else if(sURIMatcher.match(uri) == SCORES) {
+        } else if (sURIMatcher.match(uri) == SCORES) {
             mHelper.deleteUserFromScores(strings[0]);
         }
         return 0;

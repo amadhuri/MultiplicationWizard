@@ -5,12 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    tools:ignore="MergeRootFrame" >
+    tools:ignore="MergeRootFrame">
 
     <fragment
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/game_level_fragment"
-        android:name="com.capstone.multiplicationwizard.layout.GameLevelFragment"
-        />
+        android:name="com.capstone.multiplicationwizard.layout.GameLevelFragment" />
 </FrameLayout>

@@ -31,33 +31,31 @@ public class NewUserFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        mView =  inflater.inflate(R.layout.fragment_new_user, container, false);
-        Button mContBtn = (Button)mView.findViewById(R.id.bt_new_user_cont);
-        mContBtn.setOnClickListener(new View.OnClickListener(){
+        mView = inflater.inflate(R.layout.fragment_new_user, container, false);
+        Button mContBtn = (Button) mView.findViewById(R.id.bt_new_user_cont);
+        mContBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EditText tvNewUser = (EditText)mView.findViewById(R.id.new_user_et);
+                EditText tvNewUser = (EditText) mView.findViewById(R.id.new_user_et);
 
                 String name = tvNewUser.getText().toString().toLowerCase().trim();
-                if(name.equals(""))
-                {
+                if (name.equals("")) {
                     Toast.makeText(getActivity().getApplicationContext(),
-                                     "Enter user name", Toast.LENGTH_SHORT).show();
-                }
-                else {
+                            "Enter user name", Toast.LENGTH_SHORT).show();
+                } else {
                     Cursor cursor = getActivity().getContentResolver().query
-                                        (MWItemsContract.USERS_CONTENT_URI,
-                                        null,null,null,null,null);
-                    if(cursor.getCount() < MWItemsContract.MAX_USERS) {
+                            (MWItemsContract.USERS_CONTENT_URI,
+                                    null, null, null, null, null);
+                    if (cursor.getCount() < MWItemsContract.MAX_USERS) {
                         ContentValues contentValues = new ContentValues();
-                        contentValues.put(MWItemsContract.USER_NAME,name);
+                        contentValues.put(MWItemsContract.USER_NAME, name);
                         Uri newUri;
                         newUri = getActivity().getContentResolver().insert
-                                                    (MWItemsContract.USERS_CONTENT_URI,
-                                                     contentValues);
-                        if(newUri == null) {
+                                (MWItemsContract.USERS_CONTENT_URI,
+                                        contentValues);
+                        if (newUri == null) {
                             Toast.makeText(getContext(),
-                                    "Failed to insert"+name,
+                                    "Failed to insert" + name,
                                     Toast.LENGTH_SHORT).show();
                             return;
                         }
@@ -76,12 +74,10 @@ public class NewUserFragment extends Fragment {
                             Toast.makeText(getActivity(), "Duplicate User Name",
                                     Toast.LENGTH_SHORT).show();
                         }
-                    }
-                    else
-                    {
+                    } else {
                         Toast.makeText(getActivity(),
-                                      "Maximum"+MWItemsContract.MAX_USERS+
-                                      "Users can be added", Toast.LENGTH_SHORT).show();
+                                "Maximum" + MWItemsContract.MAX_USERS +
+                                        "Users can be added", Toast.LENGTH_SHORT).show();
                     }
 
                 }

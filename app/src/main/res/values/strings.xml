@@ -17,4 +17,7 @@
     <string name="dialog_level_up_str">Level Up!</string>
     <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/1033173712</string>
     <string name="no_users">There are no active players. Add one to show scores!</string>
+    <string name="level">Level</string>
+    <string name="your_score">Your Score is </string>
+    <string name="level_locked">Level is Locked</string>
 </resources>

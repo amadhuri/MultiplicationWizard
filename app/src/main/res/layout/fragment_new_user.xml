@@ -12,15 +12,14 @@
         android:elevation="@dimen/card_view_elevation"
         card_view:cardUseCompatPadding="true"
         card_view:cardCornerRadius="@dimen/card_view_cardCornerRadius"
-        android:layout_gravity="center_horizontal|center_vertical"
-        >
+        android:layout_gravity="center_horizontal|center_vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:gravity="center_horizontal"
-            >
+            android:gravity="center_horizontal">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -28,26 +27,29 @@
                 android:orientation="vertical"
                 android:gravity="center_horizontal"
                 android:layout_marginTop="@dimen/new_user_tv_margin">
+
                 <TextView
                     android:text="@string/welcome_wizard"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorPrimaryBlue"
-                    android:textSize="24sp"/>
+                    android:textSize="24sp" />
+
                 <TextView
                     android:text="@string/new_user_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorPrimaryBlue"
-                    android:textSize="24sp"/>
+                    android:textSize="24sp" />
             </LinearLayout>
+
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:hint="@string/name_hint"
                 android:id="@+id/new_user_et"
-                android:layout_below="@id/new_user_ll_tv"/>
+                android:layout_below="@id/new_user_ll_tv" />
 
             <Button
                 android:id="@+id/bt_new_user_cont"
@@ -60,8 +62,7 @@
                 android:textSize="18sp"
                 android:background="@color/colorPrimaryBlue"
                 android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                />
+                android:layout_centerHorizontal="true" />
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 </FrameLayout>

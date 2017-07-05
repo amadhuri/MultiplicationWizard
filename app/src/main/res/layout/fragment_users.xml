@@ -1,5 +1,4 @@
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
@@ -13,6 +12,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -22,7 +22,7 @@
         android:textColor="@android:color/white"
         android:layout_margin="@dimen/welcome_tv_margin"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/users_logo"/>
+        android:layout_below="@id/users_logo" />
 
 
     <android.support.design.widget.CoordinatorLayout
@@ -30,31 +30,28 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/tv_welcome"
-        android:layout_margin="@dimen/fab_margin"
-        >
+        android:layout_margin="@dimen/fab_margin">
 
-            <ListView
-                android:layout_width="@dimen/child_name_bt_width"
-                android:layout_height="match_parent"
-                android:layout_marginStart="@dimen/child_list_left_margin"
-                android:id="@+id/childLV"
-                >
-            </ListView>
+        <ListView
+            android:layout_width="@dimen/child_name_bt_width"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/child_list_left_margin"
+            android:id="@+id/childLV"></ListView>
 
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/add_users_fab"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@android:drawable/ic_input_add"
-                app:layout_anchor="@id/childLV"
-                android:elevation="5dp"
-                android:tint="@color/half_black"
-                android:layout_margin="@dimen/fab_margin"
-                android:layout_gravity="bottom|end"
-                app:layout_anchorGravity="bottom|right|end"/>
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/add_users_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_input_add"
+            app:layout_anchor="@id/childLV"
+            android:elevation="5dp"
+            android:tint="@color/half_black"
+            android:layout_margin="@dimen/fab_margin"
+            android:layout_gravity="bottom|end"
+            app:layout_anchorGravity="bottom|right|end" />
 
 
-        </android.support.design.widget.CoordinatorLayout>
+    </android.support.design.widget.CoordinatorLayout>
 </RelativeLayout>
 
 
