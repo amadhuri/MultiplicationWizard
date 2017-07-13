@@ -10,7 +10,8 @@
         android:id="@+id/iv_lock"
         android:layout_width="@dimen/levels_grid_list_item_width"
         android:layout_height="@dimen/levels_grid_list_item_width"
-        android:src="@drawable/lock" />
+        android:src="@drawable/lock"
+        android:contentDescription="@string/cd_lock"/>
 
     <TextView
         android:id="@+id/tv_level"

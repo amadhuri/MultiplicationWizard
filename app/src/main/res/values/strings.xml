@@ -20,4 +20,10 @@
     <string name="level">Level</string>
     <string name="your_score">Your Score is </string>
     <string name="level_locked">Level is Locked</string>
+
+    <!--Content Description -->
+    <string name="cd_logo">Logo</string>
+    <string name="cd_splash">Splash screen</string>
+    <string name="cd_lock">Lock</string>
+    <string name="cd_level_up">Level Up</string>
 </resources>
