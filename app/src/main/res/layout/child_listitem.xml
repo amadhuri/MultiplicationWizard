@@ -9,7 +9,6 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="15dp"
         android:id="@+id/tv_child_name"
-        android:text="Child1"
         android:padding="10dp"
         android:textSize="18sp"
         android:background="@android:color/white"

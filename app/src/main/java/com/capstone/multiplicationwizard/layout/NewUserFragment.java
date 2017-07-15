@@ -41,7 +41,7 @@ public class NewUserFragment extends Fragment {
                 String name = tvNewUser.getText().toString().toLowerCase().trim();
                 if (name.equals("")) {
                     Toast.makeText(getActivity().getApplicationContext(),
-                            "Enter user name", Toast.LENGTH_SHORT).show();
+                            getString(R.string.enter_usr_name), Toast.LENGTH_SHORT).show();
                 } else {
                     Cursor cursor = getActivity().getContentResolver().query
                             (MWItemsContract.USERS_CONTENT_URI,
@@ -55,7 +55,7 @@ public class NewUserFragment extends Fragment {
                                         contentValues);
                         if (newUri == null) {
                             Toast.makeText(getContext(),
-                                    "Failed to insert" + name,
+                                    getString(R.string.failed_to_insert) + name,
                                     Toast.LENGTH_SHORT).show();
                             return;
                         }
@@ -71,13 +71,13 @@ public class NewUserFragment extends Fragment {
                             intent.putExtra("com.capstone.multiplicationwizard.model.user", newUser);
                             startActivity(intent);
                         } else {
-                            Toast.makeText(getActivity(), "Duplicate User Name",
+                            Toast.makeText(getActivity(), getString(R.string.duplicate_user),
                                     Toast.LENGTH_SHORT).show();
                         }
                     } else {
                         Toast.makeText(getActivity(),
-                                "Maximum" + MWItemsContract.MAX_USERS +
-                                        "Users can be added", Toast.LENGTH_SHORT).show();
+                                getString(R.string.str_max) + MWItemsContract.MAX_USERS +
+                                        getString(R.string.str_usrs_added), Toast.LENGTH_SHORT).show();
                     }
 
                 }

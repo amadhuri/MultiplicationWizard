@@ -39,7 +39,7 @@
         android:layout_below="@id/tv_level_up_str"
         android:textColor="@color/colorPrimaryDarkOrange"
         android:background="@android:color/white"
-        android:text="Continue"
+        android:text="@string/str_continue"
         android:layout_alignParentRight="true" />
 
     <!--<Button

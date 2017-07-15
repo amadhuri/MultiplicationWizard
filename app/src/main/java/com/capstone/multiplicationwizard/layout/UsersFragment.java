@@ -98,7 +98,7 @@ public class UsersFragment extends Fragment {
                     usersAdapter.remove(currentUser);
                     usersAdapter.notifyDataSetChanged();
                 } else {
-                    Toast.makeText(getActivity(), "User not Deleted", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.users_not_deleted), Toast.LENGTH_SHORT).show();
                 }
                 return false;
             }
@@ -118,8 +118,8 @@ public class UsersFragment extends Fragment {
                     mListener.onFragmentAddNewUser();
                 } else {
                     Toast.makeText(getActivity(),
-                            "Maximum" + MWItemsContract.MAX_USERS +
-                                    " Users can be added\nLong Press on user to delete"
+                            getString(R.string.str_max)+ MWItemsContract.MAX_USERS +
+                                    getString(R.string.users_can_add)
                             , Toast.LENGTH_SHORT).show();
                 }
 

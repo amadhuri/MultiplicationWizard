@@ -5,12 +5,15 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="welcome_wizard">Welcome Wizard!</string>
     <string name="new_user_name">What is your name?</string>
+    <string name="str_start">Start</string>
     <string name="str_continue">Continue</string>
+    <string name="str_back">Back</string>
     <string name="name_hint">Type your name here...</string>
     <string name="welcome_back">Welcome back!</string>
     <string name="str_result">What is the multiplication result?</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
+    <string name="x">X</string>
 
     <string name="dialog_continue_str">Your score is </string>
     <string name="dialog_play_again_str">Hey Wizard! Need to score 80pts to level up. Try again!"</string>
@@ -20,10 +23,21 @@
     <string name="level">Level</string>
     <string name="your_score">Your Score is </string>
     <string name="level_locked">Level is Locked</string>
+    <string name="add_users_for_scores">Add users to show the scores</string>
+    <string name="duplicate_user">Duplicate User Name</string>
+    <string name="str_max">Maximum</string>
+    <string name="str_usrs_added">Users can be added</string>
+    <string name="enter_usr_name">Enter User Name</string>
+    <string name="failed_to_insert">Failed to insert</string>
+    <string name="users_not_deleted">Users not deleted</string>
+    <string name="users_can_add">Users can be added.Long Press on user to delete</string>
+
 
     <!--Content Description -->
     <string name="cd_logo">Logo</string>
     <string name="cd_splash">Splash screen</string>
     <string name="cd_lock">Lock</string>
     <string name="cd_level_up">Level Up</string>
+
+
 </resources>

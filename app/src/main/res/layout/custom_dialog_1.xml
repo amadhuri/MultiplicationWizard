@@ -11,9 +11,7 @@
         android:layout_centerHorizontal="true"
         android:id="@+id/iv_level_circle"
         android:textColor="@android:color/white"
-        android:text="Level 1"
         android:textSize="25sp"
-
         android:gravity="center" />
 
 
@@ -55,7 +53,7 @@
         android:layout_below="@id/tv_cont_str"
         android:textColor="@color/colorPrimaryDarkOrange"
         android:background="@android:color/white"
-        android:text="Start"
+        android:text="@string/str_start"
         android:layout_alignParentRight="true" />
 
     <Button
@@ -65,6 +63,6 @@
         android:layout_below="@id/tv_cont_str"
         android:textColor="@color/colorPrimaryDarkOrange"
         android:background="@android:color/white"
-        android:text="Back"
+        android:text="@string/str_back"
         android:layout_centerHorizontal="true" />
 </RelativeLayout>
