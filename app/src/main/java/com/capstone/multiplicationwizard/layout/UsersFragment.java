@@ -6,6 +6,9 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,22 +24,26 @@ import com.capstone.multiplicationwizard.model.User;
 
 import java.util.ArrayList;
 
-public class UsersFragment extends Fragment {
+public class UsersFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private View mRootView = null;
     private Cursor mCursor = null;
     private UsersAdapter usersAdapter;
+    private static final int LOADER_ID = 0x02;
+    ArrayList<User> arr_users = new ArrayList<>();
 
 
     private OnUsersFragmentAddNewUserListener mListener = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+
     }
 
     private void setUserAdapterItems() {
-        ArrayList<User> arr_users = new ArrayList<>();
+
 
         Cursor cursor = getActivity().getContentResolver().query(MWItemsContract.USERS_CONTENT_URI,
                 null, null, null, null, null);
@@ -65,8 +72,9 @@ public class UsersFragment extends Fragment {
         // Inflate the layout for this fragment
         ArrayList<User> arr_users = new ArrayList<>();
         usersAdapter = new UsersAdapter(this.getContext(), arr_users);
-        setUserAdapterItems();
+
         mRootView = inflater.inflate(R.layout.fragment_users, container, false);
+        getActivity().getSupportLoaderManager().initLoader(LOADER_ID, null, this);
         final ListView childListView = (ListView) mRootView.findViewById(R.id.childLV);
         childListView.setAdapter(usersAdapter);
         childListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -137,6 +145,49 @@ public class UsersFragment extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        return new CursorLoader (
+                this.getActivity().getApplicationContext(),
+                MWItemsContract.USERS_CONTENT_URI,
+                null,
+                null,
+                null,
+                null
+                );
+        /*Cursor cursor = getActivity().getContentResolver().query(MWItemsContract.USERS_CONTENT_URI,
+                null, null, null, null, null);
+        if (cursor == null) {
+            return;
+        }*/
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        if (data == null) {
+            return;
+        }
+        data.moveToFirst();
+        for (int i = 0; i < data.getCount(); i++) {
+            User user = new User();
+            String username = data.getString(data.getColumnIndex("username"));
+            Integer id = data.getInt(data.getColumnIndex("ID"));
+            user.setUsername(username);
+            user.setId(id.toString());
+            arr_users.add(user);
+            data.moveToNext();
+        }
+        data.close();
+        for (User user : arr_users) {
+            usersAdapter.add(user);
+        }
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        usersAdapter.clear();
     }
 
     public interface OnUsersFragmentAddNewUserListener {

@@ -1,5 +1,6 @@
 package com.capstone.multiplicationwizard;
 
+
 import android.content.ContentResolver;
 import android.database.Cursor;
 import android.os.Handler;
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements UsersFragment.OnU
     private static final int SPLASH_SCREEN_DELAY = 100;
     private static final String TAG = MainActivity.class.getName();
     TwoStageRate twoStageRate;
+    private static final int LOADER_ID = 0x01;
 
 
     @Override
@@ -86,7 +88,6 @@ public class MainActivity extends AppCompatActivity implements UsersFragment.OnU
 
             }
         }, SPLASH_SCREEN_DELAY);
-
     }
 
     private int getUserCount() {
@@ -138,5 +139,4 @@ public class MainActivity extends AppCompatActivity implements UsersFragment.OnU
         detachCurrentFragment();
         attachNewUserFragment();
     }
-
 }
