@@ -31,13 +31,18 @@
     <string name="failed_to_insert">Failed to insert</string>
     <string name="users_not_deleted">Users not deleted</string>
     <string name="users_can_add">Users can be added.Long Press on user to delete</string>
-
+    <string name="failed">Failed</string>
+    <string name="sorry_failed">Sorry you failed the level.  Try Again</string>
+    <string name="try_again">Try Again</string>
+    <string name="congratulations">Congratulataions.Keep working hard !</string>
+    <string name="ok">OK</string>
 
     <!--Content Description -->
     <string name="cd_logo">Logo</string>
     <string name="cd_splash">Splash screen</string>
     <string name="cd_lock">Lock</string>
     <string name="cd_level_up">Level Up</string>
+    <string name="cd_add_users">Add Users</string>
 
 
 </resources>

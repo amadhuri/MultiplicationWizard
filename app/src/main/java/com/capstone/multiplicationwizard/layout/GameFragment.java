@@ -386,10 +386,10 @@ public class GameFragment extends Fragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        builder.setTitle("Failed");
+        builder.setTitle(getString(R.string.failed));
         builder.setCancelable(false);
-        builder.setTitle("Sorry you failed the level.  Try Again");
-        builder.setPositiveButton("Try Again", new DialogInterface.OnClickListener() {
+        builder.setTitle(getString(R.string.sorry_failed));
+        builder.setPositiveButton(getString(R.string.try_again), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(getActivity().getApplicationContext(), GameActivity.class);
@@ -407,9 +407,9 @@ public class GameFragment extends Fragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        builder.setTitle("Congratulataions.Keep working hard !");
+        builder.setTitle(getString(R.string.congratulations));
         builder.setCancelable(false);
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(getActivity().getApplicationContext(), GameActivity.class);
