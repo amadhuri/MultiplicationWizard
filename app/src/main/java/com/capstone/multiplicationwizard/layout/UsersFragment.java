@@ -126,7 +126,7 @@ public class UsersFragment extends Fragment implements LoaderManager.LoaderCallb
                     mListener.onFragmentAddNewUser();
                 } else {
                     Toast.makeText(getActivity(),
-                            getString(R.string.str_max)+ MWItemsContract.MAX_USERS +
+                            getString(R.string.str_max) + MWItemsContract.MAX_USERS +
                                     getString(R.string.users_can_add)
                             , Toast.LENGTH_SHORT).show();
                 }
@@ -149,14 +149,14 @@ public class UsersFragment extends Fragment implements LoaderManager.LoaderCallb
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return new CursorLoader (
+        return new CursorLoader(
                 this.getActivity().getApplicationContext(),
                 MWItemsContract.USERS_CONTENT_URI,
                 null,
                 null,
                 null,
                 null
-                );
+        );
         /*Cursor cursor = getActivity().getContentResolver().query(MWItemsContract.USERS_CONTENT_URI,
                 null, null, null, null, null);
         if (cursor == null) {

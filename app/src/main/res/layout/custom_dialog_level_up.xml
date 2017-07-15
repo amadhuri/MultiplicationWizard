@@ -10,7 +10,7 @@
         android:src="@drawable/level_up"
         android:layout_centerHorizontal="true"
         android:id="@+id/iv_level_up_img"
-        android:contentDescription="@string/cd_level_up"/>
+        android:contentDescription="@string/cd_level_up" />
 
     <TextView
         android:layout_width="280dp"
